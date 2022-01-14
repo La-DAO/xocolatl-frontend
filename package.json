@@ -1,0 +1,18 @@
+{
+  "name": "xocolatl",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "ethers": "^5.5.2",
+    "svelte-ethers-store": "^0.6.0",
+    "svelte-navigator": "^3.1.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "npm --prefix ./svelte-app run dev",
+    "postinstall": "npm --prefix ./svelte-app install"
+  },
+  "author": "",
+  "license": "ISC"
+}
