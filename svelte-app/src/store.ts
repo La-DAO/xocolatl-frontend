@@ -1,3 +1,4 @@
 import { writable } from 'svelte/store';
 
-export const connectedAddress = writable("");
+export const selectedTab = writable("deposit");
+

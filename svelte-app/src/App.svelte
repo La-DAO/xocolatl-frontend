@@ -5,7 +5,6 @@
 	import Navigation from "./Navigation.svelte";
 	import Dashboard from "./Dashboard.svelte";
 
-
 	export let name: string;
 </script>
 
@@ -20,7 +19,7 @@
 
 	main {
 		text-align: center;
-		padding: 1em;
+		padding: 0;
 		max-width: 240px;
 		margin: 0 auto;
 		font-family: "Roboto", sans-serif;	
@@ -31,15 +30,13 @@
 			max-width: none;
 		}
 	}
-
 </style>
 
 <Router>
 <Route path="/">
 		<main>
-			<Header/>
-			<Navigation/>
-			<Dashboard /> 
+			<Header /> 
+			<Dashboard />
 		</main>
 </Route>
 </Router>
