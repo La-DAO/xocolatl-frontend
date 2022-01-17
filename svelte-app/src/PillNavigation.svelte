@@ -24,6 +24,7 @@
 	.nav-button {
 		width: 100%;
 		height: 100%;
+		color: black;
 		background-color: white;
 		border-color: white;
 		margin: 0.5rem 0 0 0;

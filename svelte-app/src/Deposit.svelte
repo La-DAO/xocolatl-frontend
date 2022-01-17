@@ -3,20 +3,11 @@
 </script>
 
 <style>
-	section {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin: 1rem 0 0 0;
-		background-color: var(--main-color);
-		color: white;
-		font-family: "Quicksand", sans-serif;
-	}
 
 	.deposit-amount-section {
 		margin: 0 0 0 1rem;
 		font-weight: 700;
-		border-right: 1px solid white;
+
 	}
 
 	.deposit-header {
@@ -40,7 +31,6 @@
 	}
 </style>
 
-<section>
 	<div class="deposit-amount-section">
 		<h1 class="deposit-header"> Cantidad de ETH a depositar </h1>
 		<input type="number" value="0.0" min="0"/>
@@ -53,4 +43,3 @@
 		<button type="button">Despositar</button>
 	</div>
 	
-</section>
