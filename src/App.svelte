@@ -1,12 +1,7 @@
 <script lang="ts">
-	import { Router, Route } from "svelte-navigator";
-
 	import ChainWarning from "./ChainWarning.svelte";
 	import Header from "./Header.svelte";
-	import Navigation from "./Navigation.svelte";
 	import Dashboard from "./Dashboard.svelte";
-
-	export let name: string;
 </script>
 
 <style>
@@ -33,12 +28,8 @@
 	}
 </style>
 
-<Router>
-<Route path="/">
 		<main>
 			<ChainWarning />
 			<Header /> 
 			<Dashboard />
 		</main>
-</Route>
-</Router>

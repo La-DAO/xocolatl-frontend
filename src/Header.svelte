@@ -1,17 +1,16 @@
 <script lang="ts">
 	import { toShortAddress } from './utils';
-	import { defaultEvmStores, connected, chainId, signerAddress} from 'svelte-ethers-store'
+	import { defaultEvmStores, signerAddress} from 'svelte-ethers-store';
 
 	async function handleDisconnect() {
-
-		defaultEvmStores.disconnect()
-		/* connectedAddress.set(""); */
+		defaultEvmStores.disconnect();
 	}
 	
 	async function handleConnect() {
-		defaultEvmStores.setProvider()
+		defaultEvmStores.setProvider();
 	}
 
+	$: shortSignerAddress = toShortAddress($signerAddress);
 </script>
 
 <style> 
@@ -26,13 +25,15 @@
 	button {
 		color: 'blue';
 	}
+
 </style>
 
 <header class="header">
+
 	<h2>Xocolatl</h2>
 	<div>
 	{#if $signerAddress}
-		{toShortAddress($signerAddress)}
+		{shortSignerAddress}
 		<button type="button" on:click={handleDisconnect}> Disconnect </button>
 	{:else}
 		<button type="button" on:click={handleConnect}> Connect with metamask</button>

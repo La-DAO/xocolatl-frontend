@@ -5,7 +5,7 @@
 		selectedTab.set(selected);
 	}
 
-	let selectedTabValue;
+	let selectedTabValue: string;
 
 	selectedTab.subscribe(value => {
 			selectedTabValue = value;
@@ -49,11 +49,9 @@
 		color: white;
 	}
 </style>
-
-
 <nav> 
 		<div class="nav-button left-nav-button" class:selected={selectedTabValue==='deposit'} on:click={()=>handleSectionClick('deposit')}> Depositar </div>
 		<div class="nav-button" class:selected={selectedTabValue==='mint'} on:click={()=>handleSectionClick('mint')}> Mintear </div>
-		<div class="nav-button" class:selected={selectedTabValue==='repay'} on:click={()=>handleSectionClick('repay')}> Amortizar </div>
-		<div class="nav-button right-nav-button" class:selected={selectedTabValue==='borrow'} on:click={()=>handleSectionClick('borrow')}> Retirar </div>
+		<div class="nav-button" class:selected={selectedTabValue==='burn'} on:click={()=>handleSectionClick('burn')}> Amortizar </div>
+		<div class="nav-button right-nav-button" class:selected={selectedTabValue==='withdraw'} on:click={()=>handleSectionClick('withdraw')}> Retirar </div>
 </nav>
