@@ -1,7 +1,46 @@
 import { writable, derived } from 'svelte/store';
+import type { Writable } from 'svelte/store';
 import { utils } from "ethers";
 
 export const selectedTab = writable("deposit");
+
+interface PendingTx {
+	hash: string;
+	status: string;
+};
+
+const testTx = {hash: "testhash", status: "pending"}
+
+const testTxFailed = {hash: "onethatfailed", status: "pending"}
+
+function createPendingTxs() {
+	const pendingTxs: Writable<Array<PendingTx>> = writable([testTx, testTxFailed]);
+
+	const closeModal = (txHash: string) => pendingTxs.update(txs => {
+			txs = txs.filter(tx => tx.hash !== txHash);
+			return txs;
+	})
+
+	return {
+		...pendingTxs,
+		updateStatus: (txHash: string, newStatus: string) => pendingTxs.update(txs => {
+			const i = txs.findIndex((tx: PendingTx) => tx.hash === txHash);
+			if(i !== -1) {
+				txs[i].status = newStatus;
+				// close modal after delay for animation if completed or dailed
+				if (newStatus === "failed" || newStatus === "completed") {
+					setTimeout(()=>closeModal(txHash), 1000);
+					return txs
+				} 
+			} else {
+				throw new Error("TXHash not found");
+			}
+		}),
+		closeModal: (txHash: string) => closeModal(txHash)	
+	};
+}
+
+export const pendingTxs = createPendingTxs();
 
 // user inputs
 export const WETHDepositInputAmount = writable(0);
@@ -93,7 +132,6 @@ export const XOCBurnInputAmountBigNum = derived(
 	}
 );
 export const XOCBurnInputError = writable("");
-
 
 // display data from contracts
 export const userWETHBalance = writable("-");

@@ -4,22 +4,27 @@ interface Window {
   ethereum: any;
 }
 
-
-
 // TODO: make better types for module
 declare module "svelte-ethers-store" {
   import type {Readable} from 'svelte/store';
+  import type {Provider} from '@ethersproject/abstract-provider';
+  import type {Signer} from '@ethersproject/abstract-signer';
 
-  export const defaultEvmStores: DefaultEVMStore 
-  export const connected: Readable<boolean>
-  export const chainId: Readable<number | string>
-  export const signerAddress: Readable<string>
-  export const provider: any;
-  export const signer: any;
-}
+  interface DefaultEVMStore {
+      disconnect: () => void;
+      setProvider: () => void;
+      provider: Readable<Provider>;
+      signer: Readable<Signer>;
+      connected: Readable<boolean>;
+      chainId: Readable<number | string>;
+      signerAddress: Readable<string>;
+      evmProviderType: Readable<string>;
+  }
 
-
-interface DefaultEVMStore {
-    disconnect: () => void;
-    setProvider: () => void;
+  export const defaultEvmStores: DefaultEVMStore;
+  export const connected: DefaultEVMStore['connected'];
+  export const chainId: DefaultEVMStore['chainId'];
+  export const signerAddress: DefaultEVMStore['signerAddress'];
+  export const provider: DefaultEVMStore['provider'];
+  export const signer: DefaultEVMStore['signer'];
 }
