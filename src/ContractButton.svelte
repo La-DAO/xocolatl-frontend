@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { connected, chainId } from 'svelte-ethers-store';
 
-	import { selectedTab, WETHDepositInputAmountBigNum, XOCBurnInputAmountBigNum } from './store';
+	import { isRighNetwork, selectedTab, WETHDepositInputAmountBigNum, XOCBurnInputAmountBigNum } from './store';
 	import { approveWETH, depositWETH, mintXOC, approveXOC, burnXOC, withdrawWETH } from './contractCalls';
 	import { getWETHAllowance, getXOCAllowance} from './contractReads';
 
@@ -10,7 +9,7 @@
 	let allowanceWETHPromise: Promise<BigNumber> | undefined;
 	let allowanceXOCPromise: Promise<BigNumber> | undefined;
 
-	$: if ($connected && ($chainId===42 || $chainId==='0x2a')) {
+	$: if ($isRighNetwork) {
 		allowanceWETHPromise = getWETHAllowance();
 		allowanceXOCPromise = getXOCAllowance();
 	}

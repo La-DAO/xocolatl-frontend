@@ -4,7 +4,7 @@
 	// TODO: are assetsAccountant events needed?
 
 	import { ethers } from 'ethers';
-	import { provider, connected, chainId, signerAddress } from 'svelte-ethers-store';
+	import { provider, signerAddress } from 'svelte-ethers-store';
 	import { 
 		mockWETHABI, 
 		mockWETHAddress, 
@@ -16,8 +16,9 @@
 		XOCABI
 	} from './abis';
 	import { fetchAllDisplayData } from './contractReads';
+	import { isRighNetwork } from './store';
 
-	$: if ($connected && ($chainId===42 || $chainId==='0x2a')) {
+	$: if ($isRighNetwork) {
 		const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, $provider);
 		const houseOfReserveContract = new ethers.Contract(houseOfReserveAddress, houseOfReserveABI, $provider);
 		const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, $provider);

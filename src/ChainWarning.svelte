@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { connected, chainId} from 'svelte-ethers-store';
+
+	import { connected } from 'svelte-ethers-store';
+	import { isRighNetwork } from './store';
 
 	async function changeNetwork() {
 		// @ts-ignore:next-line
-		await window.ethereum.request({ method: 'wallet_switchEthereumChain', params:[{chainId: '0x2A'}]});
+		await window.ethereum.request({ method: 'wallet_switchEthereumChain', params:[{chainId: '0x4'}]});
 	}
 
 </script>
@@ -19,7 +21,7 @@
 	}
 </style>
 <!-- chain id is sometimes hex and sometimes int -->
-<div class="chain-warning" class:enabled={$connected && $chainId!=='0x2a' && $chainId!==42}>
+<div class="chain-warning" class:enabled={ $connected && !$isRighNetwork}>
 	<p>Conectado a la red incorrecta</p>
-	<button on:click={()=>changeNetwork()}>Cambiar a kovan</button>
+	<button on:click={()=>changeNetwork()}>Cambiar a rinkeby</button>
 </div>

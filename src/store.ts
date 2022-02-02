@@ -1,6 +1,16 @@
 import { writable, derived } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import { utils } from 'ethers';
+import { connected, chainId } from 'svelte-ethers-store';
+
+export const isRighNetwork = derived(
+	[connected, chainId],
+	([$connected, $chainId]) => {
+		if ($connected && ($chainId===4 || $chainId === '0x4')) {
+			return true;
+		} else return false;
+	}
+);
 
 export const selectedTab = writable('deposit');
 

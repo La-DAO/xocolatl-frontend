@@ -1,11 +1,10 @@
 <script lang="ts">
 	import ContractButton from './ContractButton.svelte';
-	import { connected, chainId } from 'svelte-ethers-store';
 	import { fetchAllDisplayData } from './contractReads';
 
-	import {userWETHBalance, userWETHDepositBalance, userWETHMaxWithdrawal, userXOCDebt, userXOCBalance, userXOCMintingPower} from './store';
+	import {userWETHBalance, userWETHDepositBalance, userWETHMaxWithdrawal, userXOCDebt, userXOCBalance, userXOCMintingPower, isRighNetwork} from './store';
 
-	$: if ($connected && ($chainId===42 || $chainId==='0x2a')) {
+	$: if ($isRighNetwork) {
 		fetchAllDisplayData();
 	}
 </script>
