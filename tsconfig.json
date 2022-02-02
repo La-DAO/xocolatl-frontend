@@ -1,6 +1,7 @@
 {
-	"include": ["src/**/*", "webpack.config.ts"],
-	"exclude": ["node_modules/*", "__sapper__/*", "public/*"],
+	"extends": "@tsconfig/svelte/tsconfig.json",
+	"include": ["src/**/*"],
+	"exclude": ["node_modules/*", "__sapper__/*", "public/*", "webpack.config.ts"],
 	"compilerOptions": {
 		"moduleResolution": "node",
 		"target": "es2017",
@@ -8,7 +9,7 @@
 		"isolatedModules": true,
 		"esModuleInterop": true,
 		"sourceMap": true,
-		"strict": false,
+		"strict": true,
 		"baseUrl": ".",
 		"paths": {
 			"src/*": ["src/*"]
@@ -22,6 +23,7 @@
 			"svelte/easing"
 		]
 	},
+
 
 	// Fixes errors when changing `module` to ES in the above compiler options
 	// See: https://github.com/webpack/webpack-cli/issues/2458#issuecomment-846635277

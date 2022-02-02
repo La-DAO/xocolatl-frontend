@@ -1,203 +1,111 @@
-
-import { ethers, BigNumber } from "ethers";
-
-import { WrapperBuilder } from "redstone-evm-connector";
+import { ethers } from 'ethers';
+import { WrapperBuilder } from 'redstone-evm-connector';
 
 import { get } from 'svelte/store';
-import { connected, chainId, provider, signer, signerAddress} from 'svelte-ethers-store';
-import { mockWETHABI, mockWETHAddress, houseOfReserveABI, houseOfReserveAddress, houseOfCoinAddress, houseOfCoinABI, assetsAccountantAddress, assetsAccountantABI, reserveTokenID, backedTokenID, XOCAddress, XOCABI } from './abis';
-import { userWETHBalance, userWETHDepositBalance, userWETHMaxWithdrawal, userXOCBalance, userXOCMintingPower, userXOCDebt } from "./store";
+import { signer } from 'svelte-ethers-store';
+import { mockWETHABI, mockWETHAddress, houseOfReserveABI, houseOfReserveAddress, houseOfCoinAddress, houseOfCoinABI, XOCAddress, XOCABI } from './abis';
+import { backedTokenID, maxBigNum } from './constants';
 
-function checkContractCallPrereqs() {
-	if(!get(connected)) {
-    throw 'Wallet is not connected!';
-	} 
+import { 
+	pendingTxs,
+	WETHDepositInputAmountBigNum,
+	WETHWithdrawInputAmountBigNum,
+	XOCMintInputAmountBigNum,
+	XOCBurnInputAmountBigNum
+} from './store';
+import { fetchAllDisplayData } from './contractReads';
+import { checkContractCallPrereqs } from './utils';
 
-	if(get(chainId) !== 42) {
-		console.log("chainId ", get(chainId) === 42);
-    throw 'Wallet is connected to the wrong network!';
-	} 
-};
+import type { ContractTransaction  } from 'ethers';
+import type { TransactionReceipt } from '@ethersproject/providers';
 
-export async function getWETHAllowance() {
-	checkContractCallPrereqs();
 
- 	const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, get(provider));
+// waits for user transaction and updates store for tx progress UI display
+async function handleTxReceipt(tx: ContractTransaction) {
+	// add to tx list of pending txs
+	pendingTxs.monitor(tx.hash);
 
-	let allowance: BigNumber;
+	let receipt: TransactionReceipt;
 	try {
-		allowance = await mockWETHContract.allowance(get(signerAddress), houseOfReserveAddress);
+		receipt = await tx.wait();
+		if (receipt.status) {
+			pendingTxs.updateStatus(tx.hash, 'completed');
+		} else {
+			pendingTxs.updateStatus(tx.hash, 'failed');
+		}
 	} catch (e) {
+		pendingTxs.updateStatus(tx.hash, 'failed');
 		throw e;
 	}
-	
-	return allowance;
-};
+
+	// fetch new display data
+	fetchAllDisplayData();
+}
 
 export async function approveWETH() {
 	checkContractCallPrereqs();
-
-	const approveAmount = ethers.utils.parseUnits("10000000000");
-
- 	const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, get(signer));
-	
-	try {
-		await mockWETHContract.approve(houseOfReserveAddress, approveAmount);
-	} catch(e) {
-		throw e;
-	}
-};
-
-export async function getUserWETHBalance(): Promise<void> {
-	checkContractCallPrereqs();
-
-	let balance: BigNumber;
-
- 	const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, get(provider));
-
-	try {
-		balance = await mockWETHContract.balanceOf(get(signerAddress));
-	} catch(e) {
-		throw e;
-	}
-
-	 userWETHBalance.set(ethers.utils.formatEther(balance));
+	const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, get(signer));
+	const tx = await mockWETHContract.approve(houseOfReserveAddress, maxBigNum);
+	handleTxReceipt(tx);
 }
 
-export async function getUserWETHDepositBalance(): Promise<void> {
+
+export async function depositWETH() {
 	checkContractCallPrereqs();
-
-	let fetchedBalance: BigNumber;
-
- 	const assetsAccountantContract = new ethers.Contract(assetsAccountantAddress, assetsAccountantABI, get(provider));
-
-	try {
-		fetchedBalance = await assetsAccountantContract.balanceOf(get(signerAddress), reserveTokenID);
-	} catch(e) {
-		throw e;
-	};
-	userWETHDepositBalance.set(ethers.utils.formatEther(fetchedBalance));
-};
-
-
-export async function depositWETH(amount: BigNumber) {
-	checkContractCallPrereqs();
-
- 	const houseOfReserveContract = new ethers.Contract(houseOfReserveAddress, houseOfReserveABI, get(signer));
-	try {
-		await houseOfReserveContract.deposit(amount);
-	} catch (e) {
-		throw e;
-	}
-};
-
-export async function mintXOC(amount: BigNumber) {
-	checkContractCallPrereqs();
-
-	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(signer));
-
-	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed("redstone-stocks");
-
-	try {
-		await wrappedContract.mintCoin(mockWETHAddress, houseOfReserveAddress, amount);
-	} catch (e) {
-		throw e;
-	}
-};
-
-export async function getMaxWETHWithdrawal() {
 	const houseOfReserveContract = new ethers.Contract(houseOfReserveAddress, houseOfReserveABI, get(signer));
-
-	const wrappedContract = WrapperBuilder.wrapLite(houseOfReserveContract).usingPriceFeed("redstone-stocks");
-
-	let fetchedAmount: BigNumber;
-	try {
-		fetchedAmount = await wrappedContract.checkMaxWithdrawal(get(signerAddress));
-	} catch (e) {
-		throw e;
+	const amount = get(WETHDepositInputAmountBigNum);
+	if(amount) {
+		const tx = await houseOfReserveContract.deposit(amount);
+		handleTxReceipt(tx);
+	} else {
+		throw new Error('Invalid WETH deposit amount input');
 	}
-	userWETHMaxWithdrawal.set(ethers.utils.formatEther(fetchedAmount));
 }
 
-export async function getXOCBalance() {
-	const XOCContract = new ethers.Contract(XOCAddress, XOCABI, get(provider));
-
-	let fetchedBalance: BigNumber;
-	try {
-		fetchedBalance = await XOCContract.balanceOf(get(signerAddress));
-	} catch (e) {
-		throw e;
-	}
-	userXOCBalance.set(ethers.utils.formatEther(fetchedBalance));
-}
-
-export async function getXOCMintingPower() {
+export async function mintXOC() {
+	checkContractCallPrereqs();
 	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(signer));
-	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed("redstone-stocks");
-	let fetchedAmount: BigNumber;
-	try {
-		fetchedAmount = await wrappedContract.checkRemainingMintingPower(get(signerAddress), mockWETHAddress);
-	} catch (e) {
-		throw e;
+	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed('redstone-stocks');
+	const amount = get(XOCMintInputAmountBigNum);
+	if (amount) {
+		const tx = await wrappedContract.mintCoin(mockWETHAddress, houseOfReserveAddress, amount);
+		handleTxReceipt(tx);
+	} else {
+		throw new Error('Invalid XOC mint amount input');
 	}
-	
-	userXOCMintingPower.set(ethers.utils.formatEther(fetchedAmount));
+
 }
-
-
-export async function getXOCAllowance() {
- 	const XOCContract = new ethers.Contract(XOCAddress, XOCABI, get(signer));
-
-	let allowance: BigNumber;
-	try {
-		allowance = await XOCContract.allowance(get(signerAddress), houseOfCoinAddress);
-	} catch (e) {
-		throw e;
-	}
-	
-	return allowance;
-};
 
 // approve XOC transfers to houseOfCoin for payback
 export async function approveXOC() {
 	checkContractCallPrereqs();
+	const XOCContract = new ethers.Contract(XOCAddress, XOCABI, get(signer));
+	const tx = await XOCContract.approve(houseOfCoinAddress, maxBigNum);
+	handleTxReceipt(tx);
+}
 
-	const approveAmount = ethers.utils.parseUnits("10000000000000");
-
- 	const XOCContract = new ethers.Contract(XOCAddress, XOCABI, get(signer));
-	
-	try {
-		await XOCContract.approve(houseOfCoinAddress, approveAmount);
-	} catch(e) {
-		throw e;
-	}
-};
-
-export async function burnXOC(amount: BigNumber) {
+export async function burnXOC() {
 	checkContractCallPrereqs();
 	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(signer));
-	try {
-		await houseOfCoinContract.paybackCoin(backedTokenID, amount);
-	} catch (e) {
-		throw e;
+	const amount = get(XOCBurnInputAmountBigNum);
+	if (amount) {
+		const tx = await houseOfCoinContract.paybackCoin(backedTokenID, amount);
+		handleTxReceipt(tx);
+	} else {
+		throw new Error('Invalid XOC burn amount input');
 	}
-};
+}
 
-export async function withdrawWETH(amount: BigNumber) {
+export async function withdrawWETH() {
 	checkContractCallPrereqs();
 	const houseOfReserveContract = new ethers.Contract(houseOfReserveAddress, houseOfReserveABI, get(signer));
-	const wrappedContract = WrapperBuilder.wrapLite(houseOfReserveContract).usingPriceFeed("redstone-stocks");
-	try {
-		await wrappedContract.withdraw(amount);
-	} catch (e) {
-		throw e;
+	const wrappedContract = WrapperBuilder.wrapLite(houseOfReserveContract).usingPriceFeed('redstone-stocks');
+	const amount = get(WETHWithdrawInputAmountBigNum);
+	if (amount) {
+		const tx = await wrappedContract.withdraw(amount);
+		handleTxReceipt(tx);
+	} else {
+		throw new Error('Invalid WETH withdraw amount input');
 	}
-};
+}
 
-export function fetchAllDisplayData() {
-	getUserWETHBalance();
-	getUserWETHDepositBalance();
-	getMaxWETHWithdrawal();
-	getXOCBalance();
-	getXOCMintingPower();
-};

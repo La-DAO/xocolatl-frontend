@@ -1,14 +1,18 @@
 /// <reference types="svelte" />
 
-interface Window {
-  ethereum: any;
+declare global {
+	import type { ExternalProvider } from '@ethersproject/providers';
+
+	interface Window {
+		ethereum: ExternalProvider;
+	}
+	declare let window: Window;
 }
 
 // TODO: make better types for module
-declare module "svelte-ethers-store" {
+declare module 'svelte-ethers-store' {
   import type {Readable} from 'svelte/store';
-  import type {Provider} from '@ethersproject/abstract-provider';
-  import type {Signer} from '@ethersproject/abstract-signer';
+  import type {Provider, Signer} from 'ethers';
 
   interface DefaultEVMStore {
       disconnect: () => void;

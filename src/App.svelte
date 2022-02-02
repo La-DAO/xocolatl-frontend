@@ -1,8 +1,8 @@
 <script lang="ts">
-	import ChainWarning from "./ChainWarning.svelte";
-	import Header from "./Header.svelte";
-	import Dashboard from "./Dashboard.svelte";
-	import TxMonitor from "./TxMonitor.svelte";
+	import ChainWarning from './ChainWarning.svelte';
+	import Header from './Header.svelte';
+	import Dashboard from './Dashboard.svelte';
+	import TxMonitor from './TxMonitor.svelte';
 </script>
 
 <style>

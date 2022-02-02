@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { selectedTab } from "./store";
+	import { selectedTab } from './store';
 	
 	function handleSectionClick(selected: string) {
 		selectedTab.set(selected);
@@ -8,7 +8,7 @@
 	let selectedTabValue: string;
 
 	selectedTab.subscribe(value => {
-			selectedTabValue = value;
+		selectedTabValue = value;
 	});
 </script>
 

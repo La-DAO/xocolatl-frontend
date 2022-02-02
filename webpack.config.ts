@@ -53,7 +53,6 @@ import SvelteCheckPlugin from 'svelte-check-plugin';
 
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
-import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
@@ -258,7 +257,7 @@ if ('compilerOptions' in tsconfig && 'paths' in tsconfig.compilerOptions) {
 
 		if (config.resolve && config.resolve.alias) {
 			if (!(wpAlias in config.resolve.alias) && wpPaths.length) {
-				config.resolve.alias[wpAlias] = wpPaths.length > 1 ? wpPaths : wpPaths[0];
+				(config.resolve.alias as any)[wpAlias] = wpPaths.length > 1 ? wpPaths : wpPaths[0];
 			}
 		}
 	}
@@ -285,7 +284,7 @@ if (useBabel && (isProduction || useBabelInDevelopment)) {
 		}
 	};
 
-	config.module?.rules.unshift({
+	config.module?.rules?.unshift({
 		test: /\.(?:m?js|ts)$/,
 		include: [
 			path.resolve(__dirname, 'src'),
@@ -297,7 +296,7 @@ if (useBabel && (isProduction || useBabelInDevelopment)) {
 		use: loader,
 	});
 
-	const svelte = config.module?.rules.find(rule => {
+	const svelte = config.module?.rules?.find(rule => {
 		if (typeof rule !== 'object') return false;
 		else if (Array.isArray(rule.use))
 			return rule.use.includes((e: any) => typeof e.loader === 'string' && e.loader.startsWith('svelte-loader'));

@@ -5,7 +5,7 @@
 	
 	function handleClose(txHash: string) {
 		pendingTxs.closeModal(txHash);
-	};
+	}
 
 </script>
 
@@ -24,7 +24,7 @@
 	justify-content: center;
 	margin: 1rem auto auto auto;
 	width: 20rem;
-	height: 16rem;
+	height: 17rem;
 	border: 2px solid black;
 	border-radius: 5px;
 	background-color: white;
@@ -58,7 +58,7 @@
 <div class="overlay-wrapper">
 	{#each $pendingTxs as tx}
 			<div class="overlay-box">
-				<div class="close-button" on:click={handleClose(tx.hash)}>&#10006;</div>
+				<div class="close-button" on:click={()=>handleClose(tx.hash)}>&#10006;</div>
 				<p>Transaccion enviada, esperando confirmaciones</p>
 				<p>{toShortAddress(tx.hash)}</p>
 				<a href={blockExplorerURL + 'tx/' + tx.hash} target="_blank" rel="noopener noreferrer">Ver en el explorador</a>
