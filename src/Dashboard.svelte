@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	import { selectedTab } from './store';
 
 	import PillNavigation from './PillNavigation.svelte';

@@ -3,6 +3,7 @@
 	import Header from './Header.svelte';
 	import Dashboard from './Dashboard.svelte';
 	import TxMonitor from './TxMonitor.svelte';
+	import Polling from './Polling.svelte';
 </script>
 
 <style>
@@ -34,4 +35,5 @@
 			<Header /> 
 			<Dashboard />
 			<TxMonitor />
+			<Polling />
 		</main>

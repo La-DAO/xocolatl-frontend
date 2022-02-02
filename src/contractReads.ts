@@ -4,7 +4,6 @@ import { WrapperBuilder } from 'redstone-evm-connector';
 import { get } from 'svelte/store';
 import { provider, signer, signerAddress} from 'svelte-ethers-store';
 import { checkContractCallPrereqs } from './utils';
-
 import { reserveTokenID } from './constants';
 import { 
 	userWETHBalance,
@@ -14,9 +13,7 @@ import {
 	userXOCMintingPower,
 	/*userXOCDebt,*/
 } from './store';
-
-
-import { 
+import {
 	mockWETHABI,
 	mockWETHAddress,
 	houseOfReserveABI,
@@ -38,7 +35,7 @@ export async function getWETHAllowance() {
 }
 
 
-async function getUserWETHBalance(): Promise<void> {
+export async function getUserWETHBalance(): Promise<void> {
 	checkContractCallPrereqs();
 	const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, get(provider));
 	const balance = await mockWETHContract.balanceOf(get(signerAddress));

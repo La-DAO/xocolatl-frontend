@@ -10,7 +10,7 @@
 	let allowanceWETHPromise: Promise<BigNumber> | undefined;
 	let allowanceXOCPromise: Promise<BigNumber> | undefined;
 
-	$: if ($connected && $chainId===42) {
+	$: if ($connected && ($chainId===42 || $chainId==='0x2a')) {
 		allowanceWETHPromise = getWETHAllowance();
 		allowanceXOCPromise = getXOCAllowance();
 	}
