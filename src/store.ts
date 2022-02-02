@@ -9,7 +9,6 @@ interface PendingTx {
 	status: string;
 }
 
-
 function createPendingTxs() {
 	const pendingTxs: Writable<Array<PendingTx>> = writable([]);
 

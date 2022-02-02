@@ -18,7 +18,6 @@
 		width: 30%;
 		margin: 2rem auto auto auto;
 		justify-content: center;
-		/* background-color: black; */
 	}
 
 	.nav-button {

@@ -18,11 +18,17 @@
 	import { fetchAllDisplayData } from './contractReads';
 
 	$: if ($connected && ($chainId===42 || $chainId==='0x2a')) {
-		console.log('listening');
 		const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, $provider);
 		const houseOfReserveContract = new ethers.Contract(houseOfReserveAddress, houseOfReserveABI, $provider);
 		const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, $provider);
 		const XOCContract = new ethers.Contract(XOCAddress, XOCABI, $provider);
+
+		$provider.on('block', (blockNumber: number) => {
+			// update all data every 50 blocks in case some event is not picked up
+			if (blockNumber%50 === 0) {
+				fetchAllDisplayData();			
+			}
+		});
 
 		/* eslint-disable @typescript-eslint/no-unused-vars */
 		mockWETHContract.on('Approval', (src, guy, _event) => {
