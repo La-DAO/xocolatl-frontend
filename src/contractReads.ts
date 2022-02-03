@@ -18,7 +18,8 @@ import {
 	userHealthRatio,
 	liquidationThreshold,
 	collateralRatioParam
-} from './store';
+} from './store/contractData';
+
 import {
 	mockWETHABI,
 	mockWETHAddress,
@@ -122,7 +123,7 @@ export async function getCollateralRatioParam() {
 	collateralRatioParam.set(collatRatio);
 }
 
-// TODO: fetch with array of promises
+// TODO: fetch with array of promises and retry failed
 export function fetchAllDisplayData() {
 	checkContractCallPrereqs();
 

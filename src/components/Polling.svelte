@@ -14,9 +14,9 @@
 		houseOfCoinABI, 
 		XOCAddress, 
 		XOCABI
-	} from './abis';
-	import { fetchAllDisplayData } from './contractReads';
-	import { isRighNetwork } from './store';
+	} from '../abis';
+	import { fetchAllDisplayData } from '../contractReads';
+	import { isRighNetwork } from '../store/store';
 
 	$: if ($isRighNetwork) {
 		const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, $provider);

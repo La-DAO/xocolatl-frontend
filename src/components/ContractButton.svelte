@@ -1,12 +1,15 @@
 <script lang="ts">
-	import { isRighNetwork, selectedTab, userWETHAllowance, WETHDepositInputAmountBigNum, userXOCAllowance, XOCBurnInputAmountBigNum } from './store';
-	import { approveWETH, depositWETH, mintXOC, approveXOC, burnXOC, withdrawWETH } from './contractCalls';
+import { isRighNetwork, selectedTab } from '../store/store';
+import { WETHDepositInputAmountBigNum, XOCBurnInputAmountBigNum } from '../store/userInput';
+import { userWETHAllowance, userXOCAllowance } from '../store/contractData';
+import { approveWETH, depositWETH, mintXOC, approveXOC, burnXOC, withdrawWETH } from '../contractCalls';
 	
 	let disabled=true; // disable buttons until data loads
 	$: if ($isRighNetwork) {
 		disabled=false;
 	}
 </script>
+
 {#if $selectedTab === 'deposit'}
 	{#if $userWETHAllowance && $WETHDepositInputAmountBigNum && $userWETHAllowance.lt($WETHDepositInputAmountBigNum)}
 		<button on:click={approveWETH} type="button" {disabled}>Aprovar</button>

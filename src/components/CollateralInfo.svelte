@@ -1,5 +1,5 @@
 <script lang="ts">
-import {WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt, liquidationThreshold, userWETHLiquidationPrice} from './store';
+import {WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt, liquidationThreshold, userWETHLiquidationPrice} from '../store/contractData';
 </script>
 
 <style>

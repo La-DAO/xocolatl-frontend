@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { toShortAddress } from './utils';
-	import { blockExplorerURL } from './constants';
-	import { pendingTxs } from './store';
-	
-	function handleClose(txHash: string) {
-		pendingTxs.closeModal(txHash);
-	}
+import { toShortAddress } from '../utils';
+import { blockExplorerURL } from '../constants';
+import { pendingTxs } from '../store/store';
 
+function handleClose(txHash: string) {
+	pendingTxs.closeModal(txHash);
+}
 </script>
 
 <style>

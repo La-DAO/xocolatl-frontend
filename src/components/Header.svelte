@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { toShortAddress } from './utils';
+	import { toShortAddress } from '../utils';
 	import { defaultEvmStores, signerAddress} from 'svelte-ethers-store';
-	import { XOCAddress } from './abis';
+	import { XOCAddress } from '../abis';
 
 	async function handleDisconnect() {
 		defaultEvmStores.disconnect();

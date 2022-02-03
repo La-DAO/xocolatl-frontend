@@ -6,13 +6,13 @@ import { signer } from 'svelte-ethers-store';
 import { mockWETHABI, mockWETHAddress, houseOfReserveABI, houseOfReserveAddress, houseOfCoinAddress, houseOfCoinABI, XOCAddress, XOCABI } from './abis';
 import { backedTokenID, maxApproveAmount } from './constants';
 
+import { pendingTxs } from './store/store';
 import { 
-	pendingTxs,
 	WETHDepositInputAmountBigNum,
 	WETHWithdrawInputAmountBigNum,
 	XOCMintInputAmountBigNum,
 	XOCBurnInputAmountBigNum
-} from './store';
+} from './store/userInput';
 import { fetchAllDisplayData } from './contractReads';
 import { checkContractCallPrereqs } from './utils';
 

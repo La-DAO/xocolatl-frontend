@@ -1,7 +1,7 @@
 <script lang="ts">
 
 	import { connected } from 'svelte-ethers-store';
-	import { isRighNetwork } from './store';
+	import { isRighNetwork } from '../store/store';
 
 	async function changeNetwork() {
 		// @ts-ignore:next-line

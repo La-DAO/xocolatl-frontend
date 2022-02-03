@@ -1,27 +1,25 @@
 <script lang="ts">
-	import { selectedTab } from './store';
+import { selectedTab } from '../store/store';
 
-	import PillNavigation from './PillNavigation.svelte';
-	import CollateralInfo from './CollateralInfo.svelte';
-	import MainInfo from './MainInfo.svelte';
-	import AmountInput from './AmountInput.svelte';
+import { 
+	WETHDepositInputAmount,
+	WETHDepositInputAmountBigNum,
+	WETHDepositInputError,
+	XOCMintInputAmount, 
+	XOCMintInputAmountBigNum,
+	XOCMintInputError, 
+	XOCBurnInputAmount, 
+	XOCBurnInputAmountBigNum,
+	XOCBurnInputError, 
+	WETHWithdrawInputAmount, 
+	WETHWithdrawInputAmountBigNum,
+	WETHWithdrawInputError 
+} from '../store/userInput';	
 
-
-	import { 
-		WETHDepositInputAmount,
-		WETHDepositInputAmountBigNum,
-		WETHDepositInputError,
-		XOCMintInputAmount, 
-		XOCMintInputAmountBigNum,
-		XOCMintInputError, 
-		XOCBurnInputAmount, 
-		XOCBurnInputAmountBigNum,
-		XOCBurnInputError, 
-		WETHWithdrawInputAmount, 
-		WETHWithdrawInputAmountBigNum,
-		WETHWithdrawInputError 
-	} from './store';	
-
+import PillNavigation from './PillNavigation.svelte';
+import CollateralInfo from './CollateralInfo.svelte';
+import MainInfo from './MainInfo.svelte';
+import AmountInput from './AmountInput.svelte';
 </script>
 
 <style>

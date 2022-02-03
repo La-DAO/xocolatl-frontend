@@ -1,12 +1,20 @@
 <script lang="ts">
-	import ContractButton from './ContractButton.svelte';
-	import { fetchAllDisplayData } from './contractReads';
+import ContractButton from './ContractButton.svelte';
+import { fetchAllDisplayData } from '../contractReads';
 
-	import {userWETHBalance, userWETHDepositBalance, userWETHMaxWithdrawal, userXOCDebt, userXOCBalance, userXOCMintingPower, isRighNetwork} from './store';
+import { isRighNetwork } from '../store/store';
+import { 
+	userWETHBalance, 
+	userWETHDepositBalance, 
+	userWETHMaxWithdrawal, 
+	userXOCDebt, 
+	userXOCBalance, 
+	userXOCMintingPower
+} from '../store/contractData';
 
-	$: if ($isRighNetwork) {
-		fetchAllDisplayData();
-	}
+$: if ($isRighNetwork) {
+	fetchAllDisplayData();
+}
 </script>
 
 <style>
