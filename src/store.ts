@@ -4,6 +4,8 @@ import { connected, chainId } from 'svelte-ethers-store';
 
 import type { Writable } from 'svelte/store';
 
+
+
 export const isRighNetwork = derived(
 	[connected, chainId],
 	([$connected, $chainId]) => {
@@ -151,4 +153,40 @@ export const userXOCAllowance = writable(utils.parseEther('0'));
 export const userXOCBalance = writable('-');
 export const userXOCDebt = writable('-');
 export const userXOCMintingPower = writable('-');
+
+export const WETHToXOC = writable('-');
+export const userHealthRatio = writable('-');
+
+export const userMaxDebt = derived([userXOCMintingPower, userXOCDebt],
+	([$userXOCMintingPower, $userXOCDebt]) => {
+		if ($userXOCDebt !== '-' && $userXOCMintingPower !== '-') {
+			const res = utils.parseEther($userXOCDebt).add(utils.parseEther($userXOCMintingPower)).toString();
+			return utils.formatEther(res);
+		} else return '-';
+	}
+);
+
+// TODO: change parseFloat and be more preciose
+export const userMaxDebtUtilization = derived([userXOCDebt, userMaxDebt],
+	([$userXOCDebt, $userMaxDebt]) => {
+		if ($userXOCDebt !== '-' && $userMaxDebt !== '-') {
+			const res = parseFloat($userXOCDebt)/parseFloat($userMaxDebt);
+			return res*100;
+		} else return '-';
+	}
+);
+
+export const liquidationThreshold = writable('-');
+
+export const collateralRatioParam = writable('-');
+
+// TODO: change parseFloat and be more preciose
+export const userWETHLiquidationPrice = derived(
+	[liquidationThreshold, userXOCDebt, userWETHDepositBalance, collateralRatioParam], 
+	([$liquidationThreshold, $userXOCDebt, $userWETHDepositBalance, $collateralRatioParam]) => {
+		
+		if ($liquidationThreshold !== '-' && $userXOCDebt !== '-' && $userWETHDepositBalance !== '-' && $collateralRatioParam !== '-'){
+			return ((parseFloat($liquidationThreshold)/100)*parseFloat($userXOCDebt)*parseFloat($collateralRatioParam)) / (parseFloat($userWETHDepositBalance));
+		}
+	});
 

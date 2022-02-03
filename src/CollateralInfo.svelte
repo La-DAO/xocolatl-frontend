@@ -1,5 +1,5 @@
 <script lang="ts">
-
+import {WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt, liquidationThreshold, userWETHLiquidationPrice} from './store';
 </script>
 
 <style>
@@ -43,15 +43,17 @@ section {
 </style>
 
 <section>
+
     <h1> Indice de salud </h1>
     <div class="content">
         <div class="circle"></div>
         <div class="info">
-            <p>Limite de prestamo utilizado -</p>
-            <p>Relacion de prestamo-valor (RPM) actual -</p>
-            <p>Umbral de liquidacion del RPV -</p>
-            <p>Precio actual de ETH -</p>
-            <p>Precio de liquidacion de ETH -</p>
+            <p>Deuda maxima {$userMaxDebt}</p>
+            <p>Limite de prestamo utilizado {$userMaxDebtUtilization} %</p>
+            <p>Umbral de liquidacion del RPV {$liquidationThreshold} %</p>
+            <p>Factor de salud {$userHealthRatio}</p>
+            <p>Precio actual de ETH {$WETHToXOC}</p>
+            <p>Precio de liquidacion de ETH {$userWETHLiquidationPrice}</p>
         </div>
     </div>
 </section>

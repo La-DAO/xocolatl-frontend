@@ -100,10 +100,6 @@ export const houseOfReserveABI = [
 	'function withdraw(uint256 amount)'
 ];
  
-// mockWETH and XOC ids, needed for some contract calls
-export const reserveTokenID = '69208386426602677783460625292205263210637705470065513959812478282694433536962';
-export const backedTokenID = '6398073223512371539250731142149975136586141799346430329041765947991383045798';
-
 export const houseOfCoinAddress = '0xF3A1C091f110F7b931c02d3603ec8bC771182466';
 
 export const houseOfCoinABI = [

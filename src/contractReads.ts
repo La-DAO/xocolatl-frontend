@@ -1,10 +1,10 @@
 import { ethers } from 'ethers';
 import { WrapperBuilder } from 'redstone-evm-connector';
-
 import { get } from 'svelte/store';
 import { provider, signer, signerAddress} from 'svelte-ethers-store';
+
 import { checkContractCallPrereqs } from './utils';
-import { reserveTokenID } from './constants';
+import { reserveTokenID, backedTokenID } from './constants';
 import { 
 	userWETHAllowance,
 	userWETHBalance,
@@ -13,7 +13,11 @@ import {
 	userXOCAllowance,
 	userXOCBalance,
 	userXOCMintingPower,
-	/*userXOCDebt,*/
+	userXOCDebt,
+	WETHToXOC,
+	userHealthRatio,
+	liquidationThreshold,
+	collateralRatioParam
 } from './store';
 import {
 	mockWETHABI,
@@ -28,7 +32,17 @@ import {
 	XOCABI
 } from './abis';
 
-//TODO: store
+
+async function getWETHtoXOCRate() {
+	checkContractCallPrereqs();
+
+	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(signer));
+	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed('redstone-stocks');
+
+	const price = await wrappedContract.redstoneGetLastPrice();
+	WETHToXOC.set(ethers.utils.formatUnits(price.toString(), 8));
+};
+
 export async function getWETHAllowance() {
 	checkContractCallPrereqs();
 	const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, get(provider));
@@ -75,13 +89,40 @@ async function getXOCMintingPower() {
 	userXOCMintingPower.set(ethers.utils.formatEther(fetchedAmount));
 }
 
-//TODO: store
 export async function getXOCAllowance() {
 	const XOCContract = new ethers.Contract(XOCAddress, XOCABI, get(provider));
 	const allowance = await XOCContract.allowance(get(signerAddress), houseOfCoinAddress);
 	userXOCAllowance.set(allowance);
 }
 
+export async function getXOCDebt() {
+	const assetsAccountantContract = new ethers.Contract(assetsAccountantAddress, assetsAccountantABI, get(provider));
+	const fetchedBalance = await assetsAccountantContract.balanceOf(get(signerAddress), backedTokenID);
+	userXOCDebt.set(ethers.utils.formatEther(fetchedBalance));
+}
+
+export async function getHealthRatio() {
+	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(signer));
+	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed('redstone-stocks');
+	const fetchedAmount = await wrappedContract.computeUserHealthRatio(get(signerAddress), mockWETHAddress);
+	userHealthRatio.set(ethers.utils.formatEther(fetchedAmount.toString()));
+}
+
+export async function getLiquidationParams() {
+	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(provider));
+	const fetchedValues = await houseOfCoinContract.liqParam();
+	liquidationThreshold.set(ethers.utils.formatEther(fetchedValues.liquidationThreshold.mul(100)));
+}
+
+export async function getCollateralRatioParam() {
+	const houseOfReserveContract = new ethers.Contract(houseOfReserveAddress, houseOfReserveABI, get(provider));
+	const fetchedValues = await houseOfReserveContract.collateralRatio();
+	
+	const collatRatio = (fetchedValues.numerator/fetchedValues.denominator).toString();
+	collateralRatioParam.set(collatRatio);
+}
+
+// TODO: fetch with array of promises
 export function fetchAllDisplayData() {
 	checkContractCallPrereqs();
 
@@ -92,4 +133,10 @@ export function fetchAllDisplayData() {
 	getXOCAllowance();
 	getXOCBalance();
 	getXOCMintingPower();
+	getXOCDebt();
+
+	getWETHtoXOCRate();
+	getHealthRatio();
+	getLiquidationParams();
+	getCollateralRatioParam();
 }

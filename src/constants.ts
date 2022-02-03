@@ -5,5 +5,4 @@ export const backedTokenID = '52951359997726846672786431933234956040022616589815
 
 export const blockExplorerURL = 'https://kovan.etherscan.io/';
 
-// TODO: refactor to maxApproveAmount
-export const maxBigNum = ethers.utils.parseEther('115792089237316195423570985008687907853269984640394575840');
+export const maxApproveAmount = ethers.utils.parseEther('115792089237316195423570985008687907853269984640394575840');

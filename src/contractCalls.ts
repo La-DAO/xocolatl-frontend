@@ -4,7 +4,7 @@ import { WrapperBuilder } from 'redstone-evm-connector';
 import { get } from 'svelte/store';
 import { signer } from 'svelte-ethers-store';
 import { mockWETHABI, mockWETHAddress, houseOfReserveABI, houseOfReserveAddress, houseOfCoinAddress, houseOfCoinABI, XOCAddress, XOCABI } from './abis';
-import { backedTokenID, maxBigNum } from './constants';
+import { backedTokenID, maxApproveAmount } from './constants';
 
 import { 
 	pendingTxs,
@@ -45,7 +45,7 @@ async function handleTxReceipt(tx: ContractTransaction) {
 export async function approveWETH() {
 	checkContractCallPrereqs();
 	const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, get(signer));
-	const tx = await mockWETHContract.approve(houseOfReserveAddress, maxBigNum);
+	const tx = await mockWETHContract.approve(houseOfReserveAddress, maxApproveAmount);
 	handleTxReceipt(tx);
 }
 
@@ -80,7 +80,7 @@ export async function mintXOC() {
 export async function approveXOC() {
 	checkContractCallPrereqs();
 	const XOCContract = new ethers.Contract(XOCAddress, XOCABI, get(signer));
-	const tx = await XOCContract.approve(houseOfCoinAddress, maxBigNum);
+	const tx = await XOCContract.approve(houseOfCoinAddress, maxApproveAmount);
 	handleTxReceipt(tx);
 }
 
