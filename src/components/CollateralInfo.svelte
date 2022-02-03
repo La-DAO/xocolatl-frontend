@@ -1,5 +1,6 @@
 <script lang="ts">
-import {WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt, liquidationThreshold, userWETHLiquidationPrice} from '../store/contractData';
+import { ethers } from 'ethers';
+import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt, liquidationThreshold, userWETHLiquidationPrice, collateralFactor } from '../store/contractData';
 </script>
 
 <style>
@@ -48,12 +49,15 @@ section {
     <div class="content">
         <div class="circle"></div>
         <div class="info">
-            <p>Deuda maxima {$userMaxDebt}</p>
-            <p>Limite de prestamo utilizado {$userMaxDebtUtilization} %</p>
-            <p>Umbral de liquidacion del RPV {$liquidationThreshold} %</p>
-            <p>Factor de salud {$userHealthRatio}</p>
-            <p>Precio actual de ETH {$WETHToXOC}</p>
-            <p>Precio de liquidacion de ETH {$userWETHLiquidationPrice}</p>
+            <p>Deuda maxima {$userMaxDebt ? ethers.utils.formatEther($userMaxDebt) : '-'} XOC</p>
+
+            <p>Limite de prestamo utilizado {$userMaxDebtUtilization ? $userMaxDebtUtilization*100 : '-'} %</p>
+<!--
+<p>Limite de prestamo utilizado {$userMaxDebtUtilization ? ethers.utils.formatEther($userMaxDebtUtilization) : '-'} %</p> -->
+            <p>Umbral de liquidacion del RPV {$collateralFactor ? $collateralFactor*100 : '-'} %</p>
+            <p>Factor de salud {$userHealthRatio ? ethers.utils.formatEther($userHealthRatio) : '-'}</p>
+            <p>Precio actual de ETH ${$WETHToXOC ?  ethers.utils.formatUnits($WETHToXOC, 8) : '-'} MXN</p>
+            <p>Precio de liquidacion de ETH ${$userWETHLiquidationPrice ? $userWETHLiquidationPrice : '-'} MXN</p>
         </div>
     </div>
 </section>

@@ -1,7 +1,9 @@
 <script lang="ts">
-import ContractButton from './ContractButton.svelte';
-import { fetchAllDisplayData } from '../contractReads';
+import { ethers } from 'ethers';
 
+import ContractButton from './ContractButton.svelte';
+
+import { fetchAllDisplayData } from '../contractReads';
 import { isRighNetwork } from '../store/store';
 import { 
 	userWETHBalance, 
@@ -33,19 +35,19 @@ $: if ($isRighNetwork) {
 <section>
 	<b>Depositos</b>
 
-	<p>Balance actual del wallet {$userWETHBalance}</p> 
+	<p>Balance actual del wallet {$userWETHBalance ? ethers.utils.formatEther($userWETHBalance) : '-'}</p> 
 
-	<p>Balance de colateral depositado {$userWETHDepositBalance}</p>
+	<p>Balance de colateral depositado {$userWETHDepositBalance ? ethers.utils.formatEther($userWETHDepositBalance) : '-'}</p>
 
-	<p>Disponible para retirar {$userWETHMaxWithdrawal}</p>
+	<p>Disponible para retirar {$userWETHMaxWithdrawal ? ethers.utils.formatEther($userWETHMaxWithdrawal) : '-'}</p>
 
 	<b>Prestamos</b>
 
-	<p>Deuda restante de XOC {$userXOCDebt}</p>
+	<p>Deuda restante de XOC {$userXOCDebt ? ethers.utils.formatEther($userXOCDebt) : '-'}</p>
 
-	<p>Disponible para pedir prestado {$userXOCMintingPower}</p>
+	<p>Disponible para pedir prestado {$userXOCMintingPower ? ethers.utils.formatEther($userXOCMintingPower) : '-'}</p>
 
-	<p>El saldo de su cartera {$userXOCBalance}</p>
+	<p>El saldo de su cartera {$userXOCBalance ? ethers.utils.formatEther($userXOCBalance) : '-'}</p>
 
 	<ContractButton/>
 </section>

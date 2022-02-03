@@ -40,8 +40,9 @@ async function getWETHtoXOCRate() {
 	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(signer));
 	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed('redstone-stocks');
 
+	// returned price has 8 decimals
 	const price = await wrappedContract.redstoneGetLastPrice();
-	WETHToXOC.set(ethers.utils.formatUnits(price.toString(), 8));
+	WETHToXOC.set(price);
 };
 
 export async function getWETHAllowance() {
@@ -56,7 +57,7 @@ export async function getUserWETHBalance(): Promise<void> {
 	checkContractCallPrereqs();
 	const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, get(provider));
 	const balance = await mockWETHContract.balanceOf(get(signerAddress));
-	userWETHBalance.set(ethers.utils.formatEther(balance));
+	userWETHBalance.set(balance);
 }
 
 
@@ -64,7 +65,7 @@ async function getUserWETHDepositBalance(): Promise<void> {
 	checkContractCallPrereqs();
 	const assetsAccountantContract = new ethers.Contract(assetsAccountantAddress, assetsAccountantABI, get(provider));
 	const fetchedBalance = await assetsAccountantContract.balanceOf(get(signerAddress), reserveTokenID);
-	userWETHDepositBalance.set(ethers.utils.formatEther(fetchedBalance));
+	userWETHDepositBalance.set(fetchedBalance);
 }
 
 async function getMaxWETHWithdrawal() {
@@ -72,7 +73,7 @@ async function getMaxWETHWithdrawal() {
 	const houseOfReserveContract = new ethers.Contract(houseOfReserveAddress, houseOfReserveABI, get(signer));
 	const wrappedContract = WrapperBuilder.wrapLite(houseOfReserveContract).usingPriceFeed('redstone-stocks');
 	const fetchedAmount = await wrappedContract.checkMaxWithdrawal(get(signerAddress));
-	userWETHMaxWithdrawal.set(ethers.utils.formatEther(fetchedAmount));
+	userWETHMaxWithdrawal.set(fetchedAmount);
 }
 
 
@@ -80,14 +81,14 @@ async function getXOCBalance() {
 	checkContractCallPrereqs();
 	const XOCContract = new ethers.Contract(XOCAddress, XOCABI, get(provider));
 	const fetchedBalance = await XOCContract.balanceOf(get(signerAddress));
-	userXOCBalance.set(ethers.utils.formatEther(fetchedBalance));
+	userXOCBalance.set(fetchedBalance);
 }
 
 async function getXOCMintingPower() {
 	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(signer));
 	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed('redstone-stocks');
 	const fetchedAmount = await wrappedContract.checkRemainingMintingPower(get(signerAddress), mockWETHAddress);
-	userXOCMintingPower.set(ethers.utils.formatEther(fetchedAmount));
+	userXOCMintingPower.set(fetchedAmount);
 }
 
 export async function getXOCAllowance() {
@@ -99,28 +100,26 @@ export async function getXOCAllowance() {
 export async function getXOCDebt() {
 	const assetsAccountantContract = new ethers.Contract(assetsAccountantAddress, assetsAccountantABI, get(provider));
 	const fetchedBalance = await assetsAccountantContract.balanceOf(get(signerAddress), backedTokenID);
-	userXOCDebt.set(ethers.utils.formatEther(fetchedBalance));
+	userXOCDebt.set(fetchedBalance);
 }
 
 export async function getHealthRatio() {
 	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(signer));
 	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed('redstone-stocks');
 	const fetchedAmount = await wrappedContract.computeUserHealthRatio(get(signerAddress), mockWETHAddress);
-	userHealthRatio.set(ethers.utils.formatEther(fetchedAmount.toString()));
+	userHealthRatio.set(fetchedAmount);
 }
 
 export async function getLiquidationParams() {
 	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(provider));
 	const fetchedValues = await houseOfCoinContract.liqParam();
-	liquidationThreshold.set(ethers.utils.formatEther(fetchedValues.liquidationThreshold.mul(100)));
+	liquidationThreshold.set(fetchedValues.liquidationThreshold);
 }
 
 export async function getCollateralRatioParam() {
 	const houseOfReserveContract = new ethers.Contract(houseOfReserveAddress, houseOfReserveABI, get(provider));
 	const fetchedValues = await houseOfReserveContract.collateralRatio();
-	
-	const collatRatio = (fetchedValues.numerator/fetchedValues.denominator).toString();
-	collateralRatioParam.set(collatRatio);
+	collateralRatioParam.set(parseFloat(fetchedValues.numerator)/parseFloat(fetchedValues.denominator));
 }
 
 // TODO: fetch with array of promises and retry failed
