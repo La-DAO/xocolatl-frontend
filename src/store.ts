@@ -1,7 +1,8 @@
 import { writable, derived } from 'svelte/store';
-import type { Writable } from 'svelte/store';
 import { utils } from 'ethers';
 import { connected, chainId } from 'svelte-ethers-store';
+
+import type { Writable } from 'svelte/store';
 
 export const isRighNetwork = derived(
 	[connected, chainId],
@@ -141,9 +142,12 @@ export const XOCBurnInputAmountBigNum = derived(
 export const XOCBurnInputError = writable('');
 
 // display data from contracts
+export const userWETHAllowance = writable(utils.parseEther('0'));
 export const userWETHBalance = writable('-');
 export const userWETHDepositBalance = writable('-');
 export const userWETHMaxWithdrawal = writable('-');
+
+export const userXOCAllowance = writable(utils.parseEther('0'));
 export const userXOCBalance = writable('-');
 export const userXOCDebt = writable('-');
 export const userXOCMintingPower = writable('-');

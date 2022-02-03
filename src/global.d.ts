@@ -10,9 +10,9 @@ declare global {
 }
 
 // TODO: delete if https://gitlab.com/clb1/svelte-ethers-store/-/merge_requests/2 is merged
-declare module "svelte-ethers-store" {
-    import type { Readable } from "svelte/store";
-    import type { Signer } from "ethers";
+declare module 'svelte-ethers-store' {
+    import type { Readable } from 'svelte/store';
+    import type { Signer } from 'ethers';
     import type { Provider } from '@ethersproject/providers';
 
     /**
@@ -92,27 +92,27 @@ declare module "svelte-ethers-store" {
     /**
      * `true` if connection to the provider was successful for `defaultEvmStores`.
      */
-    export const connected: DefaultEVMStore["connected"];
+    export const connected: DefaultEVMStore['connected'];
     /**
      * The current chainId of `defaultEvmStores` if connected.
      */
-    export const chainId: DefaultEVMStore["chainId"];
+    export const chainId: DefaultEVMStore['chainId'];
     /**
      * Store value is a shortcut to get `$signer.getAddress()` when connected.
      */
-    export const signerAddress: DefaultEVMStore["signerAddress"];
+    export const signerAddress: DefaultEVMStore['signerAddress'];
     /**
      * A stored Ethers.js Provider instance when connected.
      */
-    export const provider: DefaultEVMStore["provider"];
+    export const provider: DefaultEVMStore['provider'];
     /**
      * A stored Ethers.js Signer instance when connected.
      */
-    export const signer: DefaultEVMStore["signer"];
+    export const signer: DefaultEVMStore['signer'];
     /**
      * Current selected account address if connected, `null` otherwise.
      */
-    export const selectedAccount: DefaultEVMStore["selectedAccount"];
+    export const selectedAccount: DefaultEVMStore['selectedAccount'];
 
     /**
      * You might want to access all chains CAIP-2 data directly without using the chainData store.

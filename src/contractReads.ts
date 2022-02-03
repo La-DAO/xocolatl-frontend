@@ -6,9 +6,11 @@ import { provider, signer, signerAddress} from 'svelte-ethers-store';
 import { checkContractCallPrereqs } from './utils';
 import { reserveTokenID } from './constants';
 import { 
+	userWETHAllowance,
 	userWETHBalance,
 	userWETHDepositBalance,
 	userWETHMaxWithdrawal,
+	userXOCAllowance,
 	userXOCBalance,
 	userXOCMintingPower,
 	/*userXOCDebt,*/
@@ -31,7 +33,7 @@ export async function getWETHAllowance() {
 	checkContractCallPrereqs();
 	const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, get(provider));
 	const allowance = await mockWETHContract.allowance(get(signerAddress), houseOfReserveAddress);
-	return allowance;
+	userWETHAllowance.set(allowance);
 }
 
 
@@ -70,7 +72,6 @@ async function getXOCMintingPower() {
 	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(signer));
 	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed('redstone-stocks');
 	const fetchedAmount = await wrappedContract.checkRemainingMintingPower(get(signerAddress), mockWETHAddress);
-	
 	userXOCMintingPower.set(ethers.utils.formatEther(fetchedAmount));
 }
 
@@ -78,15 +79,17 @@ async function getXOCMintingPower() {
 export async function getXOCAllowance() {
 	const XOCContract = new ethers.Contract(XOCAddress, XOCABI, get(provider));
 	const allowance = await XOCContract.allowance(get(signerAddress), houseOfCoinAddress);
-	return allowance;
+	userXOCAllowance.set(allowance);
 }
 
 export function fetchAllDisplayData() {
 	checkContractCallPrereqs();
 
+	getWETHAllowance();
 	getUserWETHBalance();
 	getUserWETHDepositBalance();
 	getMaxWETHWithdrawal();
+	getXOCAllowance();
 	getXOCBalance();
 	getXOCMintingPower();
 }

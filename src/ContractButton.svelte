@@ -1,51 +1,29 @@
 <script lang="ts">
-
-	import { isRighNetwork, selectedTab, WETHDepositInputAmountBigNum, XOCBurnInputAmountBigNum } from './store';
+	import { isRighNetwork, selectedTab, userWETHAllowance, WETHDepositInputAmountBigNum, userXOCAllowance, XOCBurnInputAmountBigNum } from './store';
 	import { approveWETH, depositWETH, mintXOC, approveXOC, burnXOC, withdrawWETH } from './contractCalls';
-	import { getWETHAllowance, getXOCAllowance} from './contractReads';
-
-	import type { BigNumber } from 'ethers';
 	
-	let allowanceWETHPromise: Promise<BigNumber> | undefined;
-	let allowanceXOCPromise: Promise<BigNumber> | undefined;
-
+	let disabled=true; // disable buttons until data loads
 	$: if ($isRighNetwork) {
-		allowanceWETHPromise = getWETHAllowance();
-		allowanceXOCPromise = getXOCAllowance();
+		disabled=false;
 	}
 </script>
 {#if $selectedTab === 'deposit'}
-	{#if allowanceWETHPromise && $WETHDepositInputAmountBigNum}
-		{#await allowanceWETHPromise}
-		...
-		{:then allowanceWETH}
-				{#if allowanceWETH.lt($WETHDepositInputAmountBigNum)}
-					<button on:click={approveWETH} type="button">Aprovar</button>
-			{:else}
-				<button on:click={depositWETH} type="button">Despositar</button>
-			{/if}
-		{:catch error}
-		There was an error! {error}
-		{/await}
+	{#if $userWETHAllowance && $WETHDepositInputAmountBigNum && $userWETHAllowance.lt($WETHDepositInputAmountBigNum)}
+		<button on:click={approveWETH} type="button" {disabled}>Aprovar</button>
+	{:else}
+		<button on:click={depositWETH} type="button" {disabled}>Despositar</button>
 	{/if}
-
 {:else if $selectedTab === 'mint'}
-	<button on:click={mintXOC} type="button">Mintea</button>
+	<button on:click={mintXOC} type="button" {disabled}>Mintea</button>
 {:else if $selectedTab === 'burn'}
-	{#if allowanceXOCPromise && $XOCBurnInputAmountBigNum}
-		{#await allowanceXOCPromise}
-		...
-		{:then allowanceXOC}
-			{#if allowanceXOC.lt($XOCBurnInputAmountBigNum)}
-				<button on:click={approveXOC} type="button">Aprovar</button>
-			{:else}
-				<button on:click={burnXOC} type="button">Amortizar</button>
-			{/if}
-		{:catch error}
-		There was an error! {error}
-		{/await}
+	{#if $userXOCAllowance && $XOCBurnInputAmountBigNum}
+		{#if $userXOCAllowance && $userXOCAllowance.lt($XOCBurnInputAmountBigNum)}
+			<button on:click={approveXOC} type="button" {disabled}>Aprovar</button>
+		{:else}
+			<button on:click={burnXOC} type="button" {disabled}>Amortizar</button>
+		{/if}
 	{/if}
 {:else if $selectedTab === 'withdraw'}
-	<button on:click={withdrawWETH} type="button">Retirar</button>
+	<button on:click={withdrawWETH} type="button" {disabled}>Retirar</button>
 {/if}
 
