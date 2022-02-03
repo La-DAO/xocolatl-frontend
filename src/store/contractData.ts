@@ -4,8 +4,8 @@ import type { Writable, Readable } from 'svelte/store';
 import type { BigNumber } from 'ethers';
 // display data from contracts
 export const userWETHAllowance: Writable<BigNumber | null> = writable(null);
-export const userWETHBalance = writable(null);
-export const userWETHDepositBalance = writable(null);
+export const userWETHBalance: Writable<BigNumber | null> = writable(null);
+export const userWETHDepositBalance: Writable<BigNumber | null> = writable(null);
 export const userWETHMaxWithdrawal = writable(null);
 
 export const userXOCAllowance: Writable<BigNumber | null> = writable(null);

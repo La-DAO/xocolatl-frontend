@@ -19,7 +19,6 @@ import {
 	liquidationThreshold,
 	collateralRatioParam
 } from './store/contractData';
-
 import {
 	mockWETHABI,
 	mockWETHAddress,
@@ -32,7 +31,6 @@ import {
 	XOCAddress,
 	XOCABI
 } from './abis';
-
 
 async function getWETHtoXOCRate() {
 	checkContractCallPrereqs();
@@ -106,8 +104,14 @@ export async function getXOCDebt() {
 export async function getHealthRatio() {
 	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(signer));
 	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed('redstone-stocks');
-	const fetchedAmount = await wrappedContract.computeUserHealthRatio(get(signerAddress), mockWETHAddress);
-	userHealthRatio.set(fetchedAmount);
+	// contract revers if no WETH deposits or no debt
+	const deposit = get(userWETHDepositBalance);
+	const debt = get(userXOCDebt);
+	if (deposit && deposit.gt(0) && debt && debt.gt(0)) {
+		const fetchedAmount = await wrappedContract.computeUserHealthRatio(get(signerAddress), mockWETHAddress);
+		userHealthRatio.set(fetchedAmount);
+	}
+
 }
 
 export async function getLiquidationParams() {
@@ -123,20 +127,22 @@ export async function getCollateralRatioParam() {
 }
 
 // TODO: fetch with array of promises and retry failed
-export function fetchAllDisplayData() {
+export async function fetchAllDisplayData() {
 	checkContractCallPrereqs();
 
 	getWETHAllowance();
-	getUserWETHBalance();
 	getUserWETHDepositBalance();
 	getMaxWETHWithdrawal();
 	getXOCAllowance();
 	getXOCBalance();
 	getXOCMintingPower();
-	getXOCDebt();
+
 
 	getWETHtoXOCRate();
-	getHealthRatio();
 	getLiquidationParams();
 	getCollateralRatioParam();
+
+	await getUserWETHBalance();
+	await getXOCDebt();
+	getHealthRatio();
 }
