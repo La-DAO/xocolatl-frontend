@@ -43,7 +43,7 @@ async function getWETHtoXOCRate() {
 	// returned price has 8 decimals
 	const price = await wrappedContract.redstoneGetLastPrice();
 	WETHToXOC.set(price);
-};
+}
 
 export async function getWETHAllowance() {
 	checkContractCallPrereqs();

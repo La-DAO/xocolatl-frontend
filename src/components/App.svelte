@@ -1,9 +1,16 @@
 <script lang="ts">
+	import { provider } from 'svelte-ethers-store';
+
 	import ChainWarning from './ChainWarning.svelte';
 	import Header from './Header.svelte';
 	import Dashboard from './Dashboard.svelte';
 	import TxMonitor from './TxMonitor.svelte';
 	import Polling from './Polling.svelte';
+
+	import { handleProviderChange } from '../utils';
+
+
+	$: $provider && handleProviderChange();
 </script>
 
 <style>

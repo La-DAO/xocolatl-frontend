@@ -2,9 +2,11 @@
 	import { toShortAddress } from '../utils';
 	import { defaultEvmStores, signerAddress} from 'svelte-ethers-store';
 	import { XOCAddress } from '../abis';
+	import { resetAll } from '../store/contractData';
 
 	async function handleDisconnect() {
 		defaultEvmStores.disconnect();
+		resetAll();
 	}
 
 	async function handleConnect() {

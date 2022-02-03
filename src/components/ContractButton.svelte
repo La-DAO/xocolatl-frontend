@@ -4,10 +4,10 @@ import { WETHDepositInputAmountBigNum, XOCBurnInputAmountBigNum } from '../store
 import { userWETHAllowance, userXOCAllowance } from '../store/contractData';
 import { approveWETH, depositWETH, mintXOC, approveXOC, burnXOC, withdrawWETH } from '../contractCalls';
 	
-	let disabled=true; // disable buttons until data loads
-	$: if ($isRighNetwork) {
-		disabled=false;
-	}
+let disabled=true; // disable buttons until data loads
+$: if ($isRighNetwork) {
+	disabled=false;
+}
 </script>
 
 {#if $selectedTab === 'deposit'}

@@ -16,11 +16,6 @@ import {
 	WETHWithdrawInputError 
 } from '../store/userInput';	
 
-import {
-	userWETHAllowance,
-	userXOCAllowance
-} from '../store/contractData';
-
 import PillNavigation from './PillNavigation.svelte';
 import CollateralInfo from './CollateralInfo.svelte';
 import MainInfo from './MainInfo.svelte';

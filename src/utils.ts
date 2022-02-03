@@ -1,6 +1,8 @@
 import { get } from 'svelte/store';
 import { connected } from 'svelte-ethers-store';
 import { isRighNetwork } from './store/store';
+import { resetAll } from './store/contractData';
+import { fetchAllDisplayData } from './contractReads';
 
 // input: 0x50c57894c3b9bf022d10b94b9d940a48a93cd8c0
 // output: 0x50...d8c0
@@ -20,3 +22,7 @@ export function checkContractCallPrereqs() {
 	} 
 }
 
+export function handleProviderChange() {
+	resetAll();
+	fetchAllDisplayData();
+}

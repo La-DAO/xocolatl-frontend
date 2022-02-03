@@ -1,6 +1,6 @@
 <script lang="ts">
 import { ethers } from 'ethers';
-import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt, liquidationThreshold, userWETHLiquidationPrice, collateralFactor } from '../store/contractData';
+import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userWETHLiquidationPrice, collateralFactor } from '../store/contractData';
 </script>
 
 <style>

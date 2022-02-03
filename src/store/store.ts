@@ -49,5 +49,3 @@ function createPendingTxs() {
 
 export const pendingTxs = createPendingTxs();
 
-
-
