@@ -7,7 +7,21 @@
 	import AmountInput from './AmountInput.svelte';
 
 
-	import { WETHDepositInputAmount, WETHDepositInputError, XOCMintInputAmount, XOCMintInputError, XOCBurnInputAmount, XOCBurnInputError, WETHWithdrawInputAmount, WETHWithdrawInputError } from './store';	
+	import { 
+		WETHDepositInputAmount,
+		WETHDepositInputAmountBigNum,
+		WETHDepositInputError,
+		XOCMintInputAmount, 
+		XOCMintInputAmountBigNum,
+		XOCMintInputError, 
+		XOCBurnInputAmount, 
+		XOCBurnInputAmountBigNum,
+		XOCBurnInputError, 
+		WETHWithdrawInputAmount, 
+		WETHWithdrawInputAmountBigNum,
+		WETHWithdrawInputError 
+	} from './store';	
+
 </script>
 
 <style>
@@ -33,11 +47,6 @@
 		min-width: 50rem;
 	}
 
-	.input-section {
-		flex-basis: 40%;
-		border-right: 1px solid white;
-		/* background-color: green; */
-	}
 
 	.info-section {
 		flex-basis: 60%;
@@ -52,14 +61,13 @@
 		<PillNavigation/>
 		<div class="main-section">
 			{#if $selectedTab==='deposit'}
-
-		<div class=input-section><AmountInput headerText={'Cantidad de WETH a depositar'} bind:inputAmount={$WETHDepositInputAmount} bind:inputError={$WETHDepositInputError}/></div>
+				<AmountInput headerText={'Cantidad de WETH a depositar'} bind:inputAmount={$WETHDepositInputAmount} bind:inputError={$WETHDepositInputError} inputAmountBigNum={$WETHDepositInputAmountBigNum}/>
 			{:else if $selectedTab==='mint'}
-				<div class=input-section><AmountInput headerText={'Cantidad de XOC a mintear'} bind:inputAmount={$XOCMintInputAmount} bind:inputError={$XOCMintInputError}/></div>
+				<AmountInput headerText={'Cantidad de XOC a mintear'} bind:inputAmount={$XOCMintInputAmount} bind:inputError={$XOCMintInputError} inputAmountBigNum={$XOCMintInputAmountBigNum}/>
 			{:else if $selectedTab==='burn'}
-				<div class=input-section><AmountInput headerText={'Cantidad de XOC a amortizar'} bind:inputAmount={$XOCBurnInputAmount} bind:inputError={$XOCBurnInputError}/></div>
+				<AmountInput headerText={'Cantidad de XOC a amortizar'} bind:inputAmount={$XOCBurnInputAmount} bind:inputError={$XOCBurnInputError} inputAmountBigNum={$XOCBurnInputAmountBigNum}/>
 			{:else if $selectedTab==='withdraw'}
-				<div class=input-section><AmountInput headerText={'Cantidad de WETH a retirar'} bind:inputAmount={$WETHWithdrawInputAmount} bind:inputError={$WETHWithdrawInputError}/></div>
+				<AmountInput headerText={'Cantidad de WETH a retirar'} bind:inputAmount={$WETHWithdrawInputAmount} bind:inputError={$WETHWithdrawInputError} inputAmountBigNum={$WETHWithdrawInputAmountBigNum}/>
 			{/if}
 			<div class="info-section"><CollateralInfo/></div>
 		</div>

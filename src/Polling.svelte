@@ -124,7 +124,7 @@
 		
 		XOCContract.on('Transfer', (from, to, _value, _event) => {
 			if(from === $signerAddress || to === $signerAddress) {
-				console.log('detected XOC Approval event');	
+				console.log('detected XOC Transfer event');	
 				fetchAllDisplayData();
 			}
 		});

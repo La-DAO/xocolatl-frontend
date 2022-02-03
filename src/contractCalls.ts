@@ -65,8 +65,8 @@ export async function depositWETH() {
 export async function mintXOC() {
 	checkContractCallPrereqs();
 	const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, get(signer));
-	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed('redstone-stocks');
 	const amount = get(XOCMintInputAmountBigNum);
+	const wrappedContract = WrapperBuilder.wrapLite(houseOfCoinContract).usingPriceFeed('redstone-stocks');
 	if (amount) {
 		const tx = await wrappedContract.mintCoin(mockWETHAddress, houseOfReserveAddress, amount);
 		handleTxReceipt(tx);
@@ -99,8 +99,8 @@ export async function burnXOC() {
 export async function withdrawWETH() {
 	checkContractCallPrereqs();
 	const houseOfReserveContract = new ethers.Contract(houseOfReserveAddress, houseOfReserveABI, get(signer));
-	const wrappedContract = WrapperBuilder.wrapLite(houseOfReserveContract).usingPriceFeed('redstone-stocks');
 	const amount = get(WETHWithdrawInputAmountBigNum);
+	const wrappedContract = WrapperBuilder.wrapLite(houseOfReserveContract).usingPriceFeed('redstone-stocks');
 	if (amount) {
 		const tx = await wrappedContract.withdraw(amount);
 		handleTxReceipt(tx);
