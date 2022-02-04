@@ -33,23 +33,28 @@ import AmountInput from './AmountInput.svelte';
 	section {
 		display: flex;
 		flex-direction: column;
-		margin: 1rem 0 0 0;
-
 		font-family: "Quicksand", sans-serif;
 	}
 
 	.wrapper {
+		display: flex;
+		flex-direction: column;
 		background-color: var(--main-color);
 		color: white;
+		row-gap: 2rem;
 	}
-
 
 	.main-section {
 		display: flex;
 		justify-content: center;
 		align-items: baseline;
-		margin: 1.5rem 0 0 0;
-		min-width: 50rem;
+		margin: auto;
+		flex-wrap: wrap-reverse;
+	}
+
+	.input-section {
+		flex-basis: 40%;
+		/* max-width: 30%; */
 	}
 
 
@@ -59,46 +64,55 @@ import AmountInput from './AmountInput.svelte';
 	}
 
 
+
 </style>
 
 <section>
 	<div class="wrapper">
 		<PillNavigation/>
 		<div class="main-section">
+			<div class="input-section">
 			{#if $selectedTab==='deposit'}
 				<AmountInput 
-					headerText={'Cantidad de WETH a depositar'} 
+					headerText={'Cantidad a depositar'} 
 					bind:inputAmount={$WETHDepositInputAmount} 
 					bind:inputError={$WETHDepositInputError} 
 					inputAmountBigNum={$WETHDepositInputAmountBigNum}
 					inputLimit={$userWETHBalance}
+					inputTypeText="Colateral: WETH"
 				/>
 			{:else if $selectedTab==='mint'}
 				<AmountInput 
-					headerText={'Cantidad de XOC a mintear'} 
+					headerText={'Cantidad a mintear'} 
 					bind:inputAmount={$XOCMintInputAmount} 
 					bind:inputError={$XOCMintInputError} 
 					inputAmountBigNum={$XOCMintInputAmountBigNum}
 					inputLimit={$userXOCMintingPower}
+					inputTypeText="Token: XOC"
 				/>
 			{:else if $selectedTab==='burn'}
 				<AmountInput 
-					headerText={'Cantidad de XOC a amortizar'} 
+					headerText={'Cantidad a amortizar'} 
 					bind:inputAmount={$XOCBurnInputAmount} 
 					bind:inputError={$XOCBurnInputError} 
 					inputAmountBigNum={$XOCBurnInputAmountBigNum}
 					inputLimit={$userXOCBalance}
+					inputTypeText="Token: XOC"
 				/>
 			{:else if $selectedTab==='withdraw'}
 				<AmountInput 
-					headerText={'Cantidad de WETH a retirar'} 
+					headerText={'Cantidad a retirar'} 
 					bind:inputAmount={$WETHWithdrawInputAmount} 
 					bind:inputError={$WETHWithdrawInputError} 
 					inputAmountBigNum={$WETHWithdrawInputAmountBigNum}
 					inputLimit={$userWETHMaxWithdrawal}
+					inputTypeText="Colateral: WETH"
 				/>
 			{/if}
-			<div class="info-section"><CollateralInfo/></div>
+			</div>
+			<div class="info-section">
+				<CollateralInfo/>
+			</div>
 		</div>
 	</div>
 

@@ -10,6 +10,20 @@ $: if ($isRighNetwork) {
 }
 </script>
 
+<style>
+button {
+	color: white;
+	background-color: var(--main-color);
+	cursor: pointer;
+	height: 2rem;
+	width: 10rem;
+	margin: auto;
+	border: none;
+	font-size: 1.1rem;
+	font-weight: 700;
+}
+</style>
+
 {#if $selectedTab === 'deposit'}
 	{#if $userWETHAllowance && $WETHDepositInputAmountBigNum && $userWETHAllowance.lt($WETHDepositInputAmountBigNum)}
 		<button on:click={approveWETH} type="button" {disabled}>Aprovar</button>

@@ -18,6 +18,7 @@ selectedTab.subscribe(value => {
 		width: 30%;
 		margin: 2rem auto auto auto;
 		justify-content: center;
+		text-align: center;
 	}
 
 	.nav-button {

@@ -4,32 +4,34 @@ import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userW
 </script>
 
 <style>
-section {
-    margin: 0 2rem 0 0;
-    flex-basis: 75%;
-}
+    section {
+        margin: auto;
+        border-left: 1px solid white;
+        width: 100%;
+    }
 
     h1 {
         margin: 0 0 0 2rem;
         text-align: left;
-
         font-weight: 700;
         font-size: 2rem;
+        text-align: center;
     }
 
     .circle {
+        display: block;
         background: lightgreen;
-        
         border-radius: 50%;
         width: 12rem;
         height: 12rem;
         margin: 0 2rem 0 2rem;
-        
     }
 
     .content {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .info {
@@ -44,7 +46,6 @@ section {
 </style>
 
 <section>
-
     <h1> Indice de salud </h1>
     <div class="content">
         <div class="circle"></div>

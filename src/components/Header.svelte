@@ -35,13 +35,21 @@
 
 <style> 
 	header {
-		width: 92%;
-		margin: auto;
+		margin: 0;
+		width: 100%;
+		background-color: var(--main-color);
+		color: white;
+	}
+
+	.container {
 		display: flex;
+		width: 90%;
 		justify-content: space-between;
 		align-items: center;
-		column-gap: 1rem;
+		margin: auto;
 	}
+
+
 	.right-content {
 		display: flex;
 		align-items: center;
@@ -56,17 +64,17 @@
 </style>
 
 <header class="header">
-
-	<h2>Xocolatl</h2>
-
-	<div class="right-content">
-	{#if $signerAddress}
-		<img class="add-token-button" src="/static/token.png" on:click={addXOCToMetamask} alt="Add XOC to metamask button"/>
-		{shortSignerAddress + ' '}
-		<button type="button" on:click={handleDisconnect}> Disconnect </button>
-	{:else}
-		<button type="button" on:click={handleConnect}> Connect with metamask</button>
-	{/if}
+	<div class="container">
+		<h2>Xocolatl</h2>
+		<div class="right-content">
+		{#if $signerAddress}
+			<img class="add-token-button" src="/static/token.png" on:click={addXOCToMetamask} alt="Add XOC to metamask button"/>
+			{shortSignerAddress + ' '}
+			<button type="button" on:click={handleDisconnect}> Disconnect </button>
+		{:else}
+			<button type="button" on:click={handleConnect}> Connect with metamask</button>
+		{/if}
+		</div>
 	</div>
 </header>
 

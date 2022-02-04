@@ -23,23 +23,16 @@
 	}
 
 	main {
-		text-align: center;
+		width: 100%;
 		padding: 0;
-		max-width: 240px;
-		margin: 0 auto;
+		margin: 0;
 		font-family: "Roboto", sans-serif;	
 	}
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>
-
 		<main>
 			<ChainWarning />
-			<Header /> 
+			<Header />  
 			<Dashboard />
 			<TxMonitor />
 			<Polling />
