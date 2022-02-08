@@ -2,7 +2,7 @@
 import { isRighNetwork, selectedTab } from '../store/store';
 import { WETHDepositInputAmountBigNum, XOCBurnInputAmountBigNum } from '../store/userInput';
 import { userWETHAllowance, userXOCAllowance } from '../store/contractData';
-import { approveWETH, depositWETH, mintXOC, approveXOC, burnXOC, withdrawWETH } from '../contractCalls';
+import { approveWETH, depositWETH, mintXOC, approveXOC, burnXOC, withdrawWETH } from '../contractWrites';
 	
 let disabled=true; // disable buttons until data loads
 $: if ($isRighNetwork) {
