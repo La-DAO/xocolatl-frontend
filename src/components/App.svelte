@@ -19,7 +19,7 @@
 
 	/* global colors */
 	:global(:root){
-		 --main-color: #4F2608; /* chocolate */
+		--main-color: #4F2608; /* chocolate */
 	}
 
 	main {

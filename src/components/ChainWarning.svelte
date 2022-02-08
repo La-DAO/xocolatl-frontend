@@ -14,6 +14,7 @@
 		flex-direction: column;
 		background-color: grey;
 		display: none;
+		text-align: center;
 	}
 
 	.enabled {
@@ -21,7 +22,7 @@
 	}
 </style>
 <!-- chain id is sometimes hex and sometimes int -->
-<div class="chain-warning" class:enabled={ $connected && !$isRighNetwork}>
+<div class="chain-warning" class:enabled={$connected && !$isRighNetwork}>
 	<p>Conectado a la red incorrecta</p>
 	<button on:click={()=>changeNetwork()}>Cambiar a rinkeby</button>
 </div>

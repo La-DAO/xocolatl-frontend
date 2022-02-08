@@ -1,6 +1,10 @@
 <script lang="ts">
 import { ethers } from 'ethers';
 import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userWETHLiquidationPrice, collateralFactor } from '../store/contractData';
+/* import HealthCircle from './HealthCircle.svelte'; */
+import ProgressBar from '@okrad/svelte-progressbar';
+
+$: progress = $userMaxDebtUtilization ? Math.round($userMaxDebtUtilization*100) : 0;
 </script>
 
 <style>
@@ -12,20 +16,11 @@ import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userW
 
     h1 {
         margin: 0 0 0 2rem;
-        text-align: left;
         font-weight: 700;
         font-size: 2rem;
         text-align: center;
     }
 
-    .circle {
-        display: block;
-        background: lightgreen;
-        border-radius: 50%;
-        width: 12rem;
-        height: 12rem;
-        margin: 0 2rem 0 2rem;
-    }
 
     .content {
         display: flex;
@@ -47,8 +42,28 @@ import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userW
 
 <section>
     <h1> Indice de salud </h1>
+    
     <div class="content">
-        <div class="circle"></div>
+        <ProgressBar 
+            width={180} 
+            style="radial" 
+                series={progress} 
+                labelColor="white" 
+                thresholds={[
+                      {
+                        till: 50, 
+                        color: '#9BB03A' /* verde-rama */
+                      },
+                      {
+                        till: 80,
+                        color: '#F86F00' /* naranja */
+                      },
+                      {
+                        till: 100,
+                        color: '#FF0000' /* rojo */
+                      }
+                    ]}
+                />
         <div class="info">
             <p>Deuda maxima {$userMaxDebt ? ethers.utils.formatEther($userMaxDebt) : '-'} XOC</p>
 
