@@ -23,7 +23,7 @@ $: if ($isRighNetwork) {
 	section {
 		display: flex;
 		flex-direction: column;
-		width: 80rem;
+		width: 100%;
 		margin: 2rem auto auto auto;
 		color: var(--main-color);
 	}

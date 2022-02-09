@@ -1,21 +1,21 @@
 <script lang="ts">
-	import { provider } from 'svelte-ethers-store';
+import { provider } from 'svelte-ethers-store';
 
-	import ChainWarning from './ChainWarning.svelte';
-	import Header from './Header.svelte';
-	import Dashboard from './Dashboard.svelte';
-	import TxMonitor from './TxMonitor.svelte';
-	import Polling from './Polling.svelte';
+import ChainWarning from './ChainWarning.svelte';
+import Header from './Header.svelte';
+import Dashboard from './Dashboard.svelte';
+import TxMonitor from './TxMonitor.svelte';
+import Polling from './Polling.svelte';
 
-	import { handleProviderChange } from '../utils';
+import { handleProviderChange } from '../utils';
 
 
-	$: $provider && handleProviderChange();
+$: $provider && handleProviderChange();
 </script>
 
 <style>
 	/* TODO: bundle fonts and stop fetching from google */
-	@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Roboto&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700;900&family=Roboto&display=swap');
 
 	/* global colors */
 	:global(:root){
@@ -30,10 +30,11 @@
 	}
 
 </style>
-		<main>
-			<ChainWarning />
-			<Header />  
-			<Dashboard />
-			<TxMonitor />
-			<Polling />
-		</main>
+
+<main>
+	<ChainWarning />
+	<Header />  
+	<Dashboard />
+	<TxMonitor />
+	<Polling />
+</main>
