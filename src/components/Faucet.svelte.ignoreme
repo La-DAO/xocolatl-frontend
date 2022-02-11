@@ -1,0 +1,28 @@
+<script lang="ts">
+	import {getWETHFromFaucet} from './contractCalls';
+	let cheatCode: string[] = [];
+let unlock = false;
+	
+	// Detect when user types 'faucet';
+document.onkeydown = function (event) {
+		let char = event.code; 		
+
+		// queue structure: keep latest 5 key presses
+		if (cheatCode.length > 5) {
+			[, ...cheatCode] = cheatCode;
+		}
+		
+		cheatCode = [...cheatCode, char];
+    
+		// check cheat
+		if (cheatCode.toString() === 'KeyF,KeyA,KeyU,KeyC,KeyE,KeyT') {
+			unlock = true;
+		}
+	};
+	
+	$: if(unlock) {
+		console.log('get from faucet');
+		getWETHFromFaucet();
+		unlock = false;
+	}
+</script>
