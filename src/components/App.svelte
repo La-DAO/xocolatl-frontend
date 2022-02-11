@@ -9,7 +9,6 @@ import Polling from './Polling.svelte';
 
 import { handleProviderChange } from '../utils';
 
-
 $: $provider && handleProviderChange();
 </script>
 

@@ -1,10 +1,26 @@
 <script lang="ts">
 import { ethers } from 'ethers';
-import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userWETHLiquidationPrice, collateralFactor } from '../store/contractData';
+import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userWETHLiquidationPrice, collateralFactor, userWETHCollateralMXNPrice } from '../store/contractData';
 /* import HealthCircle from './HealthCircle.svelte'; */
 import ProgressBar from '@okrad/svelte-progressbar';
+import Icon from '../components/Icon.svelte';
 
-$: progress = $userMaxDebtUtilization ? Math.round($userMaxDebtUtilization*100) : 0;
+// we use math ceiling since is safer to over report borrow limit than round
+$: progress = $userMaxDebtUtilization ? Math.ceil($userMaxDebtUtilization*10000) / 100 : 0;
+
+const healthIndexTooltip = "Visualizacion del limite de prestamo utilizado";
+
+const maxDebtTooltip = "Deuda maxima posible acorde al valor actual de tu colateral";
+
+const LTVTooltip = "Porcentaje de deuda maxima permitida";
+
+const healthRatioTooltip = "La seguridad de tu deuda, derivada de la proporcion de tu colateral contra tu cantidad prestada. Mantenlo arriba de 1 para no ser liquidado.";
+
+const ethPriceTooltip = "El precio actual de ETH segun el oraculo de redstone";
+
+const ethLiquidationPriceTooltip = "El precio de ETH en el que tu deuda seria liquidada";
+
+const commify = ethers.utils.commify;
 </script>
 
 <style>
@@ -14,11 +30,13 @@ $: progress = $userMaxDebtUtilization ? Math.round($userMaxDebtUtilization*100) 
         width: 100%;
     }
 
+
     h1 {
-        margin: 0 0 0 2rem;
+        display: inline-block;
+        margin: 0 1rem 0 1rem;
         font-weight: 700;
         font-size: 2rem;
-        text-align: center;
+        /* text-align: center; */
     }
 
 
@@ -38,14 +56,41 @@ $: progress = $userMaxDebtUtilization ? Math.round($userMaxDebtUtilization*100) 
     p {
         margin: 0.5rem;
     }
+
+    .info-icon {
+        display: inline;
+        cursor: pointer;
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    .text-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .text-and-tooltip {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        /* align-content: center; */
+    }
+
 </style>
 
+
 <section>
-    <h1> Indice de salud </h1>
-    
+        <h1>Indice de salud</h1>
+
     <div class="content">
+<div data-tooltip={healthIndexTooltip}>
         <ProgressBar 
             width={180} 
+
             style="radial" 
                 series={progress} 
                 labelColor="white" 
@@ -64,16 +109,62 @@ $: progress = $userMaxDebtUtilization ? Math.round($userMaxDebtUtilization*100) 
                       }
                     ]}
                 />
+        </div>
         <div class="info">
-            <p>Deuda maxima {$userMaxDebt ? ethers.utils.formatEther($userMaxDebt) : '-'} XOC</p>
 
-            <p>Limite de prestamo utilizado {$userMaxDebtUtilization ? $userMaxDebtUtilization*100 : '-'} %</p>
-<!--
-<p>Limite de prestamo utilizado {$userMaxDebtUtilization ? ethers.utils.formatEther($userMaxDebtUtilization) : '-'} %</p> -->
-            <p>Umbral de liquidacion del RPV {$collateralFactor ? $collateralFactor*100 : '-'} %</p>
-            <p>Factor de salud {$userHealthRatio ? ethers.utils.formatEther($userHealthRatio) : '-'}</p>
-            <p>Precio actual de ETH ${$WETHToXOC ?  ethers.utils.formatUnits($WETHToXOC, 8) : '-'} MXN</p>
-            <p>Precio de liquidacion de ETH ${$userWETHLiquidationPrice ? $userWETHLiquidationPrice : '-'} MXN</p>
+            <div class="text-row">
+                <div class="text-and-tooltip">
+                    <p>Factor de salud</p>
+                    <div class='info-icon' data-tooltip={healthRatioTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                </div>
+                <p>{$userHealthRatio ? ethers.utils.formatEther($userHealthRatio.sub($userHealthRatio.mod(1e14))) : '-'}</p>
+            </div>
+
+            <div class="text-row">
+                <div class="text-and-tooltip">
+                    <p>Umbral de liquidacion del RPV</p>
+                    <div class='info-icon' data-tooltip={LTVTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                </div>
+                <p>{$collateralFactor ? ($collateralFactor*100).toFixed(2) : '-'} %</p>
+            </div>
+
+
+
+
+
+            <div class="text-row">
+                <div class="text-and-tooltip">
+                    <p>Precio actual de ETH </p>
+                    <div class='info-icon' data-tooltip={ethPriceTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                </div>
+                <p>${$WETHToXOC ?  commify(ethers.utils.formatUnits($WETHToXOC.sub($WETHToXOC.mod(1e4)), 8)) : '-'} (MXN)</p>
+            </div>
+
+            <div class="text-row">
+                <div class="text-and-tooltip">
+                    <p>Precio de liquidacion de ETH</p>
+                    <div class='info-icon' data-tooltip={ethLiquidationPriceTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                </div>
+                <p>${$userWETHLiquidationPrice ? commify($userWETHLiquidationPrice.toFixed(4)) : '-'} (MXN)</p>
+            </div>
+
+
+            <div class="text-row">
+                <div class="text-and-tooltip">
+                    <p>Valor del colateral depositado </p>
+                    <div class='info-icon' data-tooltip={maxDebtTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                </div>
+                <p>${$userWETHCollateralMXNPrice ? commify(ethers.utils.formatEther($userWETHCollateralMXNPrice.sub($userWETHCollateralMXNPrice.mod(1e14)))) : '-'}(MXN)</p>
+            </div>
+
+
+            <div class="text-row">
+                <div class="text-and-tooltip">
+                    <p>Deuda maxima </p>
+                    <div class='info-icon' data-tooltip={maxDebtTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                </div>
+                <p>${$userMaxDebt ? commify(ethers.utils.formatEther($userMaxDebt.sub($userMaxDebt.mod(1e14)))) : '-'} (MXN)</p>
+            </div>
         </div>
     </div>
 </section>

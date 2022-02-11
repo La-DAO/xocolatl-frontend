@@ -14,8 +14,8 @@ export const userXOCDebt: Writable<BigNumber | null> = writable(null);
 export const userXOCMintingPower = writable(null);
 
 // 8 decimals
-export const WETHToXOC = writable(null);
-export const userHealthRatio = writable(null);
+export const WETHToXOC: Writable<BigNumber | null> = writable(null);
+export const userHealthRatio: Writable<BigNumber | null> = writable(null);
 
 export const userMaxDebt = derived([userXOCMintingPower, userXOCDebt],
 	([$userXOCMintingPower, $userXOCDebt]) => {
@@ -45,18 +45,25 @@ export const collateralFactor: Readable<number | null> = derived(collateralRatio
 		} else return null;
 	});
 
+// returns price in 18 decimals
+export const userWETHCollateralMXNPrice: Readable<BigNumber | null> = derived(
+	[WETHToXOC, userWETHDepositBalance],
+	([$WETHToXOC, $userWETHDepositBalance]) => {
+		if($WETHToXOC && $userWETHDepositBalance) {
+			return $WETHToXOC.mul($userWETHDepositBalance).div(1e8);
+		} else return null;
+	}
+);
+
 
 export const userWETHLiquidationPrice = derived(
 	[liquidationThreshold, userXOCDebt, userWETHDepositBalance, collateralRatioParam], 
 	([$liquidationThreshold, $userXOCDebt, $userWETHDepositBalance, $collateralRatioParam]) => {
-		
 		if ($liquidationThreshold && $userXOCDebt && $userWETHDepositBalance && $collateralRatioParam){
 			const floatLiqThreshold = parseFloat(ethers.utils.formatEther($liquidationThreshold));
 			const floatXOCDebt = parseFloat(ethers.utils.formatEther($userXOCDebt));
 			const wethDepositBalanceFloat = parseFloat(ethers.utils.formatEther($userWETHDepositBalance));
-
 			const result = (floatLiqThreshold*floatXOCDebt*$collateralRatioParam)/wethDepositBalanceFloat;
-
 			return result;
 			// return ((parseFloat($liquidationThreshold)/100)*parseFloat($userXOCDebt)*parseFloat($collateralRatioParam)) / (parseFloat($userWETHDepositBalance));
 		} else return null;

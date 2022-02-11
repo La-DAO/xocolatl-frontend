@@ -62,8 +62,6 @@ export const houseOfReserveContract = derived(
 export const wrappedHouseOfReserveContract = derived(
 	houseOfReserveContract,
 	($houseOfReserveContract) => {
-		const wrapped = WrapperBuilder.wrapLite($houseOfReserveContract).usingPriceFeed('redstone-stocks');
-		console.log(wrapped);
 		return WrapperBuilder.wrapLite($houseOfReserveContract).usingPriceFeed('redstone-stocks');
 	}
 );
