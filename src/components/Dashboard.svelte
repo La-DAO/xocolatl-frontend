@@ -54,13 +54,13 @@ import AmountInput from './AmountInput.svelte';
 
 	.input-section {
 		flex-basis: 40%;
-		/* max-width: 30%; */
+		flex-grow: 1;
 	}
 
 
 	.info-section {
 		flex-basis: 60%;
-		/* background-color: blue; */
+		flex-grow: 1;
 	}
 
 
