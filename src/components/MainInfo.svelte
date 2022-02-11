@@ -68,18 +68,18 @@ const commify = ethers.utils.commify;
 		<div class="box-header">
 			<b>DEPOSITOS</b>
 		</div>
-		<div class="box-row">
-			<p class:highlight={$selectedTab === 'deposit'}>Balance actual del wallet </p> 
+		<div class:highlight={$selectedTab === 'deposit'} class="box-row">
+			<p>Balance actual del wallet </p> 
 			<p>{$userWETHBalance ? ethers.utils.formatEther($userWETHBalance.sub($userWETHBalance.mod(1e10))) : '-'} ETH</p>
 		</div>
 
-		<div class="box-row">
-			<p class:highlight={$selectedTab === 'withdraw' || $selectedTab === 'deposit'}>Balance de colateral depositado </p>
+		<div class:highlight={$selectedTab === 'withdraw' || $selectedTab === 'deposit'} class="box-row">
+			<p>Balance de colateral depositado </p>
 			<p>{$userWETHDepositBalance ? ethers.utils.formatEther($userWETHDepositBalance.sub($userWETHDepositBalance.mod(1e10))) : '-'} ETH</p>
 		</div>
 
-		<div class="box-row">
-			<p class:highlight={$selectedTab === 'withdraw'}>Disponible para retirar </p>
+		<div class:highlight={$selectedTab === 'withdraw'} class="box-row">
+			<p>Disponible para retirar </p>
 			<p>{$userWETHMaxWithdrawal ? ethers.utils.formatEther($userWETHMaxWithdrawal.sub($userWETHMaxWithdrawal.mod(1e10))) : '-'} ETH</p>
 		</div>
   </div>
@@ -90,17 +90,17 @@ const commify = ethers.utils.commify;
 			<b>PRESTAMOS</b>
 		</div>
 		
-		<div class="box-row">
-			<p class:highlight={$selectedTab === 'burn' || $selectedTab === 'mint'}>Deuda restante </p>
+		<div class:highlight={$selectedTab === 'burn' || $selectedTab === 'mint'} class="box-row">
+			<p>Deuda restante </p>
 			<p>{$userXOCDebt ? commify(ethers.utils.formatEther($userXOCDebt.sub($userXOCDebt.mod(1e14)))) : '-'} XOC</p>
 		</div>
 		
-		<div class="box-row">
-			<p class:highlight={$selectedTab === 'mint'}>Disponible para pedir prestado </p>
+		<div class:highlight={$selectedTab === 'mint'} class="box-row">
+			<p>Disponible para pedir prestado </p>
 			<p>{$userXOCMintingPower ? commify(ethers.utils.formatEther($userXOCMintingPower.sub($userXOCMintingPower.mod(1e14)))) : '-'} XOC</p>
 		</div>
-		<div class="box-row">
-			<p class:highlight={$selectedTab === 'burn'}>El saldo de su cartera </p>
+		<div class:highlight={$selectedTab === 'burn'} class="box-row">
+			<p>El saldo de su cartera </p>
 			<p>{$userXOCBalance ? commify(ethers.utils.formatEther($userXOCBalance.sub($userXOCBalance.mod(1e14)))) : '-'} XOC</p>
 		</div>
 	</div>
