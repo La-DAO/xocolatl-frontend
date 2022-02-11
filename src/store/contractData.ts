@@ -6,12 +6,12 @@ import type { BigNumber } from 'ethers';
 export const userWETHAllowance: Writable<BigNumber | null> = writable(null);
 export const userWETHBalance: Writable<BigNumber | null> = writable(null);
 export const userWETHDepositBalance: Writable<BigNumber | null> = writable(null);
-export const userWETHMaxWithdrawal = writable(null);
+export const userWETHMaxWithdrawal: Writable<BigNumber | null> = writable(null);
 
 export const userXOCAllowance: Writable<BigNumber | null> = writable(null);
-export const userXOCBalance = writable(null);
+export const userXOCBalance: Writable<BigNumber | null> = writable(null);
 export const userXOCDebt: Writable<BigNumber | null> = writable(null);
-export const userXOCMintingPower = writable(null);
+export const userXOCMintingPower: Writable<BigNumber | null> = writable(null);
 
 // 8 decimals
 export const WETHToXOC: Writable<BigNumber | null> = writable(null);
