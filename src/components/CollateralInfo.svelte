@@ -8,17 +8,17 @@ import Icon from '../components/Icon.svelte';
 // we use math ceiling since is safer to over report borrow limit than round
 $: progress = $userMaxDebtUtilization ? Math.ceil($userMaxDebtUtilization*10000) / 100 : 0;
 
-const healthIndexTooltip = "Visualizacion del limite de prestamo utilizado";
+const healthIndexTooltip = 'Visualizacion del limite de prestamo utilizado';
 
-const maxDebtTooltip = "Deuda maxima posible acorde al valor actual de tu colateral";
+const maxDebtTooltip = 'Deuda maxima posible acorde al valor actual de tu colateral';
 
-const LTVTooltip = "Porcentaje de deuda maxima permitida";
+const LTVTooltip = 'Porcentaje de deuda maxima permitida';
 
-const healthRatioTooltip = "La seguridad de tu deuda, derivada de la proporcion de tu colateral contra tu cantidad prestada. Mantenlo arriba de 1 para no ser liquidado.";
+const healthRatioTooltip = 'La seguridad de tu deuda, derivada de la proporcion de tu colateral contra tu cantidad prestada. Mantenlo arriba de 1 para no ser liquidado.';
 
-const ethPriceTooltip = "El precio actual de ETH segun el oraculo de redstone";
+const ethPriceTooltip = 'El precio actual de ETH segun el oraculo de redstone';
 
-const ethLiquidationPriceTooltip = "El precio de ETH en el que tu deuda seria liquidada";
+const ethLiquidationPriceTooltip = 'El precio de ETH en el que tu deuda seria liquidada';
 
 const commify = ethers.utils.commify;
 </script>

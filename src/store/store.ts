@@ -18,18 +18,18 @@ export const selectedTab = writable('deposit');
 const test = {
 	hash: '0x420',
 	status: 'pending'
-}
+};
 
 const test2 = {
 	hash: '0x69',
 	status: 'completed'
-}
+};
 
 
 const test3 = {
 	hash: '0x8008',
 	status: 'failed'
-}
+};
 
 interface PendingTx {
 	hash: string;

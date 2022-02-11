@@ -16,6 +16,7 @@ import {
 	XOCABI
 } from '../abis';
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export const mockWETHContract = derived(
 	[provider, signer],
 	([_, $signer]) => {
@@ -58,6 +59,7 @@ export const houseOfReserveContract = derived(
 		return new ethers.Contract(houseOfReserveAddress, houseOfReserveABI, $signer);
 	}
 );
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 export const wrappedHouseOfReserveContract = derived(
 	houseOfReserveContract,

@@ -95,21 +95,21 @@ img {
 	{#each $pendingTxs as tx}
 			<div class="overlay-box">
 				<div class="heading">
-					{#if tx.status === "pending"}
+					{#if tx.status === 'pending'}
 					<div class="loader"></div>
 					<h2>Transacción Enviada </h2>
-					{:else if tx.status === "completed"}
+					{:else if tx.status === 'completed'}
 					<h2>Transacción Confirmada</h2>
-					{:else if tx.status === "failed"}
+					{:else if tx.status === 'failed'}
 					<h2>Transacción Fallida</h2>
 					{/if}
 				</div>
 
-				{#if tx.status === "pending"}
+				{#if tx.status === 'pending'}
 				<p>Esperando confirmación de la transacción, disfruta la fruta</p>
-				{:else if tx.status === "completed"}
+				{:else if tx.status === 'completed'}
 				<p>Tu transacción se ha completado correctamente</p>
-				{:else if tx.status === "failed"}
+				{:else if tx.status === 'failed'}
 				<p>¡Ay caramba! Hubo un error con tu transacción</p>
 				{/if}
 
