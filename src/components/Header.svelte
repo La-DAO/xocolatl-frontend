@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { toShortAddress } from '../utils';
+
 	import { defaultEvmStores, signerAddress, chainId} from 'svelte-ethers-store';
+	import { toShortAddress } from '../utils';
+
 	import { resetAll } from '../store/contractData';
 	import { chains } from '../chains';
 
@@ -32,7 +34,6 @@
 			},
 		});
 	}
-	
 </script>
 
 <style> 

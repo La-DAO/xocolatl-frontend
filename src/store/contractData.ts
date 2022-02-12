@@ -67,7 +67,7 @@ export const userWETHLiquidationPrice = derived(
 			return result;
 			// return ((parseFloat($liquidationThreshold)/100)*parseFloat($userXOCDebt)*parseFloat($collateralRatioParam)) / (parseFloat($userWETHDepositBalance));
 		} else return null;
-});
+	});
 
 export const healthRatioAsPercentage = derived(
 	userHealthRatio, 
@@ -83,7 +83,7 @@ export const healthRatioAsPercentage = derived(
 			const constant = 50 * Math.log10(2);
 			return 100 - constant / Math.log10(value);
 		} else return 0;
-});
+	});
 
 // method for reseting data when provider changes
 export function resetAll() {
