@@ -1,14 +1,11 @@
 <script lang="ts">
 import { ethers } from 'ethers';
-import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userWETHLiquidationPrice, collateralFactor, userWETHCollateralMXNPrice } from '../store/contractData';
+import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userWETHLiquidationPrice, collateralFactor, userWETHCollateralMXNPrice, healthRatioAsPercentage } from '../store/contractData';
 /* import HealthCircle from './HealthCircle.svelte'; */
 import ProgressBar from '@okrad/svelte-progressbar';
 import Icon from '../components/Icon.svelte';
 
-// we use math ceiling since is safer to over report borrow limit than round
-$: progress = $userMaxDebtUtilization ? Math.ceil($userMaxDebtUtilization*10000) / 100 : 0;
-
-const healthIndexTooltip = 'Visualizacion del limite de prestamo utilizado';
+const healthIndexTooltip = 'Porcentaje del poder de prestamo utilizado';
 
 const maxDebtTooltip = 'Deuda maxima posible acorde al valor actual de tu colateral';
 
@@ -107,19 +104,18 @@ const commify = ethers.utils.commify;
 
 <section>
     <h1>Indice de salud</h1>
-
     <div class="content">
-        <div data-tooltip={healthIndexTooltip}>
+        <div data-tooltip={healthRatioTooltip}>
             <ProgressBar 
                 width={180} 
-
                 style="radial" 
-                    series={progress} 
+                    series={$healthRatioAsPercentage} 
                     labelColor="white" 
+                    valueLabel={$userHealthRatio ? ethers.utils.formatEther($userHealthRatio.sub($userHealthRatio.mod(1e15))) : '-'}
                     thresholds={[
                           {
                             till: 50, 
-                            color: '#9BB03A' /* verde-rama */
+                            color: '#FF0000' /* rojo */
                           },
                           {
                             till: 80,
@@ -127,7 +123,8 @@ const commify = ethers.utils.commify;
                           },
                           {
                             till: 100,
-                            color: '#FF0000' /* rojo */
+                            color: '#9BB03A' /* verde-rama */
+
                           }
                         ]}
                     />
@@ -135,10 +132,10 @@ const commify = ethers.utils.commify;
         <div class="info">
             <div class="text-row">
                 <div class="text-and-tooltip">
-                    <p>Factor de salud</p>
-                    <div class='info-icon' data-tooltip={healthRatioTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                    <p>Limite de prestamo utilizado</p>
+                    <div class='info-icon' data-tooltip={healthIndexTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
-                <p>{$userHealthRatio ? ethers.utils.formatEther($userHealthRatio.sub($userHealthRatio.mod(1e14))) : '-'}</p>
+                <p>{$userMaxDebtUtilization ? Math.ceil($userMaxDebtUtilization*10000) / 100 : '-'} %</p>
             </div>
 
             <div class="text-row">
@@ -182,6 +179,7 @@ const commify = ethers.utils.commify;
                 </div>
                 <p>${$userMaxDebt ? commify(ethers.utils.formatEther($userMaxDebt.sub($userMaxDebt.mod(1e14)))) : '-'} (MXN)</p>
             </div>
+
         </div>
     </div>
 </section>
