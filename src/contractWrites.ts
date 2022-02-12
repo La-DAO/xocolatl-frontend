@@ -1,7 +1,7 @@
 import { get } from 'svelte/store';
-import { mockWETHAddress, houseOfReserveAddress, houseOfCoinAddress } from './abis';
-import { backedTokenID, maxApproveAmount } from './constants';
+import { maxApproveAmount } from './constants';
 
+import { chainId } from 'svelte-ethers-store';
 import { pendingTxs } from './store/store';
 import { 
 	WETHDepositInputAmountBigNum,
@@ -16,7 +16,7 @@ import type { ContractTransaction  } from 'ethers';
 import type { TransactionReceipt } from '@ethersproject/providers';
 
 import { 
-	mockWETHContract,
+	WETHContract,
 	XOCContract,
 	houseOfCoinContract,
 	houseOfReserveContract,
@@ -24,6 +24,7 @@ import {
 	wrappedHouseOfReserveContract
 } from './store/contracts';
 
+import { chains } from './chains';
 
 // waits for user transaction and updates store for tx progress UI display
 async function handleTxReceipt(tx: ContractTransaction) {
@@ -49,7 +50,7 @@ async function handleTxReceipt(tx: ContractTransaction) {
 
 export async function approveWETH() {
 	checkContractCallPrereqs();
-	const tx = await get(mockWETHContract).approve(houseOfReserveAddress, maxApproveAmount);
+	const tx = await get(WETHContract)!.approve(chains[get(chainId)].houseOfReserveAddress, maxApproveAmount);
 	handleTxReceipt(tx);
 }
 
@@ -58,7 +59,7 @@ export async function depositWETH() {
 	checkContractCallPrereqs();
 	const amount = get(WETHDepositInputAmountBigNum);
 	if(amount) {
-		const tx = await get(houseOfReserveContract).deposit(amount);
+		const tx = await get(houseOfReserveContract)!.deposit(amount);
 		handleTxReceipt(tx);
 	} else {
 		throw new Error('Invalid WETH deposit amount input');
@@ -69,7 +70,7 @@ export async function mintXOC() {
 	checkContractCallPrereqs();
 	const amount = get(XOCMintInputAmountBigNum);
 	if (amount) {
-		const tx = await get(wrappedHouseOfCoinContract).mintCoin(mockWETHAddress, houseOfReserveAddress, amount);
+		const tx = await get(wrappedHouseOfCoinContract)!.mintCoin(chains[get(chainId)].WETHAddress, chains[get(chainId)].houseOfReserveAddress, amount);
 		handleTxReceipt(tx);
 	} else {
 		throw new Error('Invalid XOC mint amount input');
@@ -80,7 +81,7 @@ export async function mintXOC() {
 // approve XOC transfers to houseOfCoin for payback
 export async function approveXOC() {
 	checkContractCallPrereqs();
-	const tx = await get(XOCContract).approve(houseOfCoinAddress, maxApproveAmount);
+	const tx = await get(XOCContract)!.approve(chains[get(chainId)].houseOfCoinAddress, maxApproveAmount);
 	handleTxReceipt(tx);
 }
 
@@ -88,7 +89,7 @@ export async function burnXOC() {
 	checkContractCallPrereqs();
 	const amount = get(XOCBurnInputAmountBigNum);
 	if (amount) {
-		const tx = await get(houseOfCoinContract).paybackCoin(backedTokenID, amount);
+		const tx = await get(houseOfCoinContract)!.paybackCoin(chains[get(chainId)].backedTokenID, amount);
 		handleTxReceipt(tx);
 	} else {
 		throw new Error('Invalid XOC burn amount input');
@@ -99,7 +100,7 @@ export async function withdrawWETH() {
 	checkContractCallPrereqs();
 	const amount = get(WETHWithdrawInputAmountBigNum);
 	if (amount) {
-		const tx = await get(wrappedHouseOfReserveContract).withdraw(amount);
+		const tx = await get(wrappedHouseOfReserveContract)!.withdraw(amount);
 		handleTxReceipt(tx);
 	} else {
 		throw new Error('Invalid WETH withdraw amount input');

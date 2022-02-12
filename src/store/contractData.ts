@@ -70,7 +70,8 @@ export const userWETHLiquidationPrice = derived(
 });
 
 export const healthRatioAsPercentage = derived(
-	userHealthRatio, ($userHealthRatio) => {
+	userHealthRatio, 
+	($userHealthRatio) => {
 		if($userHealthRatio) {
 			const value = parseFloat(ethers.utils.formatEther($userHealthRatio));
 			if (value < 1) {

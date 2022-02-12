@@ -3,10 +3,12 @@ import { connected, chainId } from 'svelte-ethers-store';
 
 import type { Writable } from 'svelte/store';
 
+import { chains } from '../chains';
+
 export const isRighNetwork = derived(
 	[connected, chainId],
 	([$connected, $chainId]) => {
-		if ($connected && ($chainId===4 || $chainId === '0x4')) {
+		if ($connected && $chainId in chains) {
 			return true;
 		} else return false;
 	}

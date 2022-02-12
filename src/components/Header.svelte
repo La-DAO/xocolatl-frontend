@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { toShortAddress } from '../utils';
-	import { defaultEvmStores, signerAddress} from 'svelte-ethers-store';
-	import { XOCAddress } from '../abis';
+	import { defaultEvmStores, signerAddress, chainId} from 'svelte-ethers-store';
 	import { resetAll } from '../store/contractData';
+	import { chains } from '../chains';
 
 	async function handleDisconnect() {
 		defaultEvmStores.disconnect();
@@ -15,6 +15,8 @@
 
 	$: shortSignerAddress = toShortAddress($signerAddress);
 
+	$: currentChain = chains[$chainId] ? chains[$chainId].name : 'unsupported chain';
+
 	function addXOCToMetamask() {
 		// @ts-ignore:next-line
 		window.ethereum.request({
@@ -22,7 +24,7 @@
 			params: {
 				type: 'ERC20', // Initially only supports ERC20, but eventually more!
 				options: {
-					address: XOCAddress, // The address that the token is at.
+					address: chains[$chainId].XOCAddress, // The address that the token is at.
 					symbol: 'XOC', // A ticker symbol or shorthand, up to 5 chars.
 					decimals: 18, // The number of decimals in the token
 					/* image: '', // TODO: A string url of the token logo */
@@ -68,7 +70,10 @@
 		<h2>Xocolatl</h2>
 		<div class="right-content">
 		{#if $signerAddress}
+			
+			{currentChain}
 			<img class="add-token-button" src="/static/token.png" on:click={addXOCToMetamask} alt="Add XOC to metamask button"/>
+
 			{shortSignerAddress + ' '}
 			<button type="button" on:click={handleDisconnect}> Disconnect </button>
 		{:else}

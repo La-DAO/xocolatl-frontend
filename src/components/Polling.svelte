@@ -3,50 +3,53 @@
 	// TODO: remove logs once all events are tested
 	// TODO: are assetsAccountant events needed?
 
-	import { ethers } from 'ethers';
+	import type { BigNumber } from 'ethers';
+
+	import { get } from 'svelte/store';
 	import { provider, signerAddress } from 'svelte-ethers-store';
 	import { 
-		mockWETHABI, 
-		mockWETHAddress, 
-		houseOfReserveABI, 
-		houseOfReserveAddress, 
-		houseOfCoinAddress, 
-		houseOfCoinABI, 
-		XOCAddress, 
-		XOCABI
-	} from '../abis';
-	import { fetchAllDisplayData } from '../contractReads';
+		fetchAllDisplayData, 
+		getWETHtoXOCRate,
+		getMaxWETHWithdrawal,
+		getXOCMintingPower,
+		getHealthRatio,
+	} from '../contractReads';
 	import { isRighNetwork } from '../store/store';
+	import {
+		WETHContract,
+		houseOfReserveContract,
+		houseOfCoinContract,
+		XOCContract,
+	} from '../store/contracts';
+	
 
 	$: if ($isRighNetwork) {
-		const mockWETHContract = new ethers.Contract(mockWETHAddress, mockWETHABI, $provider);
-		const houseOfReserveContract = new ethers.Contract(houseOfReserveAddress, houseOfReserveABI, $provider);
-		const houseOfCoinContract = new ethers.Contract(houseOfCoinAddress, houseOfCoinABI, $provider);
-		const XOCContract = new ethers.Contract(XOCAddress, XOCABI, $provider);
-
 		$provider.on('block', (blockNumber: number) => {
-			// update all data every 50 blocks in case some event is not picked up
-			if (blockNumber%50 === 0) {
-				fetchAllDisplayData();			
+			// update price dependant data more often
+			if (blockNumber%3 === 0) {
+				getWETHtoXOCRate();
+				getMaxWETHWithdrawal();
+				getXOCMintingPower();
+				getHealthRatio();
 			}
 		});
-
-		/* eslint-disable @typescript-eslint/no-unused-vars */
-		mockWETHContract.on('Approval', (src, guy, _event) => {
+		
+	/* 	/1* eslint-disable @typescript-eslint/no-unused-vars *1/ */
+		get(WETHContract).on('Approval', (src: string, guy: string, _event: any) => {
 			if (src === $signerAddress || guy === $signerAddress) {
 				console.log('detected WETH Approval event');
 				fetchAllDisplayData();			
 			}
 		});
 
-		mockWETHContract.on('Deposit', (dst, _wad, _event) => {
+		get(WETHContract).on('Deposit', (dst: any, _wad: BigNumber, _event: any) => {
 			if (dst === $signerAddress) {
 				console.log('detected WETH Deposit event');
 				fetchAllDisplayData();			
 			}
 		});
 
-		mockWETHContract.on('Transfer', (src, dst, wad, event) => {
+		get(WETHContract).on('Transfer', (src: string, dst: string, wad: BigNumber, event: any) => {
 			console.log('from: ', src, 'to ', dst, 'amount ', wad);
 			console.log(event.blockNumber);
 			if (src === $signerAddress || dst === $signerAddress) {
@@ -56,42 +59,42 @@
 		});
 
 
-		mockWETHContract.on('Withdrawal', (src, _wad, _event) => {
+		get(WETHContract).on('Withdrawal', (src: string, _wad: BigNumber, _event: any) => {
 			if (src === $signerAddress) {
 				console.log('detected WETH Withdrawal event');
 				fetchAllDisplayData();			
 			}
 		});
 		
-		houseOfReserveContract.on('UserDeposit', (user, _asset, _amount, _event) => {
+		get(houseOfReserveContract).on('UserDeposit', (user: string, _asset: string, _amount: BigNumber, _event: any) => {
 			if (user === $signerAddress) {
 				console.log('detected HouseOfContract UserDeposit event');
 				fetchAllDisplayData();
 			}
 		});
 
-		houseOfReserveContract.on('UserWithdraw', (user, _asset, _amount, _event) => {
+		get(houseOfReserveContract).on('UserWithdraw', (user: string, _asset: string, _amount: BigNumber, _event: any) => {
 			if (user === $signerAddress) {
 				console.log('detected HouseOfContract UserWithdraw event');
 				fetchAllDisplayData();
 			}
 		});
 
-		houseOfCoinContract.on('CoinMinted', (user, _backedTokenID, _amount, _event) => {
+		get(houseOfCoinContract).on('CoinMinted', (user: string, _backedTokenID: number, _amount: BigNumber, _event: any) => {
 			if (user === $signerAddress) {
 				console.log('detected HouseOfCoin CoinMinted event');	
 				fetchAllDisplayData();
 			}
 		});
 
-		houseOfCoinContract.on('CoinPayback', (user, _backedTokenID, _amount, _event) => {
+		get(houseOfCoinContract).on('CoinPayback', (user: string, _backedTokenID: number, _amount: BigNumber, _event: any) => {
 			if (user === $signerAddress) {
 				console.log('detected HouseOfCoin CoinPayback event');	
 				fetchAllDisplayData();
 			}
 		});
 
-		houseOfCoinContract.on('Liquidation', (userLiquidated, _liquidator, _collateralAmount, _event) => {
+		get(houseOfCoinContract).on('Liquidation', (userLiquidated: string, _liquidator: string, _collateralAmount: BigNumber, _event: any) => {
 			if (userLiquidated === $signerAddress) {
 				console.log(`
      |~~~~~~|                 
@@ -108,21 +111,21 @@
 			}
 		});
 
-		houseOfCoinContract.on('MarginCall', (user, _mintedAsset, _reserveAsset, _event) => {
+		get(houseOfCoinContract).on('MarginCall', (user: string, _mintedAsset: string, _reserveAsset: string, _event: any) => {
 			if (user === $signerAddress) {
 				console.log('detected HouseOfCoin MarginCall event');	
 				fetchAllDisplayData();
 			}
 		});
 
-		XOCContract.on('Approval', (owner, _spender, _value, _event) => {
+		get(XOCContract).on('Approval', (owner: string, _spender: string, _value: BigNumber, _event: any) => {
 			if(owner === $signerAddress) {
 				console.log('detected XOC Approval event');	
 				fetchAllDisplayData();
 			}
 		});
 		
-		XOCContract.on('Transfer', (from, to, _value, _event) => {
+		get(XOCContract).on('Transfer', (from: string, to: string, _value: string, _event: any) => {
 			if(from === $signerAddress || to === $signerAddress) {
 				console.log('detected XOC Transfer event');	
 				fetchAllDisplayData();
