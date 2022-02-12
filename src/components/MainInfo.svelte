@@ -26,10 +26,10 @@ const commify = ethers.utils.commify;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
-		width: 80%;
+		width: 100%;
 		margin: 1rem auto 1rem auto;
 		color: var(--main-color);
-		column-gap: 5rem;
+		column-gap: 4rem;
 		flex-wrap: wrap;
 	}
 
@@ -49,7 +49,6 @@ const commify = ethers.utils.commify;
 	}
 
 	.box-row {
-
 		padding: 0.5rem;
 		display: flex;
 		justify-content: space-between;
@@ -60,7 +59,7 @@ const commify = ethers.utils.commify;
 	.highlight {
 		font-weight: 700;
 	}
-
+	
 </style>
 
 <section>

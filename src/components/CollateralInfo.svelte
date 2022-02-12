@@ -168,7 +168,7 @@ const commify = ethers.utils.commify;
                     <p>Valor del colateral depositado </p>
                     <div class='info-icon' data-tooltip={maxDebtTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
-                <p>${$userWETHCollateralMXNPrice ? commify(ethers.utils.formatEther($userWETHCollateralMXNPrice.sub($userWETHCollateralMXNPrice.mod(1e14)))) : '-'}(MXN)</p>
+                <p>${$userWETHCollateralMXNPrice ? commify(ethers.utils.formatEther($userWETHCollateralMXNPrice.sub($userWETHCollateralMXNPrice.mod(1e14)))) : '-'} (MXN)</p>
             </div>
 
 
