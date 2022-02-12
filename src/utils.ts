@@ -26,3 +26,23 @@ export function handleProviderChange() {
 	resetAll();
 	fetchAllDisplayData();
 }
+
+// custom svelte directive, usage <Component use:clickOutside={handleClick} />
+export function clickOutside(node: HTMLElement, onEventFunction: Function) {
+    console.log('butwhyyyy');
+    const handleClick = (event: Event) => {
+        var path = event.composedPath();
+
+        if (!path.includes(node)) {
+            onEventFunction();
+        }
+    }
+
+    document.addEventListener("click", handleClick);
+
+    return {
+        destroy() {
+            document.removeEventListener("click", handleClick);
+        }
+    }
+}

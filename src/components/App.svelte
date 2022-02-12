@@ -1,12 +1,14 @@
 <script lang="ts">
 import { ethers } from 'ethers';
-import { provider, chainId, defaultEvmStores } from 'svelte-ethers-store';
+import { provider, chainId, connected, defaultEvmStores } from 'svelte-ethers-store';
 
-import ChainWarning from './ChainWarning.svelte';
 import Header from './Header.svelte';
 import Dashboard from './Dashboard.svelte';
 import TxMonitor from './TxMonitor.svelte';
 import Polling from './Polling.svelte';
+import ChainModal from './ChainModal.svelte';
+
+import { isRighNetwork } from '../store/store';
 
 import { handleProviderChange } from '../utils';
 
@@ -57,7 +59,7 @@ $: oldChain = handleNetworkChange(oldChain, $chainId);
 </style>
 
 <main>
-	<ChainWarning />
+	<ChainModal hidden={$connected && $isRighNetwork}/>
 	<Header />  
 	<Dashboard />
 	<TxMonitor />
