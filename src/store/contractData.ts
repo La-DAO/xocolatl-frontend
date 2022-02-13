@@ -69,6 +69,22 @@ export const userWETHLiquidationPrice = derived(
 		} else return null;
 	});
 
+export const healthRatioAsPercentage = derived(
+	userHealthRatio, 
+	($userHealthRatio) => {
+		if($userHealthRatio) {
+			const value = parseFloat(ethers.utils.formatEther($userHealthRatio));
+			if (value < 1) {
+				return 0;
+			}
+			if (value >= 1 && value <= 2) {
+				return 50 * value - 50;
+			}
+			const constant = 50 * Math.log10(2);
+			return 100 - constant / Math.log10(value);
+		} else return 0;
+	});
+
 // method for reseting data when provider changes
 export function resetAll() {
 	userWETHAllowance.set(null);

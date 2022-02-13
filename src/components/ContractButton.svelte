@@ -1,11 +1,12 @@
 <script lang="ts">
+import { connected } from 'svelte-ethers-store';
 import { isRighNetwork, selectedTab } from '../store/store';
 import { WETHDepositInputAmountBigNum, XOCBurnInputAmountBigNum } from '../store/userInput';
 import { userWETHAllowance, userXOCAllowance } from '../store/contractData';
 import { approveWETH, depositWETH, mintXOC, approveXOC, burnXOC, withdrawWETH } from '../contractWrites';
 	
 let disabled=true; // disable buttons until data loads
-$: if ($isRighNetwork) {
+$: if ($isRighNetwork || !connected) {
 	disabled=false;
 }
 </script>
@@ -22,25 +23,28 @@ button {
 	font-size: 1.1rem;
 	font-weight: 700;
 }
+
+.is-disabled {
+	cursor: not-allowed;
+}
+
 </style>
 
 {#if $selectedTab === 'deposit'}
 	{#if $userWETHAllowance && $WETHDepositInputAmountBigNum && $userWETHAllowance.lt($WETHDepositInputAmountBigNum)}
-		<button on:click={approveWETH} type="button" {disabled}>Aprovar</button>
+		<button on:click={approveWETH} type="button" class:is-disabled={disabled} {disabled}>Aprovar</button>
 	{:else}
-		<button on:click={depositWETH} type="button" {disabled}>Despositar</button>
+		<button on:click={depositWETH} type="button" class:is-disabled={disabled} {disabled}>Despositar</button>
 	{/if}
 {:else if $selectedTab === 'mint'}
-	<button on:click={mintXOC} type="button" {disabled}>Mintea</button>
+	<button on:click={mintXOC} type="button" {disabled} class:is-disabled={disabled}>Acuñar</button>
 {:else if $selectedTab === 'burn'}
-	{#if $userXOCAllowance && $XOCBurnInputAmountBigNum}
-		{#if $userXOCAllowance && $userXOCAllowance.lt($XOCBurnInputAmountBigNum)}
-			<button on:click={approveXOC} type="button" {disabled}>Aprovar</button>
-		{:else}
-			<button on:click={burnXOC} type="button" {disabled}>Amortizar</button>
-		{/if}
+	{#if $userXOCAllowance && $XOCBurnInputAmountBigNum && $userXOCAllowance.lt($XOCBurnInputAmountBigNum)}
+			<button on:click={approveXOC} type="button" class:is-disabled={disabled} {disabled}>Aprovar</button>
+	{:else}
+			<button on:click={burnXOC} type="button" class:is-disabled={disabled} {disabled}>Amortizar</button>
 	{/if}
 {:else if $selectedTab === 'withdraw'}
-	<button on:click={withdrawWETH} type="button" {disabled}>Retirar</button>
+	<button on:click={withdrawWETH} type="button" class:is-disabled={disabled} {disabled}>Retirar</button>
 {/if}
 

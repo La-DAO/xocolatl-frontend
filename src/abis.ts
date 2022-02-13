@@ -1,4 +1,3 @@
-export const mockWETHAddress = '0xDf032Bc4B9dC2782Bb09352007D4C57B75160B15';
 export const mockWETHABI =[
 	'event Approval(address indexed src, address indexed guy, uint256 wad)',
 	'event Deposit(address indexed dst, uint256 wad)',
@@ -18,7 +17,6 @@ export const mockWETHABI =[
 	'function withdraw(uint256 wad)'
 ]; 
 
-export const assetsAccountantAddress = '0xf487Ff2A5430eFBdC4B15e2735d9D83e3508F317';
 export const assetsAccountantABI = [
 	'constructor()',
 	'event ApprovalForAll(address indexed account, address indexed operator, bool approved)',
@@ -61,7 +59,6 @@ export const assetsAccountantABI = [
 ];
 
 
-export const houseOfReserveAddress = '0x62c4014a76e21C046fc5196D81E8cD7e04C5f122';
 export const houseOfReserveABI = [
 	'event CollateralRatioChanged(tuple(uint256 numerator, uint256 denominator) newFactor)',
 	'event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)',
@@ -99,8 +96,6 @@ export const houseOfReserveABI = [
 	'function trustedSigner() view returns (address)',
 	'function withdraw(uint256 amount)'
 ];
- 
-export const houseOfCoinAddress = '0xF3A1C091f110F7b931c02d3603ec8bC771182466';
 
 export const houseOfCoinABI = [
 	'event CoinMinted(address indexed user, uint256 indexed backedtokenID, uint256 amount)',
@@ -141,8 +136,6 @@ export const houseOfCoinABI = [
 	'function transferOwnership(address newOwner)',
 	'function trustedSigner() view returns (address)'
 ];
-
-export const XOCAddress = '0x2872332fB3619F5fDbAeb04F4e3Bd8e42AF8fD04';
 
 export const XOCABI = [
 	'constructor()',

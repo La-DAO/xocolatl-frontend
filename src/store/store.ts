@@ -3,10 +3,12 @@ import { connected, chainId } from 'svelte-ethers-store';
 
 import type { Writable } from 'svelte/store';
 
+import { chains } from '../chains';
+
 export const isRighNetwork = derived(
 	[connected, chainId],
 	([$connected, $chainId]) => {
-		if ($connected && ($chainId===4 || $chainId === '0x4')) {
+		if ($connected && $chainId in chains) {
 			return true;
 		} else return false;
 	}
@@ -14,22 +16,6 @@ export const isRighNetwork = derived(
 
 export const selectedTab = writable('deposit');
 
-// TODO: remove once design is finalized
-const test = {
-	hash: '0x420',
-	status: 'pending'
-};
-
-const test2 = {
-	hash: '0x69',
-	status: 'completed'
-};
-
-
-const test3 = {
-	hash: '0x8008',
-	status: 'failed'
-};
 
 interface PendingTx {
 	hash: string;
@@ -37,7 +23,7 @@ interface PendingTx {
 }
 
 function createPendingTxs() {
-	const pendingTxs: Writable<Array<PendingTx>> = writable([test, test2, test3]);
+	const pendingTxs: Writable<Array<PendingTx>> = writable([]);
 
 	const closeModal = (txHash: string) => pendingTxs.update(txs => {
 		txs = txs.filter(tx => tx.hash !== txHash);

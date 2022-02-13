@@ -51,7 +51,7 @@ selectedTab.subscribe(value => {
 </style>
 <nav> 
 	<div class="nav-button left-nav-button" class:selected={selectedTabValue==='deposit'} on:click={()=>handleSectionClick('deposit')}> Depositar </div>
-	<div class="nav-button" class:selected={selectedTabValue==='mint'} on:click={()=>handleSectionClick('mint')}> Mintear </div>
+	<div class="nav-button" class:selected={selectedTabValue==='mint'} on:click={()=>handleSectionClick('mint')}> Acuñar </div>
 	<div class="nav-button" class:selected={selectedTabValue==='burn'} on:click={()=>handleSectionClick('burn')}> Amortizar </div>
 	<div class="nav-button right-nav-button" class:selected={selectedTabValue==='withdraw'} on:click={()=>handleSectionClick('withdraw')}> Retirar </div>
 </nav>

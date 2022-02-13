@@ -42,6 +42,12 @@ function handleClose(txHash: string) {
   animation: spin 2s linear infinite;
 }
 
+.status-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+	font-size: 1.5rem;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -99,8 +105,10 @@ img {
 					<div class="loader"></div>
 					<h2>Transacción Enviada </h2>
 					{:else if tx.status === 'completed'}
+					<div class="status-icon">✓</div>
 					<h2>Transacción Confirmada</h2>
 					{:else if tx.status === 'failed'}
+					<div class="status-icon">⨯</div>
 					<h2>Transacción Fallida</h2>
 					{/if}
 				</div>
@@ -108,15 +116,21 @@ img {
 				{#if tx.status === 'pending'}
 				<p>Esperando confirmación de la transacción, disfruta la fruta</p>
 				{:else if tx.status === 'completed'}
-				<p>Tu transacción se ha completado correctamente</p>
+				<p>La transacción ha sido procesada exitosamente, y ahora puedes verlo reflejado en tu balance.</p>
 				{:else if tx.status === 'failed'}
-				<p>¡Ay caramba! Hubo un error con tu transacción</p>
+				<p>¡Ay caramba! La transaccion ha fallado por alguna razon, intenta mandarla de nuevo</p>
 				{/if}
 
 				<a class="hash" href={blockExplorerURL + 'tx/' + tx.hash} target="_blank" rel="noopener noreferrer">{toShortAddress(tx.hash)}</a>
 
 
+				{#if tx.status === 'pending'}
 				<img src="/static/waiting.svg" alt="text waiting"/>
+				{:else if tx.status === 'completed'}
+				<img src="/static/success.svg" alt="text waiting"/>
+				{:else if tx.status === 'failed'}
+				<img src="/static/failure.svg" alt="text waiting"/>
+				{/if}
 				<div class="button-line">
 					<a href={blockExplorerURL + 'tx/' + tx.hash} target="_blank" rel="noopener noreferrer">
 						<div class='button'>Ver en el explorador</div>
