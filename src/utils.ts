@@ -28,21 +28,25 @@ export function handleProviderChange() {
 }
 
 // custom svelte directive, usage <Component use:clickOutside={handleClick} />
-export function clickOutside(node: HTMLElement, onEventFunction: Function) {
-    console.log('butwhyyyy');
-    const handleClick = (event: Event) => {
-        var path = event.composedPath();
+export function clickOutside(node: HTMLElement, onEventFunction: ()=>void) {
+	const handleClick = (event: Event) => {
+		const path = event.composedPath();
+		if (!path.includes(node)) {
+			onEventFunction();
+		}
+	};
 
-        if (!path.includes(node)) {
-            onEventFunction();
-        }
-    }
+	document.addEventListener('click', handleClick);
 
-    document.addEventListener("click", handleClick);
+	return {
+		destroy() {
+			document.removeEventListener('click', handleClick);
+		}
+	};
+}
 
-    return {
-        destroy() {
-            document.removeEventListener("click", handleClick);
-        }
-    }
+// prompt user to change network via metamask
+export async function changeNetwork(chainId: string) {
+	// @ts-ignore:next-line
+	await window.ethereum.request({ method: 'wallet_switchEthereumChain', params:[{chainId}]});
 }

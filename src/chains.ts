@@ -8,6 +8,7 @@ import {
 
 interface ChainData {
 	chain: number;
+	chainHex: string;
 	name: string;
 	blockExplorerURL: string;
 	WETHAddress: string;
@@ -28,6 +29,7 @@ type ChainDict = Record<number | string, ChainData>
 
 const rinkebyData: ChainData = {
 	chain: 4,
+	chainHex: '0x4',
 	name: 'Rinkeby',
 	blockExplorerURL: 'https://rinkeby.etherscan.io/',
 	WETHAddress: '0xDf032Bc4B9dC2782Bb09352007D4C57B75160B15',
@@ -46,6 +48,7 @@ const rinkebyData: ChainData = {
 
 const kovanData: ChainData = {
 	chain: 42,
+	chainHex: '0x2a',
 	name: 'Kovan',
 	blockExplorerURL: 'https://kovan.etherscan.io/',
 	WETHAddress: '0x053DA244AaaF94A071d9e3E73141e5249FE9251D',

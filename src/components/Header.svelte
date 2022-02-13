@@ -1,10 +1,23 @@
 <script lang="ts">
-
 	import { defaultEvmStores, signerAddress, chainId} from 'svelte-ethers-store';
-	import { toShortAddress } from '../utils';
+	import { toShortAddress, changeNetwork } from '../utils';
 
+	import { isRighNetwork } from '../store/store';
 	import { resetAll } from '../store/contractData';
 	import { chains } from '../chains';
+
+	import Select from './Select.svelte';
+
+	const chainOptions = [
+		{
+			value: '0x4',
+			label: 'Rinkeby',
+		},
+		{
+			value: '0x2a',
+			label: 'Kovan',
+		}
+	];
 
 	async function handleDisconnect() {
 		defaultEvmStores.disconnect();
@@ -17,7 +30,7 @@
 
 	$: shortSignerAddress = toShortAddress($signerAddress);
 
-	$: currentChain = chains[$chainId] ? chains[$chainId].name : 'unsupported chain';
+	$: currentChainHex = chains[$chainId] ? chains[$chainId].chainHex : null;
 
 	function addXOCToMetamask() {
 		// @ts-ignore:next-line
@@ -71,10 +84,10 @@
 		<h2>Xocolatl</h2>
 		<div class="right-content">
 		{#if $signerAddress}
-			
-			{currentChain}
+			{#if $isRighNetwork && currentChainHex}
+				<Select options={chainOptions} defaultValue={currentChainHex} handleClickFunc={changeNetwork}/>
+			{/if}
 			<img class="add-token-button" src="/static/token.png" on:click={addXOCToMetamask} alt="Add XOC to metamask button"/>
-
 			{shortSignerAddress + ' '}
 			<button type="button" on:click={handleDisconnect}> Disconnect </button>
 		{:else}

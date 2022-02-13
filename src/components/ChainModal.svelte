@@ -1,14 +1,8 @@
 <script lang="ts">
-import { connected } from 'svelte-ethers-store';
-import { isRighNetwork } from '../store/store';
-import { clickOutside } from '../utils';
+import { clickOutside, changeNetwork } from '../utils';
 export let hidden = true; 
 
-async function changeNetwork(chainId: string) {
-	hidden = true;
-	// @ts-ignore:next-line
-	await window.ethereum.request({ method: 'wallet_switchEthereumChain', params:[{chainId}]});
-}
+
 
 function handleOutsideClick() {
 	hidden = true;

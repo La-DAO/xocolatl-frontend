@@ -26,14 +26,6 @@ button {
 
 .is-disabled {
 	cursor: not-allowed;
-	background: repeating-linear-gradient(
-		45deg,
-		grey,
-		grey 10px,
-		var(--main-color) 10px,
-		var(--main-color) 20px
-
-	);
 }
 
 </style>
