@@ -1,5 +1,8 @@
 <script lang="ts">
+import { _ } from 'svelte-i18n';
 import { selectedTab } from '../store/store';
+
+
 
 import {
 	userWETHBalance,
@@ -15,9 +18,9 @@ import {
 	XOCMintInputAmount, 
 	XOCMintInputAmountBigNum,
 	XOCMintInputError, 
-	XOCBurnInputAmount, 
-	XOCBurnInputAmountBigNum,
-	XOCBurnInputError, 
+	XOCRedeemInputAmount, 
+	XOCRedeemInputAmountBigNum,
+	XOCRedeemInputError, 
 	WETHWithdrawInputAmount, 
 	WETHWithdrawInputAmountBigNum,
 	WETHWithdrawInputError 
@@ -74,39 +77,39 @@ import AmountInput from './AmountInput.svelte';
 			<div class="input-section">
 			{#if $selectedTab==='deposit'}
 				<AmountInput 
-					headerText={'Cantidad a depositar'} 
+					headerText={$_('input.deposit')} 
 					bind:inputAmount={$WETHDepositInputAmount} 
 					bind:inputError={$WETHDepositInputError} 
 					inputAmountBigNum={$WETHDepositInputAmountBigNum}
 					inputLimit={$userWETHBalance}
-					inputTypeText="Colateral: WETH"
+					inputTypeText={$_('input.collateral') + ": WETH"}
 				/>
 			{:else if $selectedTab==='mint'}
 				<AmountInput 
-					headerText={'Cantidad a mintear'} 
+					headerText={$_('input.mint')} 
 					bind:inputAmount={$XOCMintInputAmount} 
 					bind:inputError={$XOCMintInputError} 
 					inputAmountBigNum={$XOCMintInputAmountBigNum}
 					inputLimit={$userXOCMintingPower}
-					inputTypeText="Token: XOC"
+					inputTypeText={$_('input.token') + ": XOC"}
 				/>
-			{:else if $selectedTab==='burn'}
+			{:else if $selectedTab==='redeem'}
 				<AmountInput 
-					headerText={'Cantidad a amortizar'} 
-					bind:inputAmount={$XOCBurnInputAmount} 
-					bind:inputError={$XOCBurnInputError} 
-					inputAmountBigNum={$XOCBurnInputAmountBigNum}
+					headerText={$_('input.redeem')} 
+					bind:inputAmount={$XOCRedeemInputAmount} 
+					bind:inputError={$XOCRedeemInputError} 
+					inputAmountBigNum={$XOCRedeemInputAmountBigNum}
 					inputLimit={$userXOCBalance}
-					inputTypeText="Token: XOC"
+					inputTypeText={$_('input.token') + ": XOC"}
 				/>
 			{:else if $selectedTab==='withdraw'}
 				<AmountInput 
-					headerText={'Cantidad a retirar'} 
+					headerText={$_('input.withdraw')} 
 					bind:inputAmount={$WETHWithdrawInputAmount} 
 					bind:inputError={$WETHWithdrawInputError} 
 					inputAmountBigNum={$WETHWithdrawInputAmountBigNum}
 					inputLimit={$userWETHMaxWithdrawal}
-					inputTypeText="Colateral: WETH"
+					inputTypeText={$_('input.collateral') + ": WETH"}
 				/>
 			{/if}
 			</div>

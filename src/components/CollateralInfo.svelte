@@ -1,5 +1,6 @@
 <script lang="ts">
 import { ethers } from 'ethers';
+import { _ } from 'svelte-i18n';
 import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userWETHLiquidationPrice, collateralFactor, userWETHCollateralMXNPrice, healthRatioAsPercentage } from '../store/contractData';
 /* import HealthCircle from './HealthCircle.svelte'; */
 import ProgressBar from '@okrad/svelte-progressbar';
@@ -103,9 +104,9 @@ const commify = ethers.utils.commify;
 
 
 <section>
-    <h1>Indice de salud</h1>
+    <h1>{$_('healthIndex.healthIndex')}</h1>
     <div class="content">
-        <div data-tooltip={healthRatioTooltip}>
+        <div data-tooltip={$_('healthIndex.healthIndexTooltip')}>
             <ProgressBar 
                 width={180} 
                 style="radial" 
@@ -132,32 +133,32 @@ const commify = ethers.utils.commify;
         <div class="info">
             <div class="text-row">
                 <div class="text-and-tooltip">
-                    <p>Limite de prestamo utilizado</p>
-                    <div class='info-icon' data-tooltip={healthIndexTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                    <p>{$_('healthIndex.usedBorrowingPower')}</p>
+                    <div class='info-icon' data-tooltip={$_('healthIndex.usedBorrowingPowerTooltip')}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
                 <p>{$userMaxDebtUtilization ? Math.ceil($userMaxDebtUtilization*10000) / 100 : '-'} %</p>
             </div>
 
             <div class="text-row">
                 <div class="text-and-tooltip">
-                    <p>Umbral de liquidacion del RPV</p>
-                    <div class='info-icon' data-tooltip={LTVTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                    <p>{$_('healthIndex.LTV')}</p>
+                    <div class='info-icon' data-tooltip={$_('healthIndex.LTVTooltip')}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
                 <p>{$collateralFactor ? ($collateralFactor*100).toFixed(2) : '-'} %</p>
             </div>
 
             <div class="text-row">
                 <div class="text-and-tooltip">
-                    <p>Precio actual de ETH </p>
-                    <div class='info-icon' data-tooltip={ethPriceTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                    <p>{$_('healthIndex.currentETHPrice')}</p>
+                    <div class='info-icon' data-tooltip={$_('healthIndex.currentETHPriceTooltip')}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
                 <p>${$WETHToXOC ?  commify(ethers.utils.formatUnits($WETHToXOC.sub($WETHToXOC.mod(1e4)), 8)) : '-'} (MXN)</p>
             </div>
 
             <div class="text-row">
                 <div class="text-and-tooltip">
-                    <p>Precio de liquidacion de ETH</p>
-                    <div class='info-icon' data-tooltip={ethLiquidationPriceTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                    <p>{$_('healthIndex.liquidationETHPrice')}</p>
+                    <div class='info-icon' data-tooltip={$_('healthIndex.liquidationETHPriceTooltip')}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
                 <p>${$userWETHLiquidationPrice ? commify($userWETHLiquidationPrice.toFixed(4)) : '-'} (MXN)</p>
             </div>
@@ -165,8 +166,8 @@ const commify = ethers.utils.commify;
 
             <div class="text-row">
                 <div class="text-and-tooltip">
-                    <p>Valor del colateral depositado </p>
-                    <div class='info-icon' data-tooltip={maxDebtTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                    <p>{$_('healthIndex.collateralValue')}</p>
+                    <div class='info-icon' data-tooltip={$_('healthIndex.collateralValueTooltip')}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
                 <p>${$userWETHCollateralMXNPrice ? commify(ethers.utils.formatEther($userWETHCollateralMXNPrice.sub($userWETHCollateralMXNPrice.mod(1e14)))) : '-'} (MXN)</p>
             </div>
@@ -174,8 +175,8 @@ const commify = ethers.utils.commify;
 
             <div class="text-row">
                 <div class="text-and-tooltip">
-                    <p>Deuda maxima </p>
-                    <div class='info-icon' data-tooltip={maxDebtTooltip}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
+                    <p>{$_('healthIndex.maxDebt')}</p>
+                    <div class='info-icon' data-tooltip={$_('healthIndex.maxDebtTooltip')}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
                 <p>${$userMaxDebt ? commify(ethers.utils.formatEther($userMaxDebt.sub($userMaxDebt.mod(1e14)))) : '-'} (MXN)</p>
             </div>

@@ -7,7 +7,7 @@ import {
 	WETHDepositInputAmountBigNum,
 	WETHWithdrawInputAmountBigNum,
 	XOCMintInputAmountBigNum,
-	XOCBurnInputAmountBigNum
+	XOCRedeemInputAmountBigNum
 } from './store/userInput';
 import { fetchAllDisplayData } from './contractReads';
 import { checkContractCallPrereqs } from './utils';
@@ -85,14 +85,14 @@ export async function approveXOC() {
 	handleTxReceipt(tx);
 }
 
-export async function burnXOC() {
+export async function redeemXOC() {
 	checkContractCallPrereqs();
-	const amount = get(XOCBurnInputAmountBigNum);
+	const amount = get(XOCRedeemInputAmountBigNum);
 	if (amount) {
 		const tx = await get(houseOfCoinContract)!.paybackCoin(chains[get(chainId)].backedTokenID, amount);
 		handleTxReceipt(tx);
 	} else {
-		throw new Error('Invalid XOC burn amount input');
+		throw new Error('Invalid XOC redeem amount input');
 	}
 }
 

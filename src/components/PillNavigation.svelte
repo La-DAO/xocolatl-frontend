@@ -1,4 +1,5 @@
 <script lang="ts">
+import { _ } from 'svelte-i18n'
 import { selectedTab } from '../store/store';
 
 function handleSectionClick(selected: string) {
@@ -50,8 +51,8 @@ selectedTab.subscribe(value => {
 	}
 </style>
 <nav> 
-	<div class="nav-button left-nav-button" class:selected={selectedTabValue==='deposit'} on:click={()=>handleSectionClick('deposit')}> Depositar </div>
-	<div class="nav-button" class:selected={selectedTabValue==='mint'} on:click={()=>handleSectionClick('mint')}> Acuñar </div>
-	<div class="nav-button" class:selected={selectedTabValue==='burn'} on:click={()=>handleSectionClick('burn')}> Amortizar </div>
-	<div class="nav-button right-nav-button" class:selected={selectedTabValue==='withdraw'} on:click={()=>handleSectionClick('withdraw')}> Retirar </div>
+	<div class="nav-button left-nav-button" class:selected={selectedTabValue==='deposit'} on:click={()=>handleSectionClick('deposit')}> {$_('actions.deposit')} </div>
+	<div class="nav-button" class:selected={selectedTabValue==='mint'} on:click={()=>handleSectionClick('mint')}> {$_('actions.mint')} </div>
+	<div class="nav-button" class:selected={selectedTabValue==='redeem'} on:click={()=>handleSectionClick('redeem')}> {$_('actions.redeem')} </div>
+	<div class="nav-button right-nav-button" class:selected={selectedTabValue==='withdraw'} on:click={()=>handleSectionClick('withdraw')}> {$_('actions.withdraw')} </div>
 </nav>

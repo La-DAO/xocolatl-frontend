@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { defaultEvmStores, signerAddress, chainId} from 'svelte-ethers-store';
+	import { _, locale, locales } from 'svelte-i18n'
 	import { toShortAddress, changeNetwork } from '../utils';
 
 	import { isRighNetwork } from '../store/store';
@@ -8,16 +9,20 @@
 
 	import Select from './Select.svelte';
 
-	const chainOptions = [
-		{
-			value: '0x4',
-			label: 'Rinkeby',
-		},
-		{
-			value: '0x2a',
-			label: 'Kovan',
-		}
-	];
+	const chainOptions = {
+		'0x4': 'Rinkeby',
+		'0x2a': 'Kovan'
+	}
+
+	// locale array as select options object
+	$: localeOptions = $locales.reduce((a, v) => ({ ...a, [v]: v}), {});
+	// removes - from locale for select
+	$: trimmedLocale = $locale!.replace(/\-.*/,'')
+
+
+	// locale array as select options object
+	/* const localeOptions = $locales.map(locale=>{return {value: locale, label: locale}}) */
+
 
 	async function handleDisconnect() {
 		defaultEvmStores.disconnect();
@@ -83,15 +88,18 @@
 	<div class="container">
 		<h2>Xocolatl</h2>
 		<div class="right-content">
+		<Select width="3rem" options={localeOptions} defaultValue={trimmedLocale} handleClickFunc={locale.set}/>
 		{#if $signerAddress}
 			{#if $isRighNetwork && currentChainHex}
-				<Select options={chainOptions} defaultValue={currentChainHex} handleClickFunc={changeNetwork}/>
+				<Select width="6rem" options={chainOptions} defaultValue={currentChainHex} handleClickFunc={changeNetwork}/>
+			{:else}
+				Unsupported network!
 			{/if}
 			<img class="add-token-button" src="/static/token.png" on:click={addXOCToMetamask} alt="Add XOC to metamask button"/>
 			{shortSignerAddress + ' '}
-			<button type="button" on:click={handleDisconnect}> Disconnect </button>
+			<button type="button" on:click={handleDisconnect}>{$_('actions.disconnect')}</button>
 		{:else}
-			<button type="button" on:click={handleConnect}> Connect with metamask</button>
+			<button type="button" on:click={handleConnect}>{$_('actions.connect')}</button>
 		{/if}
 		</div>
 	</div>

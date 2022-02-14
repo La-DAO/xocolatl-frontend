@@ -1,9 +1,9 @@
 <script lang="ts">
 import { connected } from 'svelte-ethers-store';
 import { isRighNetwork, selectedTab } from '../store/store';
-import { WETHDepositInputAmountBigNum, XOCBurnInputAmountBigNum } from '../store/userInput';
+import { WETHDepositInputAmountBigNum, XOCRedeemInputAmountBigNum } from '../store/userInput';
 import { userWETHAllowance, userXOCAllowance } from '../store/contractData';
-import { approveWETH, depositWETH, mintXOC, approveXOC, burnXOC, withdrawWETH } from '../contractWrites';
+import { approveWETH, depositWETH, mintXOC, approveXOC, redeemXOC, withdrawWETH } from '../contractWrites';
 	
 let disabled=true; // disable buttons until data loads
 $: if ($isRighNetwork || !connected) {
@@ -38,11 +38,11 @@ button {
 	{/if}
 {:else if $selectedTab === 'mint'}
 	<button on:click={mintXOC} type="button" {disabled} class:is-disabled={disabled}>Acuñar</button>
-{:else if $selectedTab === 'burn'}
-	{#if $userXOCAllowance && $XOCBurnInputAmountBigNum && $userXOCAllowance.lt($XOCBurnInputAmountBigNum)}
+{:else if $selectedTab === 'redeem'}
+	{#if $userXOCAllowance && $XOCRedeemInputAmountBigNum && $userXOCAllowance.lt($XOCRedeemInputAmountBigNum)}
 			<button on:click={approveXOC} type="button" class:is-disabled={disabled} {disabled}>Aprovar</button>
 	{:else}
-			<button on:click={burnXOC} type="button" class:is-disabled={disabled} {disabled}>Amortizar</button>
+			<button on:click={redeemXOC} type="button" class:is-disabled={disabled} {disabled}>Amortizar</button>
 	{/if}
 {:else if $selectedTab === 'withdraw'}
 	<button on:click={withdrawWETH} type="button" class:is-disabled={disabled} {disabled}>Retirar</button>

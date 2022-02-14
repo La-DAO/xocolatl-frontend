@@ -51,7 +51,8 @@
 		"ethers": "^5.5.3",
 		"redstone-evm-connector": "^2.1.2",
 		"serve": "^13.0.2",
-		"svelte-ethers-store": "^0.6.4"
+		"svelte-ethers-store": "^0.6.4",
+		"svelte-i18n": "^3.3.13"
 	},
 	"browserslist": [
 		"defaults"

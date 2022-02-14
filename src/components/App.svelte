@@ -2,6 +2,9 @@
 import { ethers } from 'ethers';
 import { provider, chainId, connected, defaultEvmStores } from 'svelte-ethers-store';
 
+import '../i18n'; // locales
+import { isLoading } from 'svelte-i18n'
+
 import Header from './Header.svelte';
 import Dashboard from './Dashboard.svelte';
 import TxMonitor from './TxMonitor.svelte';
@@ -12,6 +15,7 @@ import { isRighNetwork } from '../store/store';
 
 import { handleProviderChange } from '../utils';
 
+
 $: $provider && handleProviderChange();
 
 function handleNetworkChange(oldChain: number | string, newChain: number | string): number | string {
@@ -20,7 +24,6 @@ function handleNetworkChange(oldChain: number | string, newChain: number | strin
 	}
 	return newChain; 
 }
-
 
 // connects automatically to account if returning user
 async function checkIfAlreadyConnected() {
@@ -40,6 +43,7 @@ let oldChain: number | string;
 $: oldChain = handleNetworkChange(oldChain, $chainId);
 </script>
 
+
 <style>
 	/* TODO: bundle fonts and stop fetching from google */
 	@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700;900&family=Roboto&display=swap');
@@ -58,6 +62,9 @@ $: oldChain = handleNetworkChange(oldChain, $chainId);
 
 </style>
 
+{#if $isLoading}
+Por favor espere...
+{:else}
 <main>
 	<ChainModal hidden={$connected && $isRighNetwork}/>
 	<Header />  
@@ -65,3 +72,4 @@ $: oldChain = handleNetworkChange(oldChain, $chainId);
 	<TxMonitor />
 	<Polling />
 </main>
+{/if}

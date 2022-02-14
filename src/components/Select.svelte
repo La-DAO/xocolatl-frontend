@@ -2,6 +2,7 @@
 export let options;
 export let defaultValue;
 export let handleClickFunc;
+export let width;
 
 let isClickExpanded = false;
 
@@ -33,7 +34,6 @@ li > ul {
     border: 2px solid white;
     border-radius: 5px;
     margin: auto;
-    width: 6rem;
     background-color: #CE9786;
     cursor: pointer;
 }
@@ -55,12 +55,12 @@ li > ul {
 </style>
 
 <ul>
-        <li class="box"><div class="title" on:click="{()=>isClickExpanded = !isClickExpanded}">{options.find(e=>e.value===defaultValue).label} v</div>
+        <li width={width} class="box"><div class="title" on:click="{()=>isClickExpanded = !isClickExpanded}">{options[defaultValue]} v</div>
         <ul class:visible={isClickExpanded}>
-            {#each options as option}
+            {#each Object.entries(options) as [key, value]}
             <li class="option" 
                 on:click={()=>isClickExpanded=false}
-                on:click={handleClickFunc(option.value)}>{option.label}</li>
+                on:click={handleClickFunc(key)}>{value}</li>
             {/each}
         </ul>
     </li>

@@ -1,5 +1,6 @@
 <script lang="ts">
 import { ethers } from 'ethers';
+import { _ } from 'svelte-i18n';
 
 import ContractButton from './ContractButton.svelte';
 
@@ -65,7 +66,7 @@ const commify = ethers.utils.commify;
 <section>
 	<div class="outer-box">
 		<div class="box-header">
-			<b>DEPOSITOS</b>
+			<b>{$_('balances.deposits')}</b>
 		</div>
 		<div class:highlight={$selectedTab === 'deposit'} class="box-row">
 			<p>Balance actual del wallet </p> 
@@ -86,20 +87,20 @@ const commify = ethers.utils.commify;
 	<div class="outer-box">
 
 		<div class="box-header">
-			<b>PRESTAMOS</b>
+			<b>{$_('balances.loans')}</b>
 		</div>
 		
-		<div class:highlight={$selectedTab === 'burn' || $selectedTab === 'mint'} class="box-row">
-			<p>Deuda restante </p>
+		<div class:highlight={$selectedTab === 'redeem' || $selectedTab === 'mint'} class="box-row">
+			<p>{$_('balances.remainingLoan')}</p>
 			<p>{$userXOCDebt ? commify(ethers.utils.formatEther($userXOCDebt.sub($userXOCDebt.mod(1e14)))) : '-'} XOC</p>
 		</div>
 		
 		<div class:highlight={$selectedTab === 'mint'} class="box-row">
-			<p>Disponible para pedir prestado </p>
+			<p>{$_('balances.availableToLoan')}</p>
 			<p>{$userXOCMintingPower ? commify(ethers.utils.formatEther($userXOCMintingPower.sub($userXOCMintingPower.mod(1e14)))) : '-'} XOC</p>
 		</div>
-		<div class:highlight={$selectedTab === 'burn'} class="box-row">
-			<p>El saldo de su cartera </p>
+		<div class:highlight={$selectedTab === 'redeem'} class="box-row">
+			<p>{$_('balances.xocBalance')}</p>
 			<p>{$userXOCBalance ? commify(ethers.utils.formatEther($userXOCBalance.sub($userXOCBalance.mod(1e14)))) : '-'} XOC</p>
 		</div>
 	</div>
