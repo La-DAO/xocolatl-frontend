@@ -1,0 +1,44 @@
+{
+  "actions": {
+		"connect": "Conectarse con metamask",
+		"disconnect": "Desconectar",
+		"deposit": "Depositar",
+		"mint": "Acuñar",
+		"redeem": "Amortizar",
+		"withdraw": "Retirar"
+	},
+	"input": {
+		"deposit": "Cantidad a depositar",
+		"mint": "Cantidad a acuñar",
+		"redeem": "Cantidad a amortizar",
+		"withdraw": "Cantidad a retirar",
+		"collateral": "Colateral",
+		"token": "Token"
+	},
+	"healthIndex": {
+		"healthIndex": "Indice de salud",
+		"healthIndexTooltip": "La seguridad de tu deuda, derivada de la proporcion de tu colateral contra tu cantidad prestada. Mantenlo arriba de 1 para no ser liquidado",
+		"usedBorrowingPower": "Limite de prestamo utilizado",
+		"usedBorrowingPowerTooltip": "El porcentaje utilizado del limite de prestamo",
+		"LTV": "RPV (Relación Prestamo-Valor)",
+		"LTVTooltip": "Relación Prestamo valor representa el poder de prestamo máximo de tu colateral. Por ejemplo, un RPV de 66% significa que puedes pedir prestado el valor de 0.66 ETH en XOC por cada 1 ETH de colateral",
+		"currentETHPrice": "Precio actual de ETH",
+		"currentETHPriceTooltip": "El precio actual de ETH, el precio es el mismo del protocolo",
+		"liquidationETHPrice": "Precio de liquidación de ETH",
+		"liquidationETHPriceTooltip": "El precio de ETH al que tu colateral seria liquidado para cubrir tu deuda",
+		"collateralValue": "Valor del colateral depositado",
+		"collateralValueTooltip": "El valor de tu colateral depositado, convertido a pesos mexicanos",
+		"maxDebt": "Deuda máxima",
+		"maxDebtTooltip": "Tu deuda máxima permitida, segun el valor actual de tu colateral"
+	},
+	"balances": {
+		"deposits": "Depositos",
+		"walletBalance": "Balance de tu cartera",
+		"depositBalance": "Balance del colateral depositado",
+		"availableForWithdrawal": "Disponible para retirar",
+		"loans": "Prestamos",
+		"remainingLoan": "Deuda restante",
+		"availableToLoan": "Disponible para pedir prestado",
+		"xocBalance": "Balance de tu cartera"
+	}
+}

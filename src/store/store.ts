@@ -39,7 +39,7 @@ function createPendingTxs() {
 				txs[i].status = newStatus;
 				// close modal after delay for animation if completed or dailed
 				if (newStatus === 'failed' || newStatus === 'completed') {
-					setTimeout(()=>closeModal(txHash), 1000);
+					setTimeout(()=>closeModal(txHash), 10000);
 				} 
 			} else {
 				throw new Error('TXHash not found');

@@ -70,24 +70,24 @@ export const XOCMintInputAmountBigNum = derived(
 );
 export const XOCMintInputError = writable('');
 
-export const XOCBurnInputAmount = writable(0);
-export const XOCBurnInputAmountBigNum = derived(
-	XOCBurnInputAmount,
-	$XOCBurnInputAmount => {
-		XOCBurnInputError.set('');
-		if (!Number.isFinite($XOCBurnInputAmount)){
-			XOCBurnInputError.set('Cantidad invalida');
-		} else if ($XOCBurnInputAmount) {
+export const XOCRedeemInputAmount = writable(0);
+export const XOCRedeemInputAmountBigNum = derived(
+	XOCRedeemInputAmount,
+	$XOCRedeemInputAmount => {
+		XOCRedeemInputError.set('');
+		if (!Number.isFinite($XOCRedeemInputAmount)){
+			XOCRedeemInputError.set('Cantidad invalida');
+		} else if ($XOCRedeemInputAmount) {
 			try {
-				return ethers.utils.parseEther($XOCBurnInputAmount.toString());
+				return ethers.utils.parseEther($XOCRedeemInputAmount.toString());
 			} catch(e) {
-				XOCBurnInputError.set('Cantidad invalida');
+				XOCRedeemInputError.set('Cantidad invalida');
 			}
-		} else if ($XOCBurnInputAmount === 0){
+		} else if ($XOCRedeemInputAmount === 0){
 			return ethers.utils.parseEther('0');
 		} else {
-			XOCBurnInputError.set('Cantidad invalida');
+			XOCRedeemInputError.set('Cantidad invalida');
 		}
 	}
 );
-export const XOCBurnInputError = writable('');
+export const XOCRedeemInputError = writable('');

@@ -3,8 +3,10 @@
 	"include": ["src/**/*"],
 	"exclude": ["node_modules/*", "__sapper__/*", "public/*", "webpack.config.ts"],
 	"compilerOptions": {
+		"module": "ES2020",
 		"moduleResolution": "node",
-		"target": "es2017",
+		"target": "es2020",
+		"resolveJsonModule": true,
 		"importsNotUsedAsValues": "remove",
 		"isolatedModules": true,
 		"esModuleInterop": true,
