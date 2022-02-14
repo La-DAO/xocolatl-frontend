@@ -69,17 +69,17 @@ const commify = ethers.utils.commify;
 			<b>{$_('balances.deposits')}</b>
 		</div>
 		<div class:highlight={$selectedTab === 'deposit'} class="box-row">
-			<p>Balance actual del wallet </p> 
+			<p>{$_('balances.walletBalance')}</p> 
 			<p>{$userWETHBalance ? ethers.utils.formatEther($userWETHBalance.sub($userWETHBalance.mod(1e10))) : '-'} ETH</p>
 		</div>
 
 		<div class:highlight={$selectedTab === 'withdraw' || $selectedTab === 'deposit'} class="box-row">
-			<p>Balance de colateral depositado </p>
+			<p>{$_('balances.depositBalance')}</p>
 			<p>{$userWETHDepositBalance ? ethers.utils.formatEther($userWETHDepositBalance.sub($userWETHDepositBalance.mod(1e10))) : '-'} ETH</p>
 		</div>
 
 		<div class:highlight={$selectedTab === 'withdraw'} class="box-row">
-			<p>Disponible para retirar </p>
+			<p>{$_('balances.availableForWithdrawal')}</p>
 			<p>{$userWETHMaxWithdrawal ? ethers.utils.formatEther($userWETHMaxWithdrawal.sub($userWETHMaxWithdrawal.mod(1e10))) : '-'} ETH</p>
 		</div>
   </div>

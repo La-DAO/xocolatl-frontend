@@ -6,18 +6,6 @@ import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userW
 import ProgressBar from '@okrad/svelte-progressbar';
 import Icon from '../components/Icon.svelte';
 
-const healthIndexTooltip = 'Porcentaje del poder de prestamo utilizado';
-
-const maxDebtTooltip = 'Deuda maxima posible acorde al valor actual de tu colateral';
-
-const LTVTooltip = 'Porcentaje de deuda maxima permitida';
-
-const healthRatioTooltip = 'La seguridad de tu deuda, derivada de la proporcion de tu colateral contra tu cantidad prestada. Mantenlo arriba de 1 para no ser liquidado.';
-
-const ethPriceTooltip = 'El precio actual de ETH segun el oraculo de redstone';
-
-const ethLiquidationPriceTooltip = 'El precio de ETH en el que tu deuda seria liquidada';
-
 const commify = ethers.utils.commify;
 </script>
 

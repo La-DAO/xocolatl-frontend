@@ -55,7 +55,7 @@ li > ul {
 </style>
 
 <ul>
-        <li width={width} class="box"><div class="title" on:click="{()=>isClickExpanded = !isClickExpanded}">{options[defaultValue]} v</div>
+        <li width={width} class="box"><div class="title" on:click="{()=>isClickExpanded = !isClickExpanded}">{options[defaultValue]} ▼</div>
         <ul class:visible={isClickExpanded}>
             {#each Object.entries(options) as [key, value]}
             <li class="option" 
