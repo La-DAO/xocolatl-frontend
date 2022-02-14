@@ -1,6 +1,8 @@
 <script lang="ts">
+
 import { _ } from 'svelte-i18n'
 import { selectedTab } from '../store/store';
+
 
 function handleSectionClick(selected: string) {
 	selectedTab.set(selected);

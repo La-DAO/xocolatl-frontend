@@ -1,6 +1,9 @@
 <script lang="ts">
 import { ethers } from 'ethers';
 import { provider, chainId, connected, defaultEvmStores } from 'svelte-ethers-store';
+import '@fontsource/quicksand';
+import '@fontsource/quicksand/700.css';
+import '@fontsource/roboto';
 
 import '../i18n'; // locales
 import { isLoading } from 'svelte-i18n'
@@ -46,7 +49,6 @@ $: oldChain = handleNetworkChange(oldChain, $chainId);
 
 <style>
 	/* TODO: bundle fonts and stop fetching from google */
-	@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700;900&family=Roboto&display=swap');
 
 	/* global colors */
 	:global(:root){
