@@ -4,13 +4,13 @@
 		"disconnect": "Disconnect",
 		"deposit": "Deposit",
 		"mint": "Mint",
-		"redeem": "Redeem",
+		"redeem": "Repay",
 		"withdraw": "Withdraw"
 	},
 	"input": {
 		"deposit": "Amount to deposit",
 		"mint": "Amount to mint",
-		"redeem": "Amount to redeem",
+		"redeem": "Amount to repay",
 		"withdraw": "Amount to withdraw",
 		"collateral": "Collateral",
 		"token": "Token"
@@ -20,7 +20,7 @@
 		"healthIndexTooltip": "The safety of your loan derived from the proportion of collateral versus amount borrowed. Keep it above 1 to avoid liquidation.",
 		"usedBorrowingPower": "Borrowing power used",
 		"usedBorrowingPowerTooltip": "The percentage of the maximum borrowing power you are currently using",
-		"LTV": "LTV (Loan to Value)",
+		"LTV": "LTV (Loan-to-Value)",
 		"LTVTooltip": "Loan-to-Value represents the maximum borrowing power of your collateral. For example, with a LTV of 66%, you can borrow up to 0.66 worth of ETH in mexican pesos for every 1 ETH worth of collateral.",
 		"currentETHPrice": "Current ETH price",
 		"currentETHPriceTooltip": "The current price of ETH, as priced by the protocol",
@@ -28,7 +28,7 @@
 		"liquidationETHPriceTooltip": "The price of ETH at which your collateral will be liquidated to cover your debt",
 		"collateralValue": "Deposited Collateral value",
 		"collateralValueTooltip": "The current value of your deposited collateral, converted to mexican pesos",
-		"maxDebt": "Max debt",
+		"maxDebt": "Borrowing limit",
 		"maxDebtTooltip": "Your maximum allowed debt, taking into account the current value of your collateral"
 	},
 	"balances": {
@@ -37,8 +37,8 @@
 		"depositBalance": "Deposited collateral balance",
 		"availableForWithdrawal": "Available for withdrawal",
 		"loans": "Loans",
-		"remainingLoan": "Remaining loan",
-		"availableToLoan": "Available to loan",
+		"remainingLoan": "Outstanding loan",
+		"availableToLoan": "Available to borrow",
 		"xocBalance": "Your wallet balance"
 	}
 }
