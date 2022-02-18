@@ -22,7 +22,7 @@ import { handleProviderChange } from '../utils';
 $: $provider && handleProviderChange();
 
 function handleNetworkChange(oldChain: number | string, newChain: number | string): number | string {
-	if(oldChain) {
+	if(oldChain && newChain) {
 		window.location.reload();
 	}
 	return newChain; 
