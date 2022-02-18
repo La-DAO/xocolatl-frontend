@@ -6,7 +6,7 @@ import '@fontsource/quicksand/700.css';
 import '@fontsource/roboto';
 
 import '../i18n'; // locales
-import { isLoading } from 'svelte-i18n'
+import { isLoading } from 'svelte-i18n';
 
 import Header from './Header.svelte';
 import Dashboard from './Dashboard.svelte';
