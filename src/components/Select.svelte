@@ -1,4 +1,5 @@
 <script>
+import Icon from './Icon.svelte';
 export let options;
 export let defaultValue;
 export let handleClickFunc;
@@ -18,11 +19,11 @@ li > ul {
     position: absolute;
     visibility: hidden;
 }
-/* li:hover > ul, li:focus-within > ul { */
-/*     left: 0; */
-/*     visibility: visible; */
-/* } */
 
+li:hover > ul, li:focus-within > ul {
+    left: 0;
+    visibility: visible;
+}
 
 .visible {
     left: 0;
@@ -31,31 +32,30 @@ li > ul {
 
 
 .box {
-    border: 2px solid white;
+    border: 1px solid white;
     border-radius: 5px;
     margin: auto;
-    background-color: #CE9786;
+    background-color: #613516;
     cursor: pointer;
 }
 
 .title {
     box-sizing: border-box;
-    padding: 0.5rem;   
+    padding: 0.5rem;
 }
 
 .option {
     box-sizing: border-box;
-    background-color: #CE9786;
+    background-color: #613516;
     width: 100%;
     border: 1px solid white;
     padding: 0.5rem;
-    
 }
 
 </style>
 
 <ul>
-        <li width={width} class="box"><div class="title" on:click="{()=>isClickExpanded = !isClickExpanded}">{options[defaultValue]} v</div>
+<li width={width} class="box"><div class="title" on:click="{()=>isClickExpanded = !isClickExpanded}">{options[defaultValue]} <Icon name="chevron"/></div>
         <ul class:visible={isClickExpanded}>
             {#each Object.entries(options) as [key, value]}
             <li class="option" 

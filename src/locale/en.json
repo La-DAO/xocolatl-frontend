@@ -2,6 +2,7 @@
   "actions": {
 		"connect": "Connect with metamask",
 		"disconnect": "Disconnect",
+		"approve": "Approve",
 		"deposit": "Deposit",
 		"mint": "Mint",
 		"redeem": "Repay",
@@ -40,5 +41,10 @@
 		"remainingLoan": "Outstanding loan",
 		"availableToLoan": "Available to borrow",
 		"xocBalance": "Your wallet balance"
+	},
+	"modal": {
+		"header": "Connected to unsupported network",
+		"body": "Please select below, or connect manually to one of the following networks",
+		"close": "Close this message"
 	}
 }

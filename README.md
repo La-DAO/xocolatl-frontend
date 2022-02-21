@@ -1,7 +1,6 @@
-# Svelte Webpack Starter
+# Xocolatl frontend 
 
-A starter template for [Svelte](https://svelte.dev) that comes preconfigured with Webpack, TypeScript, SCSS, Babel,
-Autoprefixer, and HMR.
+Applicacion para mintear e interactuar con XOC, un peso mexicano decentralizado. Hecho posible gracias a un esfuerzo colaborativo de PipilaDAO.
 
 - [Getting started](#getting-started)
 	- [Installation](#installation)

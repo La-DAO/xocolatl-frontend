@@ -1,6 +1,8 @@
 <script lang="ts">
-import { _ } from 'svelte-i18n'
+
+import { _ } from 'svelte-i18n';
 import { selectedTab } from '../store/store';
+
 
 function handleSectionClick(selected: string) {
 	selectedTab.set(selected);
@@ -33,6 +35,7 @@ selectedTab.subscribe(value => {
 		border-style: solid;
 		font-family: "Quicksand", sans-serif;
 		font-weight: bold;
+		cursor: pointer;
 	}
 
 	.left-nav-button {

@@ -2,6 +2,7 @@
   "actions": {
 		"connect": "Conectarse con metamask",
 		"disconnect": "Desconectar",
+		"approve": "Aprovar",
 		"deposit": "Depositar",
 		"mint": "Acuñar",
 		"redeem": "Amortizar",
@@ -40,5 +41,10 @@
 		"remainingLoan": "Deuda restante",
 		"availableToLoan": "Disponible para pedir prestado",
 		"xocBalance": "Balance de tu cartera"
+	},
+	"modal": {
+		"header": "Conectado a red no soportada",
+		"body": "Favor de seleccionar abajo, o conectarse manualmente a alguna de las siguientes redes",
+		"close": "Cerrar este mensaje"
 	}
 }

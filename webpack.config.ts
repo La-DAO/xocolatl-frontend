@@ -1,3 +1,4 @@
+import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
 /**
  * Babel will compile modern JavaScript down to a format compatible with older browsers, but it will also increase your
  * final bundle size and build speed. Edit the `browserslist` property in the package.json file to define which
@@ -75,10 +76,6 @@ const config: Configuration = {
 		},
 		extensions: ['.mjs', '.js', '.ts', '.svelte'],
 		mainFields: ['svelte', 'browser', 'module', 'main'],
-		fallback: { 
-			"stream": require.resolve("stream-browserify"),
-			"buffer": require.resolve("buffer")
-		}
 	},
 	output: {
 		path: path.resolve(__dirname, 'public/build'),
@@ -118,7 +115,11 @@ const config: Configuration = {
 					}
 				}
 			},
-
+			// load fonts
+			{
+				test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
+				use: ['file-loader']
+			},
 			// Required to prevent errors from Svelte on Webpack 5+, omit on Webpack 4
 			// See: https://github.com/sveltejs/svelte-loader#usage
 			{
@@ -174,12 +175,8 @@ const config: Configuration = {
 	},
 	target: isDevelopment ? 'web' : 'browserslist',
 	plugins: [
-		new Webpack.ProvidePlugin({
-      process: 'process/browser',
-      Buffer: ['buffer', 'Buffer'],
-    }),
-		new Webpack.DefinePlugin({
-      'process.env': JSON.stringify('development')
+		new NodePolyfillPlugin({
+			excludeAliases: ['console']
 		}),
 		new MiniCssExtractPlugin({
 			filename: '[name].css'

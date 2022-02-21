@@ -1,4 +1,5 @@
 <script lang="ts">
+import { _ } from 'svelte-i18n';
 import { connected } from 'svelte-ethers-store';
 import { isRighNetwork, selectedTab } from '../store/store';
 import { WETHDepositInputAmountBigNum, XOCRedeemInputAmountBigNum } from '../store/userInput';
@@ -32,19 +33,19 @@ button {
 
 {#if $selectedTab === 'deposit'}
 	{#if $userWETHAllowance && $WETHDepositInputAmountBigNum && $userWETHAllowance.lt($WETHDepositInputAmountBigNum)}
-		<button on:click={approveWETH} type="button" class:is-disabled={disabled} {disabled}>Aprovar</button>
+		<button on:click={approveWETH} type="button" class:is-disabled={disabled} {disabled}>{$_('actions.approve')}</button>
 	{:else}
-		<button on:click={depositWETH} type="button" class:is-disabled={disabled} {disabled}>Despositar</button>
+		<button on:click={depositWETH} type="button" class:is-disabled={disabled} {disabled}>{$_('actions.deposit')}</button>
 	{/if}
 {:else if $selectedTab === 'mint'}
-	<button on:click={mintXOC} type="button" {disabled} class:is-disabled={disabled}>Acuñar</button>
+	<button on:click={mintXOC} type="button" {disabled} class:is-disabled={disabled}>{$_('actions.mint')}</button>
 {:else if $selectedTab === 'redeem'}
 	{#if $userXOCAllowance && $XOCRedeemInputAmountBigNum && $userXOCAllowance.lt($XOCRedeemInputAmountBigNum)}
-			<button on:click={approveXOC} type="button" class:is-disabled={disabled} {disabled}>Aprovar</button>
+			<button on:click={approveXOC} type="button" class:is-disabled={disabled} {disabled}>{$_('actions.approve')}</button>
 	{:else}
-			<button on:click={redeemXOC} type="button" class:is-disabled={disabled} {disabled}>Amortizar</button>
+			<button on:click={redeemXOC} type="button" class:is-disabled={disabled} {disabled}>{$_('actions.redeem')}</button>
 	{/if}
 {:else if $selectedTab === 'withdraw'}
-	<button on:click={withdrawWETH} type="button" class:is-disabled={disabled} {disabled}>Retirar</button>
+	<button on:click={withdrawWETH} type="button" class:is-disabled={disabled} {disabled}>{$_('actions.withdraw')}</button>
 {/if}
 

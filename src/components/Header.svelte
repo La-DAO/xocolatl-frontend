@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { defaultEvmStores, signerAddress, chainId} from 'svelte-ethers-store';
-	import { _, locale, locales } from 'svelte-i18n'
+	import { _, locale, locales } from 'svelte-i18n';
 	import { toShortAddress, changeNetwork } from '../utils';
 
 	import { isRighNetwork } from '../store/store';
@@ -12,12 +12,12 @@
 	const chainOptions = {
 		'0x4': 'Rinkeby',
 		'0x2a': 'Kovan'
-	}
+	};
 
 	// locale array as select options object
 	$: localeOptions = $locales.reduce((a, v) => ({ ...a, [v]: v}), {});
 	// removes - from locale for select
-	$: trimmedLocale = $locale!.replace(/\-.*/,'')
+	$: trimmedLocale = $locale!.replace(/-.*/,'');
 
 
 	// locale array as select options object
@@ -82,23 +82,33 @@
 		cursor: pointer;
 	}
 	
+	button {
+		padding: 0.5rem;
+		background-color: white;
+		color: black;
+		border-radius: 5px;
+		border: 2px solid white;
+  	text-decoration: none;
+		cursor: pointer;
+	}
+
 </style>
 
 <header class="header">
 	<div class="container">
 		<h2>Xocolatl</h2>
 		<div class="right-content">
-		<Select width="3rem" options={localeOptions} defaultValue={trimmedLocale} handleClickFunc={locale.set}/>
 		{#if $signerAddress}
+			<img class="add-token-button" src="/static/token.png" on:click={addXOCToMetamask} alt="Add XOC to metamask button"/>
 			{#if $isRighNetwork && currentChainHex}
 				<Select width="6rem" options={chainOptions} defaultValue={currentChainHex} handleClickFunc={changeNetwork}/>
 			{:else}
 				Unsupported network!
 			{/if}
-			<img class="add-token-button" src="/static/token.png" on:click={addXOCToMetamask} alt="Add XOC to metamask button"/>
-			{shortSignerAddress + ' '}
-			<button type="button" on:click={handleDisconnect}>{$_('actions.disconnect')}</button>
+			<Select width="3rem" options={localeOptions} defaultValue={trimmedLocale} handleClickFunc={locale.set}/>
+			<button type="button" on:click={handleDisconnect}>{shortSignerAddress + ' '}</button>
 		{:else}
+			<Select width="3rem" options={localeOptions} defaultValue={trimmedLocale} handleClickFunc={locale.set}/>
 			<button type="button" on:click={handleConnect}>{$_('actions.connect')}</button>
 		{/if}
 		</div>

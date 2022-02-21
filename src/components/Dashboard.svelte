@@ -82,7 +82,7 @@ import AmountInput from './AmountInput.svelte';
 					bind:inputError={$WETHDepositInputError} 
 					inputAmountBigNum={$WETHDepositInputAmountBigNum}
 					inputLimit={$userWETHBalance}
-					inputTypeText={$_('input.collateral') + ": WETH"}
+					inputTypeText={$_('input.collateral') + ': WETH'}
 				/>
 			{:else if $selectedTab==='mint'}
 				<AmountInput 
@@ -91,7 +91,7 @@ import AmountInput from './AmountInput.svelte';
 					bind:inputError={$XOCMintInputError} 
 					inputAmountBigNum={$XOCMintInputAmountBigNum}
 					inputLimit={$userXOCMintingPower}
-					inputTypeText={$_('input.token') + ": XOC"}
+					inputTypeText={$_('input.token') + ': XOC'}
 				/>
 			{:else if $selectedTab==='redeem'}
 				<AmountInput 
@@ -100,7 +100,7 @@ import AmountInput from './AmountInput.svelte';
 					bind:inputError={$XOCRedeemInputError} 
 					inputAmountBigNum={$XOCRedeemInputAmountBigNum}
 					inputLimit={$userXOCBalance}
-					inputTypeText={$_('input.token') + ": XOC"}
+					inputTypeText={$_('input.token') + ': XOC'}
 				/>
 			{:else if $selectedTab==='withdraw'}
 				<AmountInput 
@@ -109,7 +109,7 @@ import AmountInput from './AmountInput.svelte';
 					bind:inputError={$WETHWithdrawInputError} 
 					inputAmountBigNum={$WETHWithdrawInputAmountBigNum}
 					inputLimit={$userWETHMaxWithdrawal}
-					inputTypeText={$_('input.collateral') + ": WETH"}
+					inputTypeText={$_('input.collateral') + ': WETH'}
 				/>
 			{/if}
 			</div>
