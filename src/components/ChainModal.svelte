@@ -1,7 +1,7 @@
 <script lang="ts">
+import { _ } from 'svelte-i18n';
 import { clickOutside, changeNetwork } from '../utils';
 export let hidden = true; 
-
 
 
 function handleOutsideClick() {
@@ -64,12 +64,12 @@ button {
 
 <section  class:hidden class="modal">
 	<div use:clickOutside={handleOutsideClick} class="modal-content">
-		<h2 class="modal-header">Conectado a red no soportada</h2>
+		<h2 class="modal-header">{$_('modal.header')}</h2>
 		<div class="modal-body">
-			<h4>Favor de seleccionar abajo, o conectarse manualmente a alguna de las siguientes redes: </h4>
+			<h4>{$_('modal.body')}: </h4>
 				<p on:click={()=>changeNetwork('0x4')}>Rinkeby</p><br>
 				<p on:click={()=>changeNetwork('0x2a')}>Kovan</p><br>
-			<button on:click="{()=>hidden=true}">Cerrar este mensaje</button>
+			<button on:click="{()=>hidden=true}">{$_('modal.close')}</button>
 		</div>
 	</div>
 </section>
