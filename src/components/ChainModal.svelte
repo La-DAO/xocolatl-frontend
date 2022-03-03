@@ -27,6 +27,7 @@ function handleOutsideClick() {
 .modal-content {
 	z-index: 4;
 	border: 2px solid var(--main-color);
+	border-radius: 7px;
 	width: 30rem;
 	margin: auto;
 	background-color: white;
