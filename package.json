@@ -52,11 +52,13 @@
 		"@fontsource/quicksand": "^4.5.4",
 		"@fontsource/roboto": "^4.5.3",
 		"@okrad/svelte-progressbar": "^1.11.3",
+		"@walletconnect/web3-provider": "^1.7.1",
 		"ethers": "^5.5.3",
 		"redstone-evm-connector": "^2.1.5",
 		"serve": "^13.0.2",
-		"svelte-ethers-store": "^0.6.4",
-		"svelte-i18n": "^3.3.13"
+		"svelte-ethers-store": "^1.0.1",
+		"svelte-i18n": "^3.3.13",
+		"web3modal": "^1.9.5"
 	},
 	"browserslist": [
 		"defaults"

@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { connected } from 'svelte-ethers-store';
+import { defaultEvmStores, connected } from 'svelte-ethers-store';
 import { isRighNetwork } from './store/store';
 import { resetAll } from './store/contractData';
 import { fetchAllDisplayData } from './contractReads';
@@ -35,9 +35,7 @@ export function clickOutside(node: HTMLElement, onEventFunction: ()=>void) {
 			onEventFunction();
 		}
 	};
-
 	document.addEventListener('click', handleClick);
-
 	return {
 		destroy() {
 			document.removeEventListener('click', handleClick);
