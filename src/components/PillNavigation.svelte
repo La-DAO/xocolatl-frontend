@@ -28,8 +28,8 @@ selectedTab.subscribe(value => {
 		width: 100%;
 		height: 100%;
 		color: black;
-		background-color: white;
-		border-color: white;
+		background-color: var(--light-color);
+		border-color: var(--light-color);
 		margin: 0.5rem 0 0 0;
 		padding: 0.8rem;
 		border-style: solid;
@@ -50,7 +50,7 @@ selectedTab.subscribe(value => {
 
 	.selected {
 		background-color: var(--main-color);
-		color: white;
+		color: var(--light-color);
 	}
 </style>
 <nav> 

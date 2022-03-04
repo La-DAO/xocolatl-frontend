@@ -29,7 +29,7 @@ function handleOutsideClick() {
 	border: 2px solid var(--main-color);
 	width: 30rem;
 	margin: auto;
-	background-color: white;
+	background-color: var(--light-color);
 	opacity: 1;
 	padding: 2rem;
 	text-align: center;

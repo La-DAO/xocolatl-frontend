@@ -26,7 +26,7 @@ function handleClose(txHash: string) {
 	height: 26rem;
 	border: 2px solid black;
 	border-radius: 5px;
-	background-color: white;
+	background-color: var(--light-color);
 	opacity: 0.9;
 	padding: 1rem;
 }

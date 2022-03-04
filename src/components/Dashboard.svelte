@@ -43,7 +43,7 @@ import AmountInput from './AmountInput.svelte';
 		display: flex;
 		flex-direction: column;
 		background-color: var(--main-color);
-		color: white;
+		color: var(--light-color);
 		row-gap: 2rem;
 	}
 

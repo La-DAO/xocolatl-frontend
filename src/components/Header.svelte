@@ -59,7 +59,12 @@
 		margin: 0;
 		width: 100%;
 		background-color: var(--main-color);
-		color: white;
+		color: var(--light-color);
+	}
+
+	h2 {
+		font-family: "HWTAetna-ExtraCondensed";
+		font-size: 2rem;
 	}
 
 	.container {
@@ -84,10 +89,10 @@
 	
 	button {
 		padding: 0.5rem;
-		background-color: white;
+		background-color: var(--light-color);
 		color: black;
 		border-radius: 5px;
-		border: 2px solid white;
+		border: 2px solid var(--light-color);
   	text-decoration: none;
 		cursor: pointer;
 	}

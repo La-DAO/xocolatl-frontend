@@ -42,16 +42,14 @@
 	}
 
 	.collateral-type {
-		color: black;
-		background-color: white;
+		color: var(--light-color);
 		width: 10rem;
 		margin: 2rem auto 2rem auto;
 		text-align: center;
-		padding: 0.5rem;
-		border-radius: 2rem;
+		font-size: 1.2rem;
 	}
 	.percent-button {
-		background-color: white;
+		background-color: var(--light-color);
 		font-size: 1rem;
 		margin: 0.5rem;
 		cursor: pointer;
@@ -73,7 +71,7 @@
 
 	<div class="deposit-amount-section">
 		<h1 class="deposit-header"> {headerText} </h1>
-		<input bind:value={inputAmount} type="number" min=0/>
+		<input bind:value={inputAmount} type="number" min=0 lang="en"/>
 		<div class="buttons">
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(0.25)}>25%</button>
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(0.5)}>50%</button>
