@@ -32,7 +32,7 @@ li:hover > ul, li:focus-within > ul {
 
 
 .box {
-    border: 1px solid white;
+    border: 1px solid var(--light-color);
     border-radius: 5px;
     margin: auto;
     background-color: #613516;
@@ -48,7 +48,7 @@ li:hover > ul, li:focus-within > ul {
     box-sizing: border-box;
     background-color: #613516;
     width: 100%;
-    border: 1px solid white;
+    border: 1px solid var(--light-color);
     padding: 0.5rem;
 }
 

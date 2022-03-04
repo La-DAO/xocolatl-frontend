@@ -13,6 +13,7 @@ import Dashboard from './Dashboard.svelte';
 import TxMonitor from './TxMonitor.svelte';
 import Polling from './Polling.svelte';
 import ChainModal from './ChainModal.svelte';
+import Footer from './Footer.svelte';
 
 import { isRighNetwork } from '../store/store';
 
@@ -48,11 +49,19 @@ $: oldChain = handleNetworkChange(oldChain, $chainId);
 
 
 <style>
-	/* TODO: bundle fonts and stop fetching from google */
+	@font-face {
+		font-family: "HWTAetna-ExtraCondensed";
+		src: url('fonts/HWTAetnaExtraCondensed/font.woff2') format('woff2'), url('webFonts/HWTAetnaExtraCondensed/font.woff') format('woff');
+	}
 
 	/* global colors */
 	:global(:root){
 		--main-color: #4F2608; /* chocolate */
+		--light-color: #E0DDD7;
+	}
+	:global(html, body) {
+		background-color: var(--light-color);
+
 	}
 
 	main {
@@ -60,6 +69,8 @@ $: oldChain = handleNetworkChange(oldChain, $chainId);
 		padding: 0;
 		margin: 0;
 		font-family: "Roboto", sans-serif;	
+		background-color: #E0DDD7;
+		min-height: 100vh;
 	}
 
 </style>
@@ -73,5 +84,6 @@ Por favor espere...
 	<Dashboard />
 	<TxMonitor />
 	<Polling />
+	<Footer />
 </main>
 {/if}

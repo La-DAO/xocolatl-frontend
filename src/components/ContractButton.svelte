@@ -14,7 +14,7 @@ $: if ($isRighNetwork || !connected) {
 
 <style>
 button {
-	color: white;
+	color: var(--light-color);
 	background-color: var(--main-color);
 	cursor: pointer;
 	height: 2rem;

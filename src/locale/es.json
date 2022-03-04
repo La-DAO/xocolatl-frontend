@@ -46,5 +46,6 @@
 		"header": "Conectado a red no soportada",
 		"body": "Favor de seleccionar abajo, o conectarse manualmente a alguna de las siguientes redes",
 		"close": "Cerrar este mensaje"
-	}
+	},
+	"footer": "Un proyecto de"
 }
