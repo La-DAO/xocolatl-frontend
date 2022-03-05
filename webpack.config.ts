@@ -118,7 +118,7 @@ const config: Configuration = {
 			// load fonts
 			{
 				test: /\.(eot|woff|woff2|svg|ttf)([?]?.*)$/,
-				use: ['file-loader']
+				type: 'asset/resource'
 			},
 			// Required to prevent errors from Svelte on Webpack 5+, omit on Webpack 4
 			// See: https://github.com/sveltejs/svelte-loader#usage

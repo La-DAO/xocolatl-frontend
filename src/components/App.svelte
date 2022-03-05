@@ -49,11 +49,6 @@ $: oldChain = handleNetworkChange(oldChain, $chainId);
 
 
 <style>
-	@font-face {
-		font-family: "HWTAetna-ExtraCondensed";
-		src: url('fonts/HWTAetnaExtraCondensed/font.woff2') format('woff2'), url('webFonts/HWTAetnaExtraCondensed/font.woff') format('woff');
-	}
-
 	/* global colors */
 	:global(:root){
 		--main-color: #4F2608; /* chocolate */
