@@ -1,72 +1,62 @@
 <script lang="ts">
-import { providers } from 'ethers';
-import WalletConnectProvider from '@walletconnect/web3-provider';
+
+
 import { defaultEvmStores, connected, signerAddress, chainId, provider } from 'svelte-ethers-store';
 import { onMount } from 'svelte';
 import { _ } from 'svelte-i18n';
 
-import { clickOutside, toShortAddress } from '../utils';
+import { clickOutside, toShortAddress, handleWalletConnectProvider } from '../utils';
 import { chains } from '../chains';
+
+import { providerType } from '../store/store';
 import { resetAll } from '../store/contractData';
 
 import Icon from './Icon.svelte';
 
-
-
-
 export let hidden = true; 
 let delayPassed = false;
 
+$: changing = false;
+$: copying = false;
+
+async function handleCopy() {
+	navigator.clipboard.writeText($signerAddress);
+	copying=true;
+	await new Promise(r => setTimeout(r, 1000));
+	copying=false;
+}
+
 function handleOutsideClick() {
 	if(delayPassed) {
+		changing = false;
 		hidden = true;
 	}
+}
+
+async function handleConnect(target: string) {
+	if(target === 'walletconnect') {
+		await handleWalletConnectProvider();
+
+		changing = false;
+	}
+
 }
 
 
 async function handleMetamaskConnect() {
 	/* hidden = true; */
 	await defaultEvmStores.setProvider();
+
+	changing=false;
 }
 
-async function handleWalletConnectProvider() {
-	const providerOptions = {
-		walletconnect: {
-			network: 'rinkeby',
-			cacheProvider: false,
-			package: WalletConnectProvider, // required
-			options: {
-				rpc: {
-					4: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
-					42: 'https://kovan.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
-					// ...
-				},
-			}
-		}
-	};
-	//  Enable session (triggers QR Code modal)
 
-
-	const wcProvider = new WalletConnectProvider({
-		rpc: {
-			4: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
-			42: 'https://kovan.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
-			// ...
-		},
-	});
-	//  Enable session (triggers QR Code modal)
-	await wcProvider.enable();
-
-	//  Wrap with Web3Provider from ethers.js
-	const web3Provider = new providers.Web3Provider(wcProvider);
-	await defaultEvmStores.setProvider(web3Provider);
-	console.log($provider);
-}
 
 
 async function handleDisconnect() {
 	defaultEvmStores.disconnect();
 	resetAll();
+	localStorage.removeItem('walletconnect');
 	hidden = true;
 }
 
@@ -168,9 +158,12 @@ button {
 	padding: 0.2rem;
 	font-size: 0.8rem;
 	display: inline;
-	color: var(--light-main-color);
 	margin: 0.2rem;
 }
+
+/* .light-text { */
+/* 	color: var(--light-main-color); */
+/* } */
 
 
 .mini-pill-button:hover {
@@ -192,7 +185,10 @@ button {
 	justify-content: space-between;
 	align-items: center;
 	cursor: pointer;
-	padding: 0.8rem;
+	/* padding: 0.5rem; */
+	/* height: 5rem; */
+	padding: 0.5rem;
+	
 	margin: 0.2rem;
 }
 
@@ -201,28 +197,43 @@ button {
 	font-weight: 600;
 }
 
+.provider-option > div {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
 
 .wallet-logo {
 	width: 1.5rem;
 	height: 1.5rem;
 }
 
+.green {
+	color: green;
+	/* font-size: 2rem; */
+}
+
 </style>
 
 <section class:hidden class="modal">
 	<div use:clickOutside={handleOutsideClick} class="modal-content">
-		{#if $connected}
+		{#if $connected && !changing}
 			<div class="modal-header">
 				<b>Account</b>
 				<div>
-					<div class="mini-pill-button">Change</div>
+					<div on:click={()=>changing=true} class="mini-pill-button">Change</div>
 					<div on:click={handleDisconnect} class="mini-pill-button">Disconnect</div>
 				</div>
 			</div>
 			<div class="round-border modal-body">
 				<p>{toShortAddress($signerAddress)}</p><br>
 				<div class="mini-buttons">
-					<div on:click={()=>navigator.clipboard.writeText($signerAddress)} class="mini-button"><Icon name="copy" width="0.8rem" height="0.8rem"/>&nbsp;Copy address</div>
+					{#if !copying}
+						<div on:click={handleCopy} class="mini-button"><Icon name="copy" width="0.8rem" height="0.8rem"/>&nbsp;Copy address</div>
+					{:else}
+						<div on:click={handleCopy} class="mini-button"><Icon name="check" width="0.8rem" height="0.8rem"/>&nbsp;Copied to clipboard</div>
+					{/if}
 					<div on:click={()=>window.open(chains[$chainId].blockExplorerURL + '/address/' + $signerAddress, '_blank')} class="mini-button"><Icon name="link" width="0.8rem" height="0.8rem"/>&nbsp;View on block explorer</div>
 				</div>
 			</div>
@@ -232,18 +243,24 @@ button {
 			</div>
 			<div class="modal-body">
 				<div on:click={handleMetamaskConnect} class="round-border provider-option">
-					Metamask
+					<div>
+						<span class:hidden={$providerType !== 'metamask'} class="green">&#8226;</span>
+						Metamask
+					</div>
 					<img class="wallet-logo" alt="Metamask logo" src="/static/wallets/metamask.png"/>
 				</div>
-				<div on:click={handleWalletConnectProvider} class="round-border provider-option">
-					WalletConnect
+						<div on:click={()=>handleConnect('walletconnect')} class="round-border provider-option"> <div>
+						<span class:hidden={$providerType !== 'walletconnect'} class="green">&#8226;</span>
+						WalletConnect
+					</div>
 					<img class="wallet-logo" alt="WalletConnect logo" src="/static/wallets/walletconnect.svg"/>
 				</div>
 
-				<div class="round-border provider-option">
+				<!-- <div class="round-border provider-option">
 					Coinbase	
 					<img class="wallet-logo" alt="Coinbase logo" src="/static/wallets/coinbase.svg"/>
 				</div>
+				-->
 			</div>
 		{/if}
 		<button class="mini-pill-button" on:click="{()=>hidden=true}">{$_('modal.close')}</button>

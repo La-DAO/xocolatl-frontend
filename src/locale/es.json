@@ -1,6 +1,6 @@
 {
   "actions": {
-		"connect": "Conectarse con metamask",
+		"connect": "Conectar cartera",
 		"disconnect": "Desconectar",
 		"approve": "Aprovar",
 		"deposit": "Depositar",

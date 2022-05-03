@@ -1,6 +1,6 @@
 {
   "actions": {
-		"connect": "Connect with metamask",
+		"connect": "Connect wallet",
 		"disconnect": "Disconnect",
 		"approve": "Approve",
 		"deposit": "Deposit",
@@ -46,5 +46,6 @@
 		"header": "Connected to unsupported network",
 		"body": "Please select below, or connect manually to one of the following networks",
 		"close": "Close this message"
-	}
+	},
+	"footer": "A project by"
 }

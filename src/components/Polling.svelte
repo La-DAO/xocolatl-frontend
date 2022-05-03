@@ -24,21 +24,7 @@
 	
 
 	$: if($isRighNetwork && get(WETHContract) && get(houseOfCoinContract) && get(houseOfReserveContract) && get(XOCContract)) {
-
-
 		/* eslint-disable @typescript-eslint/no-unused-vars */
-		$provider.on('network', (blockNumber: number) => {
-			console.log(blockNumber);
-			// update price dependant data more often
-			console.log('detected network change!!');
-		});
-
-		$provider.on('chainChanged', (blockNumber: number) => {
-
-			console.log(blockNumber);
-			// update price dependant data more often
-			console.log('detected chain change!!');
-		});
 
 		$provider.on('block', (blockNumber: number) => {
 			// update price dependant data more often

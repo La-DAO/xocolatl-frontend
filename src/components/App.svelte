@@ -6,7 +6,7 @@ import '@fontsource/quicksand/700.css';
 import '@fontsource/roboto';
 
 import '../i18n'; // locales
-import { isLoading } from 'svelte-i18n';
+import { isLoading, _ } from 'svelte-i18n';
 
 import Header from './Header.svelte';
 import Dashboard from './Dashboard.svelte';
@@ -15,10 +15,10 @@ import Polling from './Polling.svelte';
 import ChainModal from './ChainModal.svelte';
 import Footer from './Footer.svelte';
 
+
 import { isRighNetwork } from '../store/store';
 
-import { handleProviderChange } from '../utils';
-
+import { handleProviderChange, checkIfAlreadyConnected } from '../utils';
 
 $: $provider && handleProviderChange();
 
@@ -29,18 +29,7 @@ function handleNetworkChange(oldChain: number | string, newChain: number | strin
 	return newChain; 
 }
 
-// connects automatically to account if returning user
-async function checkIfAlreadyConnected() {
-	//@ts-ignore:next-line
-	if(window.ethereum) {
-		//@ts-ignore:next-line
-		const provider = new ethers.providers.Web3Provider(window.ethereum);
-		const accounts = await provider.listAccounts();
-		if (accounts[0]) {
-			defaultEvmStores.setProvider();
-		} 		
-	}
-}
+
 checkIfAlreadyConnected();
 
 let oldChain: number | string;
@@ -67,7 +56,6 @@ $: oldChain = handleNetworkChange(oldChain, $chainId);
 		background-color: #E0DDD7;
 		min-height: 100vh;
 	}
-
 </style>
 
 {#if $isLoading}
