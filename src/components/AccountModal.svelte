@@ -161,11 +161,6 @@ button {
 	margin: 0.2rem;
 }
 
-/* .light-text { */
-/* 	color: var(--light-main-color); */
-/* } */
-
-
 .mini-pill-button:hover {
 	border-color:	var(--main-color);
 	color: var(--main-color);
@@ -185,8 +180,6 @@ button {
 	justify-content: space-between;
 	align-items: center;
 	cursor: pointer;
-	/* padding: 0.5rem; */
-	/* height: 5rem; */
 	padding: 0.5rem;
 	
 	margin: 0.2rem;
@@ -211,7 +204,6 @@ button {
 
 .green {
 	color: green;
-	/* font-size: 2rem; */
 }
 
 </style>
