@@ -1,8 +1,8 @@
 <script lang="ts">
 
 
-import { defaultEvmStores, connected, signerAddress, chainId, provider } from 'svelte-ethers-store';
-import { onMount } from 'svelte';
+import { defaultEvmStores, connected, signerAddress, chainId } from 'svelte-ethers-store';
+import { onMount, onDestroy } from 'svelte';
 import { _ } from 'svelte-i18n';
 
 import { clickOutside, toShortAddress, handleWalletConnectProvider } from '../utils';
@@ -13,8 +13,10 @@ import { resetAll } from '../store/contractData';
 
 import Icon from './Icon.svelte';
 
-export let hidden = true; 
+export let hidden = true;
+
 let delayPassed = false;
+let hideTimeOutId: number;
 
 $: changing = false;
 $: copying = false;
@@ -33,25 +35,10 @@ function handleOutsideClick() {
 	}
 }
 
-async function handleConnect(target: string) {
-	if(target === 'walletconnect') {
-		await handleWalletConnectProvider();
-
-		changing = false;
-	}
-
-}
-
-
 async function handleMetamaskConnect() {
-	/* hidden = true; */
 	await defaultEvmStores.setProvider();
-
 	changing=false;
 }
-
-
-
 
 async function handleDisconnect() {
 	defaultEvmStores.disconnect();
@@ -62,10 +49,18 @@ async function handleDisconnect() {
 
 onMount(async () => {
 	if(!$connected) {
-		/* handleConnect(); */
+		if ($providerType === 'metamask') {
+			handleMetamaskConnect();
+		} else if ($providerType === 'walletconnect') {
+			handleWalletConnectProvider();
+		}
 	}
-	await new Promise(r => setTimeout(r, 1000));
+	hideTimeOutId = await new Promise(r => setTimeout(r, 1000));
 	delayPassed = true;
+});
+
+onDestroy(() => {
+	clearTimeout(hideTimeOutId);
 });
 </script>
 
@@ -88,7 +83,7 @@ onMount(async () => {
 	z-index: 4;
 	border: 2px solid var(--main-color);
 	border-radius: 7px;
-	width: 20rem;
+	max-width: 22rem;
 	margin: auto;
 	background-color: white;
 	opacity: 1;
@@ -135,18 +130,18 @@ button {
 
 .mini-buttons {
 	display: flex;
-	column-gap: 0.8rem;
+	column-gap: 0.7rem;
 }
 
 .mini-button {
-	font-size: 0.8rem;
+	font-size: 0.7rem;
 	cursor: pointer;
 	color: var(--light-main-color);
 }
 
 
 .mini-button:hover {
-	font-size: 0.8rem;
+	font-size: 0.7rem;
 	cursor: pointer;
 	color: var(--main-color);
 }
@@ -207,31 +202,30 @@ button {
 }
 
 </style>
-
 <section class:hidden class="modal">
 	<div use:clickOutside={handleOutsideClick} class="modal-content">
 		{#if $connected && !changing}
 			<div class="modal-header">
-				<b>Account</b>
+				<b>{$_('modal.account')}</b>
 				<div>
-					<div on:click={()=>changing=true} class="mini-pill-button">Change</div>
-					<div on:click={handleDisconnect} class="mini-pill-button">Disconnect</div>
+					<div on:click={()=>changing=true} class="mini-pill-button">{$_('actions.change')}</div>
+					<div on:click={handleDisconnect} class="mini-pill-button">{$_('actions.disconnect')}</div>
 				</div>
 			</div>
 			<div class="round-border modal-body">
 				<p>{toShortAddress($signerAddress)}</p><br>
 				<div class="mini-buttons">
 					{#if !copying}
-						<div on:click={handleCopy} class="mini-button"><Icon name="copy" width="0.8rem" height="0.8rem"/>&nbsp;Copy address</div>
+						<div on:click={handleCopy} class="mini-button"><Icon name="copy" width="0.8rem" height="0.8rem"/>&nbsp;{$_('modal.copyAddress')}</div>
 					{:else}
-						<div on:click={handleCopy} class="mini-button"><Icon name="check" width="0.8rem" height="0.8rem"/>&nbsp;Copied to clipboard</div>
+						<div on:click={handleCopy} class="mini-button"><Icon name="check" width="0.8rem" height="0.8rem"/>&nbsp;{$_('modal.copiedAddress')}</div>
 					{/if}
-					<div on:click={()=>window.open(chains[$chainId].blockExplorerURL + '/address/' + $signerAddress, '_blank')} class="mini-button"><Icon name="link" width="0.8rem" height="0.8rem"/>&nbsp;View on block explorer</div>
+					<div on:click={()=>window.open(chains[$chainId].blockExplorerURL + '/address/' + $signerAddress, '_blank')} class="mini-button"><Icon name="link" width="0.8rem" height="0.8rem"/>&nbsp;{$_('modal.viewOnExplorer')}</div>
 				</div>
 			</div>
 		{:else}
 			<div class="modal-header">
-				<b>Connect a wallet</b>
+				<b>{$_('actions.connect')}</b>
 			</div>
 			<div class="modal-body">
 				<div on:click={handleMetamaskConnect} class="round-border provider-option">
@@ -241,7 +235,7 @@ button {
 					</div>
 					<img class="wallet-logo" alt="Metamask logo" src="/static/wallets/metamask.png"/>
 				</div>
-						<div on:click={()=>handleConnect('walletconnect')} class="round-border provider-option"> <div>
+						<div on:click={handleWalletConnectProvider} class="round-border provider-option"> <div>
 						<span class:hidden={$providerType !== 'walletconnect'} class="green">&#8226;</span>
 						WalletConnect
 					</div>

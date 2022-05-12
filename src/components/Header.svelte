@@ -1,17 +1,14 @@
 <script lang="ts">
-	import { defaultEvmStores, signerAddress, chainId, connected} from 'svelte-ethers-store';
+	import { signerAddress, chainId, connected} from 'svelte-ethers-store';
 
 	import { _, locale, locales } from 'svelte-i18n';
 	import { toShortAddress, changeNetwork } from '../utils';
 
-	import { isRighNetwork } from '../store/store';
-	import { resetAll } from '../store/contractData';
+	import { isRighNetwork, accountModalHidden } from '../store/store';
 	import { chains } from '../chains';
 
 	import Select from './Select.svelte';
-	import AccountModal from './AccountModal.svelte';
 
-	let accountModalHidden = true;
 	const chainOptions = {
 		'0x4': 'Rinkeby',
 		'0x2a': 'Kovan'
@@ -25,12 +22,6 @@
 
 	// locale array as select options object
 	/* const localeOptions = $locales.map(locale=>{return {value: locale, label: locale}}) */
-
-	async function handleDisconnect() {
-		defaultEvmStores.disconnect();
-		resetAll();
-	}
-
 
 	$: shortSignerAddress = toShortAddress($signerAddress);
 
@@ -114,10 +105,7 @@
 			<Select width="3rem" options={localeOptions} defaultValue={trimmedLocale} handleClickFunc={locale.set}/>
 
 		{/if}
-		<button type="button" on:click={()=>accountModalHidden=false}>{$connected ? toShortAddress($signerAddress) : $_('actions.connect')}</button>
-		{#if !accountModalHidden}
-			<AccountModal bind:hidden={accountModalHidden}/>
-		{/if}
+		<button type="button" on:click={()=>$accountModalHidden=false}>{$connected ? shortSignerAddress : $_('actions.connect')}</button>
 		</div>
 	</div>
 </header>

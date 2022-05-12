@@ -2,8 +2,6 @@
 import { _ } from 'svelte-i18n';
 import { selectedTab } from '../store/store';
 
-
-
 import {
 	userWETHBalance,
 	userXOCMintingPower,

@@ -1,24 +1,22 @@
 <script lang="ts">
-import { ethers } from 'ethers';
-import { provider, chainId, connected, defaultEvmStores } from 'svelte-ethers-store';
+import { provider, chainId, connected } from 'svelte-ethers-store';
 import '@fontsource/quicksand';
 import '@fontsource/quicksand/700.css';
 import '@fontsource/roboto';
 
 import '../i18n'; // locales
-import { isLoading, _ } from 'svelte-i18n';
+import { isLoading } from 'svelte-i18n';
+
+import { isRighNetwork, accountModalHidden } from '../store/store';
+import { handleProviderChange, checkIfAlreadyConnected } from '../utils';
 
 import Header from './Header.svelte';
+import AccountModal from './AccountModal.svelte';
 import Dashboard from './Dashboard.svelte';
 import TxMonitor from './TxMonitor.svelte';
 import Polling from './Polling.svelte';
 import ChainModal from './ChainModal.svelte';
 import Footer from './Footer.svelte';
-
-
-import { isRighNetwork } from '../store/store';
-
-import { handleProviderChange, checkIfAlreadyConnected } from '../utils';
 
 $: $provider && handleProviderChange();
 
@@ -28,7 +26,6 @@ function handleNetworkChange(oldChain: number | string, newChain: number | strin
 	}
 	return newChain; 
 }
-
 
 checkIfAlreadyConnected();
 
@@ -64,6 +61,9 @@ Por favor espere...
 <main>
 	<ChainModal hidden={$connected && $isRighNetwork}/>
 	<Header />  
+	{#key !$accountModalHidden}
+		<AccountModal bind:hidden={$accountModalHidden}/>
+	{/key}
 	<Dashboard />
 	<TxMonitor />
 	<Polling />

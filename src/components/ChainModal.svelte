@@ -63,7 +63,7 @@ button {
 }
 </style>
 
-<section  class:hidden class="modal">
+<section class:hidden class="modal">
 	<div use:clickOutside={handleOutsideClick} class="modal-content">
 		<h2 class="modal-header">{$_('modal.header')}</h2>
 		<div class="modal-body">

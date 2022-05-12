@@ -4,7 +4,7 @@ stdenv.mkDerivation {
     name = "node";
     buildInputs = [
         nodejs
-        python27
+        python3
     ];
 
     shellHook = ''
