@@ -1,12 +1,14 @@
 {
   "actions": {
-		"connect": "Connect with metamask",
+		"connect": "Connect wallet",
 		"disconnect": "Disconnect",
 		"approve": "Approve",
 		"deposit": "Deposit",
 		"mint": "Mint",
 		"redeem": "Repay",
-		"withdraw": "Withdraw"
+		"withdraw": "Withdraw",
+		"change": "Change"
+
 	},
 	"input": {
 		"deposit": "Amount to deposit",
@@ -43,8 +45,13 @@
 		"xocBalance": "Your wallet balance"
 	},
 	"modal": {
+		"account": "Account",
 		"header": "Connected to unsupported network",
 		"body": "Please select below, or connect manually to one of the following networks",
-		"close": "Close this message"
-	}
+		"close": "Close this message",
+		"copyAddress": "Copy address",
+		"copiedAddress": "Copied to clipboard",
+		"viewOnExplorer": "View in block explorer"
+	},
+	"footer": "A project by"
 }

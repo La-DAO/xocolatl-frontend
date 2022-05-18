@@ -1,6 +1,5 @@
 <script lang="ts">
-import { ethers } from 'ethers';
-import { provider, chainId, connected, defaultEvmStores } from 'svelte-ethers-store';
+import { provider, chainId, connected } from 'svelte-ethers-store';
 import '@fontsource/quicksand';
 import '@fontsource/quicksand/700.css';
 import '@fontsource/roboto';
@@ -8,17 +7,16 @@ import '@fontsource/roboto';
 import '../i18n'; // locales
 import { isLoading } from 'svelte-i18n';
 
+import { isRighNetwork, accountModalHidden } from '../store/store';
+import { handleProviderChange, checkIfAlreadyConnected } from '../utils';
+
 import Header from './Header.svelte';
+import AccountModal from './AccountModal.svelte';
 import Dashboard from './Dashboard.svelte';
 import TxMonitor from './TxMonitor.svelte';
 import Polling from './Polling.svelte';
 import ChainModal from './ChainModal.svelte';
 import Footer from './Footer.svelte';
-
-import { isRighNetwork } from '../store/store';
-
-import { handleProviderChange } from '../utils';
-
 
 $: $provider && handleProviderChange();
 
@@ -29,18 +27,6 @@ function handleNetworkChange(oldChain: number | string, newChain: number | strin
 	return newChain; 
 }
 
-// connects automatically to account if returning user
-async function checkIfAlreadyConnected() {
-	//@ts-ignore:next-line
-	if(window.ethereum) {
-		//@ts-ignore:next-line
-		const provider = new ethers.providers.Web3Provider(window.ethereum);
-		const accounts = await provider.listAccounts();
-		if (accounts[0]) {
-			defaultEvmStores.setProvider();
-		} 		
-	}
-}
 checkIfAlreadyConnected();
 
 let oldChain: number | string;
@@ -67,7 +53,6 @@ $: oldChain = handleNetworkChange(oldChain, $chainId);
 		background-color: #E0DDD7;
 		min-height: 100vh;
 	}
-
 </style>
 
 {#if $isLoading}
@@ -76,6 +61,9 @@ Por favor espere...
 <main>
 	<ChainModal hidden={$connected && $isRighNetwork}/>
 	<Header />  
+	{#key !$accountModalHidden}
+		<AccountModal bind:hidden={$accountModalHidden}/>
+	{/key}
 	<Dashboard />
 	<TxMonitor />
 	<Polling />

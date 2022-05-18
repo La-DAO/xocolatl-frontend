@@ -114,6 +114,7 @@ export async function getCollateralRatioParam() {
 
 // TODO: fetch with array of promises and retry failed
 export async function fetchAllDisplayData() {
+	checkContractCallPrereqs();
 	getWETHAllowance();
 	getUserWETHDepositBalance();
 	getMaxWETHWithdrawal();

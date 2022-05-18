@@ -27,6 +27,7 @@ function handleOutsideClick() {
 .modal-content {
 	z-index: 4;
 	border: 2px solid var(--main-color);
+	border-radius: 7px;
 	width: 30rem;
 	margin: auto;
 	background-color: var(--light-color);
@@ -62,7 +63,7 @@ button {
 }
 </style>
 
-<section  class:hidden class="modal">
+<section class:hidden class="modal">
 	<div use:clickOutside={handleOutsideClick} class="modal-content">
 		<h2 class="modal-header">{$_('modal.header')}</h2>
 		<div class="modal-body">

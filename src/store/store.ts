@@ -1,9 +1,11 @@
 import { writable, derived } from 'svelte/store';
-import { connected, chainId } from 'svelte-ethers-store';
+import { connected, chainId, provider } from 'svelte-ethers-store';
 
 import type { Writable } from 'svelte/store';
 
 import { chains } from '../chains';
+
+export const accountModalHidden = writable(true);
 
 export const isRighNetwork = derived(
 	[connected, chainId],
@@ -14,8 +16,25 @@ export const isRighNetwork = derived(
 	}
 );
 
+
 export const selectedTab = writable('deposit');
 
+export const providerType =  derived([provider], 
+	([$provider]) => {
+		if($provider && 'provider' in $provider) {
+			// @ts-ignore:next-line
+			if ('isMetaMask' in $provider.provider) {
+				localStorage.setItem('providerType', 'metamask');
+				return 'metamask';
+			// @ts-ignore:next-line
+			} else if ('wc' in $provider.provider) {
+				localStorage.setItem('providerType', 'walletconnect');
+
+				return 'walletconnect';
+			}
+		} 
+		return 'unknown';
+	});
 
 interface PendingTx {
 	hash: string;

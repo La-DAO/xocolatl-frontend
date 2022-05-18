@@ -1,12 +1,13 @@
 {
   "actions": {
-		"connect": "Conectarse con metamask",
+		"connect": "Conectar cartera",
 		"disconnect": "Desconectar",
 		"approve": "Aprovar",
 		"deposit": "Depositar",
 		"mint": "Acuñar",
 		"redeem": "Amortizar",
-		"withdraw": "Retirar"
+		"withdraw": "Retirar",
+		"change": "Cambiar"
 	},
 	"input": {
 		"deposit": "Cantidad a depositar",
@@ -43,9 +44,13 @@
 		"xocBalance": "Balance de tu cartera"
 	},
 	"modal": {
+		"account": "Cuenta",
 		"header": "Conectado a red no soportada",
 		"body": "Favor de seleccionar abajo, o conectarse manualmente a alguna de las siguientes redes",
-		"close": "Cerrar este mensaje"
+		"close": "Cerrar este mensaje",
+		"copyAddress": "Copiar dirección",
+		"copiedAddress": "Copiada al portapeles",
+		"viewOnExplorer": "Ver en explorador de bloques"
 	},
 	"footer": "Un proyecto de"
 }
