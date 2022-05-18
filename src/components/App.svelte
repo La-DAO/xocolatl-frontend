@@ -39,7 +39,9 @@ $: oldChain = handleNetworkChange(oldChain, $chainId);
 	:global(:root){
 		--main-color: #4F2608; /* chocolate */
 		--light-color: #E0DDD7;
+		--box-radius: 8px; /* border radius of all boxes for consitent design */
 	}
+
 	:global(html, body) {
 		background-color: var(--light-color);
 
