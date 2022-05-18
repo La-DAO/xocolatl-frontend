@@ -46,9 +46,10 @@ li:hover > ul, li:focus-within > ul {
 
 .option {
     box-sizing: border-box;
-    background-color: #613516;
+    background-color: #6b3a18;
     width: 100%;
     border: 1px solid var(--light-color);
+    border-radius: var(--box-radius);
     padding: 0.5rem;
 }
 

@@ -61,6 +61,12 @@ const commify = ethers.utils.commify;
 	.highlight {
 		font-weight: 700;
 	}
+
+  @media (max-width: 1100px) {
+		.outer-box {
+			margin-bottom: 1rem;
+		}
+  }
 	
 </style>
 
