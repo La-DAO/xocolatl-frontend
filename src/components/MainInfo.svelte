@@ -36,6 +36,7 @@ const commify = ethers.utils.commify;
 
 	.outer-box {
 		border: 2px solid var(--main-color);
+		border-radius: var(--box-radius);
 		width: 32rem;
 	}
 

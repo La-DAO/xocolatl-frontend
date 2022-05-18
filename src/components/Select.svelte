@@ -33,7 +33,7 @@ li:hover > ul, li:focus-within > ul {
 
 .box {
     border: 1px solid var(--light-color);
-    border-radius: 5px;
+    border-radius: var(--box-radius);
     margin: auto;
     background-color: #613516;
     cursor: pointer;
