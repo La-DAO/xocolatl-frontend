@@ -30,10 +30,11 @@
 	}
 
 	.deposit-header {
-		font-size: 2rem;
+		font-size: 1.8rem;
 	}
 
-	.deposit-amount-section > input {
+	input {
+		display: inline-block;
   	all: unset;
     appearance: none;
 		font-size: 3.2rem;
@@ -42,11 +43,11 @@
 	}
 
 	.collateral-type {
-		color: var(--light-color);
+		color: grey;
 		width: 10rem;
-		margin: 2rem auto 2rem auto;
+		margin: 0 auto 0.5rem auto;
 		text-align: center;
-		font-size: 1.2rem;
+		font-size: 1rem;
 	}
 	.percent-button {
 		background-color: var(--light-color);
@@ -71,7 +72,9 @@
 
 	<div class="deposit-amount-section">
 		<h1 class="deposit-header"> {headerText} </h1>
-		<input bind:value={inputAmount} type="number" min=0 lang="en"/>
+		<label for="amount"></label>
+		<input id="amount" bind:value={inputAmount} type="number" min=0 lang="en"/>
+		<div class='collateral-type'>{inputTypeText}</div>
 		<div class="buttons">
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(0.25)}>25%</button>
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(0.5)}>50%</button>
@@ -79,6 +82,6 @@
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(1)}>100%</button>
 		</div>
 		{inputError}
-		<div class='collateral-type'>{inputTypeText}</div>
+
 	</div>
 
