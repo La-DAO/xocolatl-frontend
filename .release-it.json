@@ -1,0 +1,14 @@
+{
+  "git": {
+    "commitMessage": "release: v${version}"
+  },
+	"npm": {
+		"publish": "false"
+	},
+  "github": {
+    "release": true,
+		"draft": true,
+		"autoGenerate": true,
+		"assets": ["*.gz"]
+  }
+}

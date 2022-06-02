@@ -1,13 +1,17 @@
 {
 	"name": "xocolatl-frontend",
-	"version": "0.0.1",
-	"private": true,
+	"version": "0.0.0",
+	"homepage": "https://github.com/PipilaDAO/frontend",
+	"license": "GPL-3.0",
 	"scripts": {
 		"build": "cross-env NODE_ENV=production webpack",
 		"dev": "webpack serve",
 		"start": "serve public --listen 8080",
 		"validate": "svelte-check",
-		"lint": "eslint './src/**/*.{js,ts,svelte}'"
+		"lint": "eslint './src/**/*.{js,ts,svelte}'",
+		"release": "npm pack && npx release-it",
+		"prepack": "npm run build",
+		"postpack": "node ./scripts/renameTarball.js"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.17",
@@ -35,6 +39,7 @@
 		"postcss": "8.3",
 		"postcss-loader": "^5.0.0",
 		"regenerator-runtime": "^0.13.7",
+		"release-it": "^15.0.0",
 		"require-json5": "^1.1.0",
 		"sass": "^1.32.8",
 		"sass-loader": "^11.0.1",

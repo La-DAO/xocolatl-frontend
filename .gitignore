@@ -3,3 +3,4 @@ public/build/
 **/result
 yarn.lock
 .DS_Store
+.tgz

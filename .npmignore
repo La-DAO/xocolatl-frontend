@@ -1,0 +1,6 @@
+# when packaging with npm pack
+# ignore everything
+*
+# except public/ and its files
+!public/
+!public/**
