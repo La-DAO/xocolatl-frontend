@@ -38,7 +38,7 @@ const svelteCheckOnBuild = false;
  * This option will run svelte-check when the bundle is built in production mode only, and cause the build to fail
  * when svelte-check has errors or warnings
  */
-const svelteCheckOnBuildInProduction = true;
+const svelteCheckOnBuildInProduction = false;
 
 /*********************************************************************************************************************/
 /**********                                             Webpack                                             **********/
@@ -51,6 +51,7 @@ import Autoprefixer from 'autoprefixer';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CSSMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import SvelteCheckPlugin from 'svelte-check-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
 
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
@@ -208,7 +209,14 @@ export interface Configuration extends Webpack.Configuration, WebpackDev.Configu
 // Configuration for production bundles
 if (isProduction) {
 	// Clean the build directory for production builds
-	config.plugins?.push(new CleanWebpackPlugin());
+	config.plugins?.push(
+		...[
+			new CleanWebpackPlugin(),
+			new ESLintPlugin({
+				context: path.resolve(__dirname, 'src/'),
+				extensions: ['js', 'ts', 'svelte', 'jsx', 'tsx']
+			}),
+		]);
 
 	// Minify CSS files
 	config.optimization?.minimizer?.push(

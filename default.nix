@@ -5,13 +5,13 @@ let
 in
    rec {
       # fetches all dependencies and dev dependencies listed package.json
-      nodeDependencies = fetchNodeModules{
+      nodeDependencies = fetchNodeModules {
          src = ./.;
          nativeBuildInputs = [nodejs];
          buildInputs = [nodejs];
          name = "xocolatl-frontend-node_modules";
          production = false;
-         hash = "sha256-oX5JpylThIj9PYlzzxWnwih8lBnChmlFW5dKn+ehQ1w=";
+         hash = "sha256-/gTAa9/Lz6OTLMGvPKsU2vAI3j227iSpOZQB0mQ6cCg=";
          makeTarball = false; # otherwise ${nodeModules}/lib is not accesible
       };
 
