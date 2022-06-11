@@ -1,50 +1,63 @@
-{stdenvNoCC, nodejs, nodePackages, makeWrapper, callPackage, writeShellScriptBin}:
+{
+   lib,
+   stdenvNoCC,
+   nodejs,
+   nodePackages,
+   makeWrapper,
+   callPackage,
+   writeShellScriptBin,
+   nix-gitignore
+}:
 
 let
    fetchNodeModules = callPackage ./nix/fetchNodeModules.nix {};
+   packageJSON = lib.importJSON ./package.json;
+   name_ = packageJSON.name;
+   version = packageJSON.version;
 in
    rec {
       # fetches all dependencies and dev dependencies listed package.json
-      nodeDependencies = fetchNodeModules {
-         src = ./.;
-         nativeBuildInputs = [nodejs];
+      nodeDependencies = stdenvNoCC.mkDerivation rec {
+         pname = "${name_}-node_modules-patched";
+         name = "${pname}-${version}";
+         src = fetchNodeModules {
+            inherit version;
+            name = "${name}-node_modules-${version}";
+            src = ./.;
+            production = false;
+            hash = "sha256-RV7qpD/RkPsiP54yWv+7j+i1Vn/SIRyQS5oNq068mYo=";
+            makeTarball = false; # otherwise ${nodeModules}/lib is not accesible
+         };
          buildInputs = [nodejs];
-         name = "xocolatl-frontend-node_modules";
-         production = false;
-         hash = "sha256-/gTAa9/Lz6OTLMGvPKsU2vAI3j227iSpOZQB0mQ6cCg=";
-         makeTarball = false; # otherwise ${nodeModules}/lib is not accesible
+         installPhase = ''
+            mkdir -p $out/lib
+            cp -r lib/node_modules $out/lib
+         '';
       };
 
-      # frontend static files 
-      static = stdenvNoCC.mkDerivation {
-         src = ./.;
-         name = "xocolatl-frontend-static";
+      # runnable application that provides scripts in package.json 
+      app = stdenvNoCC.mkDerivation rec {
+         inherit version;
+         pname = name_;
+         name = "${pname}-${version}";
+         src = nix-gitignore.gitignoreSource [] ./.;
          nativeBuildInputs = [makeWrapper nodejs];
-         buildInputs = [nodejs];
          buildPhase = ''
-            cp -r ${nodeDependencies}/lib/node_modules ./node_modules
-            chmod -R +w node_modules
-            patchShebangs node_modules
-            export PATH="node_modules/.bin:$PATH"
-            npm run build
+            export HOME=$PWD # needed to avoid write permissions error
+            # copy built node deps
+            ln -s ${nodeDependencies}/lib/node_modules node_modules
+            # npm pack will call the 'build' script, webpack then lints and runs svelte-check
+            npm pack
          '';
          installPhase = ''
-            mkdir -p $out
-            cp -r public $out
+            # copy source files and link nodeDependencies
+            mkdir -p $out/lib
+            cp -r . $out/lib
+
+            # npm executable providing scripts defined in package.json
+            makeWrapper ${nodejs}/bin/npm $out/bin/xocolatl-frontend \
+              --set PATH "$out/lib/node_modules/.bin/:$PATH" \
+              --add-flags "--prefix $out/lib run"
          '';
       };
-
-       # a simple server to quickly host the static files
-       app = stdenvNoCC.mkDerivation {
-          src = static;
-          name = "xocolatl-frontend-dev-server";
-          nativeBuildInputs = [makeWrapper];
-          buildInputs = [nodejs nodePackages.serve];
-          installPhase = ''
-            mkdir -p $out/bin
-            cp -r public $out
-            makeWrapper ${nodePackages.serve}/bin/serve $out/bin/xocolatl-frontend-dev-server \
-               --add-flags "$out/public --listen 8080"
-          '';
-       };
- }
+   }

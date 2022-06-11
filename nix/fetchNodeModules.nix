@@ -79,13 +79,8 @@ in stdenvNoCC.mkDerivation ({
             node_modules
     else
         # Copy all modules into a directory
-        
         mkdir -p $out/lib
-
         cp -r node_modules $out/lib
-
-        chmod +x $out/lib/node_modules/cross-env/src/bin
-        # patchShebangs $out/lib/node_modules
     fi
   '';
 

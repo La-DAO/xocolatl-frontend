@@ -16,12 +16,17 @@
     apps = {
       default = {
         type = "app";
-        program = "${webapp.app}/bin/xocolatl-frontend-dev-server";
+        program = "${webapp.app}/bin/xocolatl-frontend";
+      };
+      release = {
+        type = "app";
+        program = "${webapp.static.test}";
       };
     };
 
     packages = rec {
       default = static;
+      app = webapp.app;
       static = webapp.static;
       nodeDependencies = webapp.nodeDependencies;
     };

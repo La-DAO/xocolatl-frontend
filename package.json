@@ -9,15 +9,16 @@
 		"start": "serve public --listen 8080",
 		"validate": "svelte-check",
 		"lint": "eslint './src/**/*.{js,ts,svelte}'",
-		"release": "npm pack && npx release-it",
 		"prepack": "npm run build",
-		"postpack": "node ./scripts/renameTarball.js"
+		"pack": "npm pack",
+		"release": "release-it --ci --dry-run"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.17",
 		"@babel/plugin-transform-runtime": "^7.12.17",
 		"@babel/preset-env": "^7.12.17",
 		"@babel/runtime": "^7.12.18",
+		"@release-it/conventional-changelog": "^5.0.0",
 		"@tsconfig/svelte": "^3.0.0",
 		"@types/mini-css-extract-plugin": "^1.2.2",
 		"@types/webpack-dev-server": "^3.11.1",
