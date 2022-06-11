@@ -1,5 +1,12 @@
 
 
+# [0.2.0](https://github.com/PipilaDAO/frontend/compare/0.1.3...0.2.0) (2022-06-11)
+
+
+### Features
+
+* test feats commit ([b517298](https://github.com/PipilaDAO/frontend/commit/b5172981f12a44b1c1c01ecefac535e6048bd269))
+
 ## [0.1.3](https://github.com/PipilaDAO/frontend/compare/0.0.2...0.1.3) (2022-06-11)
 
 ## [0.1.2](https://github.com/PipilaDAO/frontend/compare/0.0.2...0.1.2) (2022-06-11)
