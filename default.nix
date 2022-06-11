@@ -59,6 +59,7 @@ in
          name = "release";
          runtimeInputs = [ nodejs ];
          text = ''
+            export PATH="${nodeDependencies}/lib/node_modules/.bin/:$PATH"
             npm run release
          '';
       }; 
