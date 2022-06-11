@@ -65,10 +65,6 @@ in stdenvNoCC.mkDerivation ({
 
     echo "Running npm ci $NPM_FLAGS"
     npm ci $NPM_FLAGS
-
-    echo "Injecting package manifest into output"
-    cp package.json node_modules/
-    cp package-lock.json node_modules/
   '';
 
   installPhase = ''

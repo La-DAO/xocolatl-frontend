@@ -16,7 +16,7 @@ in
             name = "${name}-node_modules-${version}";
             src = ./.;
             production = false;
-            hash = "sha256-1z7SUtQTYuFWi0iWZFh/QYDBBQGZTeifbTTfQhw8css=";
+            hash = "sha256-eYuszEDvWUOB52HZW5AIuog31T6XGyqfYzOJ3RO0lzc=";
             makeTarball = false; # otherwise ${nodeModules}/lib is not accesible
          };
          buildInputs = [nodejs];
