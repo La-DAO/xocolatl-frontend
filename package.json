@@ -1,6 +1,6 @@
 {
 	"name": "xocolatl-frontend",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"homepage": "https://github.com/PipilaDAO/frontend",
 	"license": "GPL-3.0",
 	"scripts": {
@@ -11,7 +11,7 @@
 		"lint": "eslint './src/**/*.{js,ts,svelte}'",
 		"prepack": "npm run build",
 		"pack": "npm pack",
-		"release": "release-it --ci --dry-run"
+		"release": "release-it --ci"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.17",

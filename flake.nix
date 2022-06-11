@@ -20,14 +20,13 @@
       };
       release = {
         type = "app";
-        program = "${webapp.static.test}";
+        program = "${webapp.app}/bin/xocolatl-frontend release";
       };
     };
 
-    packages = rec {
-      default = static;
+    packages = {
+      default = webapp.app;
       app = webapp.app;
-      static = webapp.static;
       nodeDependencies = webapp.nodeDependencies;
     };
 

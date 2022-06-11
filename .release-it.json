@@ -1,11 +1,9 @@
 {
   "git": {
-    "commitMessage": "release: v${version}"
+    "commitMessage": "release: v${version}",
+    "requireCleanWorkingDir": false
   },
-  "npm": {
-    "publish": "false",
-    "skipChecks": "true"
-  },
+  "npm": false,
   "github": {
     "release": true,
     "draft": true,

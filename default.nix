@@ -1,14 +1,5 @@
-{
-   lib,
-   stdenvNoCC,
-   nodejs,
-   nodePackages,
-   makeWrapper,
-   callPackage,
-   writeShellScriptBin,
-   nix-gitignore
-}:
-
+{ pkgs ? import <nixpkgs> {} }:
+with pkgs;
 let
    fetchNodeModules = callPackage ./nix/fetchNodeModules.nix {};
    packageJSON = lib.importJSON ./package.json;
@@ -40,8 +31,11 @@ in
          inherit version;
          pname = name_;
          name = "${pname}-${version}";
-         src = nix-gitignore.gitignoreSource [] ./.;
+         # ignore files in gitignore, but keep .git folder for releases
+         # src = ./.;
+         src = nix-gitignore.gitignoreSourcePure ./.gitignore ./.;
          nativeBuildInputs = [makeWrapper nodejs];
+         buildInputs = [ git ];
          buildPhase = ''
             export HOME=$PWD # needed to avoid write permissions error
             # copy built node deps
@@ -60,4 +54,12 @@ in
               --add-flags "--prefix $out/lib run"
          '';
       };
+
+      release = writeShellApplication{
+         name = "${name_}-release";
+         runtimeInputs = [ app ];
+         text = ''
+            app release
+         '';
+      }; 
    }
