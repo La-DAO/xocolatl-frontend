@@ -2,14 +2,20 @@
   "git": {
     "commitMessage": "release: v${version}"
   },
-	"npm": {
-		"publish": "false",
+  "npm": {
+    "publish": "false",
     "skipChecks": "true"
-	},
+  },
   "github": {
     "release": true,
-		"draft": true,
-		"autoGenerate": true,
-		"assets": ["*.gz"]
+    "draft": true,
+    "autoGenerate": true,
+    "assets": ["*.gz"]
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "angular",
+      "infile": "CHANGELOG.md"
+    }
   }
 }
