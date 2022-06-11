@@ -55,7 +55,7 @@ in
          '';
       };
 
-      release = writeShellApplication{
+       release = writeShellApplication{
          name = "${name_}-release";
          runtimeInputs = [ app ];
          text = ''
