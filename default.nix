@@ -16,7 +16,7 @@ in
             name = "${name}-node_modules-${version}";
             src = ./.;
             production = false;
-            hash = "sha256-RV7qpD/RkPsiP54yWv+7j+i1Vn/SIRyQS5oNq068mYo=";
+            hash = "sha256-MaUuSUXYkJuq/5FhmkK3nuuDaHn/nABN+adPGAETDBA=";
             makeTarball = false; # otherwise ${nodeModules}/lib is not accesible
          };
          buildInputs = [nodejs];
@@ -56,10 +56,10 @@ in
       };
 
       release = writeShellApplication{
-         name = "${name_}-release";
-         runtimeInputs = [ app ];
+         name = "release";
+         runtimeInputs = [ nodejs ];
          text = ''
-            app release
+            npm run release
          '';
       }; 
    }

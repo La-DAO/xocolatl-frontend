@@ -1,6 +1,6 @@
 {
 	"name": "xocolatl-frontend",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"homepage": "https://github.com/PipilaDAO/frontend",
 	"license": "GPL-3.0",
 	"scripts": {

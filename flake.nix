@@ -20,7 +20,7 @@
       };
       release = {
         type = "app";
-        program = "${webapp.app}/bin/xocolatl-frontend release";
+        program = "${webapp.release}/bin/release";
       };
     };
 
