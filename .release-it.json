@@ -8,9 +8,7 @@
   },
   "github": {
     "release": true,
-    "draft": true,
-    "autoGenerate": true,
-    "assets": ["*.gz"]
+    "assets": ["*.tgz"]
   },
   "plugins": {
     "@release-it/conventional-changelog": {
