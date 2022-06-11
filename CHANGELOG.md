@@ -1,5 +1,9 @@
 
 
+## [0.1.3](https://github.com/PipilaDAO/frontend/compare/0.0.2...0.1.3) (2022-06-11)
+
+## [0.1.2](https://github.com/PipilaDAO/frontend/compare/0.0.2...0.1.2) (2022-06-11)
+
 ## [0.0.2](https://github.com/PipilaDAO/frontend/compare/0.0.1...0.0.2) (2022-06-11)
 
 

@@ -3,7 +3,10 @@
     "commitMessage": "release: v${version}",
     "requireCleanWorkingDir": false
   },
-  "npm": false,
+  "npm": {
+    "publish": false,
+    "skipChecks": true
+  },
   "github": {
     "release": true,
     "draft": true,
