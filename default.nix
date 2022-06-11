@@ -55,7 +55,7 @@ in
          '';
       };
 
-      release = writeShellApplication{
+      release = writeShellApplication {
          name = "release";
          runtimeInputs = [ nodejs ];
          text = ''

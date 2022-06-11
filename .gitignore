@@ -1,8 +1,9 @@
 **/node_modules/
 public/build/
-**/result
+**/result*
 yarn.lock
 .DS_Store
 *.tgz
 .env
 .envrc
+.
