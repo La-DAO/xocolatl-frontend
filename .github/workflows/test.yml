@@ -14,7 +14,7 @@ jobs:
     - name: "Build frontend application"
       run: nix build
     - name: "Release frontend application"
-    - run: nix run .#release
+      run: nix run .#release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GIT_AUTHOR_NAME: "bender"

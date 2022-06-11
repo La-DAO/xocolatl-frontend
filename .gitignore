@@ -6,4 +6,3 @@ yarn.lock
 *.tgz
 .env
 .envrc
-.
