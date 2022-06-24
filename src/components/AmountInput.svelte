@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { ethers } from 'ethers';
 	import type {BigNumber} from 'ethers';
+
+	import Button3D from './Button3D.svelte';
+
 	// writeable object from store to bind to input
 	export let inputAmount: number;
 	export let inputError: string;
@@ -8,7 +11,10 @@
 	export let inputLimit: BigNumber | null; 
 	export let headerText: string;
 	export let inputTypeText: string;
-
+	export let actionText: string;
+	export let actionHandler: () => void;
+	export const approvalText = ''; 
+	export const approvalHandler = ()=>{/*do nothing*/};
 
 	function handlePercentButton(ratio: number) {
 		if(inputLimit) {
@@ -50,13 +56,15 @@
 		font-size: 1rem;
 	}
 	.percent-button {
-		background-color: var(--light-color);
+		background-color: var(--main-color);
+		color: var(--light-color);
 		font-size: 1rem;
 		margin: 0.5rem;
 		cursor: pointer;
 		width: 5rem;
-		border: none;
+		border: 2px solid var(--light-color);
 		border-radius: 1rem;
+		margin-bottom: 1rem;
 	}
 
 	/* remove arrows form input */
@@ -68,6 +76,18 @@
 	input[type=number]{
 			-moz-appearance: textfield;
 	}
+
+	/* .action-button { */
+	/* 	background-color: var(--light-color); */
+	/* 	border-radius: 0.5rem; */
+	/* 	cursor: pointer; */
+	/* 	height: 2rem; */
+	/* 	width: 10rem; */
+	/* 	margin: auto; */
+	/* 	border: none; */
+	/* 	font-size: 1.1rem; */
+	/* 	font-weight: 700; */
+	/* } */
 </style>
 
 	<div class="deposit-amount-section">
@@ -81,7 +101,7 @@
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(0.75)}>75%</button>
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(1)}>100%</button>
 		</div>
+		<Button3D on:click={actionHandler}>{actionText}</Button3D>
 		{inputError}
-
 	</div>
 

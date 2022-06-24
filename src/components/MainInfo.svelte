@@ -112,5 +112,3 @@ const commify = ethers.utils.commify;
 		</div>
 	</div>
 </section>
-
-<ContractButton/>

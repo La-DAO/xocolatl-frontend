@@ -24,6 +24,9 @@ import {
 	WETHWithdrawInputError 
 } from '../store/userInput';	
 
+
+import { approveWETH, depositWETH, mintXOC, approveXOC, redeemXOC, withdrawWETH } from '../contractWrites';
+
 import PillNavigation from './PillNavigation.svelte';
 import CollateralInfo from './CollateralInfo.svelte';
 import MainInfo from './MainInfo.svelte';
@@ -81,6 +84,10 @@ import AmountInput from './AmountInput.svelte';
 					inputAmountBigNum={$WETHDepositInputAmountBigNum}
 					inputLimit={$userWETHBalance}
 					inputTypeText={$_('input.collateral') + ': WETH'}
+					actionText={$_('actions.deposit')}
+					actionHandler={depositWETH}
+					approvalText={$_('actions.approve')}
+					approvalHandler={approveWETH}
 				/>
 			{:else if $selectedTab==='mint'}
 				<AmountInput 
@@ -90,6 +97,8 @@ import AmountInput from './AmountInput.svelte';
 					inputAmountBigNum={$XOCMintInputAmountBigNum}
 					inputLimit={$userXOCMintingPower}
 					inputTypeText={$_('input.token') + ': XOC'}
+					actionHandler={mintXOC}
+					actionText={$_('actions.mint')}
 				/>
 			{:else if $selectedTab==='redeem'}
 				<AmountInput 
@@ -99,6 +108,10 @@ import AmountInput from './AmountInput.svelte';
 					inputAmountBigNum={$XOCRedeemInputAmountBigNum}
 					inputLimit={$userXOCBalance}
 					inputTypeText={$_('input.token') + ': XOC'}
+					actionHandler={redeemXOC}
+					actionText={$_('actions.redeem')}
+					approvalText={$_('actions.approve')}
+					approvalHandler={approveXOC}
 				/>
 			{:else if $selectedTab==='withdraw'}
 				<AmountInput 
@@ -108,6 +121,8 @@ import AmountInput from './AmountInput.svelte';
 					inputAmountBigNum={$WETHWithdrawInputAmountBigNum}
 					inputLimit={$userWETHMaxWithdrawal}
 					inputTypeText={$_('input.collateral') + ': WETH'}
+					actionHandler={withdrawWETH}
+					actionText={$_('actions.withdraw')}
 				/>
 			{/if}
 			</div>
