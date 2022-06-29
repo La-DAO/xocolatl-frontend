@@ -23,6 +23,7 @@ interface ChainData {
 	XOCABI: string[];
 	reserveTokenID: string;
 	backedTokenID: string;
+	supportsNative: boolean; // indicates if we can send ETH directly so contract handles the wrapping
 }
 
 type ChainDict = Record<number | string, ChainData>
@@ -44,6 +45,7 @@ const rinkebyData: ChainData = {
 	XOCABI: XOCABI,
 	reserveTokenID: '23521581748539401991698080115251968228683771099106616881408414261195714218434',
 	backedTokenID: '107399411905206098464630623321328189146904250703588213735147548373379041237213',
+	supportsNative: true
 };
 
 const kovanData: ChainData = {
@@ -63,6 +65,7 @@ const kovanData: ChainData = {
 	XOCABI: XOCABI,
 	reserveTokenID: '69208386426602677783460625292205263210637705470065513959812478282694433536962',
 	backedTokenID: '6398073223512371539250731142149975136586141799346430329041765947991383045798',
+	supportsNative: true
 };
 
 export const chains: ChainDict = {

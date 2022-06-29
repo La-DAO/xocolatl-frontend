@@ -30,11 +30,20 @@ import {
 
 import { chains } from './chains';
 
-
 export async function getWETHtoXOCRate() {
 	checkContractCallPrereqs();
+
+	console.log(get(wrappedHouseOfCoinContract));
+	let price;
+	try {
 	// returned price has 8 decimals
-	const price = await get(wrappedHouseOfCoinContract)!.redstoneGetLastPrice();
+		price = await get(wrappedHouseOfCoinContract)!.getLatestPrice();
+	} catch (e) {
+		console.log(e);
+	}
+	
+	console.log('WETH TO XOC IS: ', price);
+
 	WETHToXOC.set(price);
 }
 
@@ -44,13 +53,11 @@ export async function getWETHAllowance() {
 	userWETHAllowance.set(allowance);
 }
 
-
 export async function getUserWETHBalance(): Promise<void> {
 	checkContractCallPrereqs();
 	const balance = await get(WETHContract)!.balanceOf(get(signerAddress));
 	userWETHBalance.set(balance);
 }
-
 
 async function getUserWETHDepositBalance(): Promise<void> {
 	checkContractCallPrereqs();
@@ -102,7 +109,7 @@ export async function getHealthRatio() {
 
 export async function getLiquidationParams() {
 	checkContractCallPrereqs();
-	const fetchedValues = await get(houseOfCoinContract)!.liqParam();
+	const fetchedValues = await get(houseOfCoinContract)!.getLiqParams();
 	liquidationThreshold.set(fetchedValues.liquidationThreshold);
 }
 

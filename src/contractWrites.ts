@@ -54,7 +54,6 @@ export async function approveWETH() {
 	handleTxReceipt(tx);
 }
 
-
 export async function depositWETH() {
 	checkContractCallPrereqs();
 	const amount = get(WETHDepositInputAmountBigNum);
