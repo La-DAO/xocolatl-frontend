@@ -6,13 +6,15 @@ import {
 	userWETHBalance,
 	userXOCMintingPower,
 	userXOCBalance,
-	userWETHMaxWithdrawal
+	userWETHMaxWithdrawal,
+	userWETHAllowance,
 } from '../store/contractData';
 
 import { 
 	WETHDepositInputAmount,
 	WETHDepositInputAmountBigNum,
 	WETHDepositInputError,
+	WETHDepositNeedsAllowance,
 	XOCMintInputAmount, 
 	XOCMintInputAmountBigNum,
 	XOCMintInputError, 
@@ -77,18 +79,30 @@ import AmountInput from './AmountInput.svelte';
 		<div class="main-section">
 			<div class="input-section">
 			{#if $selectedTab==='deposit'}
-				<AmountInput 
-					headerText={$_('input.deposit')} 
-					bind:inputAmount={$WETHDepositInputAmount} 
-					bind:inputError={$WETHDepositInputError} 
-					inputAmountBigNum={$WETHDepositInputAmountBigNum}
-					inputLimit={$userWETHBalance}
-					inputTypeText={$_('input.collateral') + ': WETH'}
-					actionText={$_('actions.deposit')}
-					actionHandler={depositWETH}
-					approvalText={$_('actions.approve')}
-					approvalHandler={approveWETH}
-				/>
+				{#if $WETHDepositNeedsAllowance}
+					<AmountInput 
+						headerText={$_('input.deposit')} 
+						bind:inputAmount={$WETHDepositInputAmount} 
+						bind:inputError={$WETHDepositInputError} 
+						inputAmountBigNum={$WETHDepositInputAmountBigNum}
+						inputLimit={$userWETHBalance}
+						inputTypeText={$_('input.collateral') + ': WETH'}
+						actionText={$_('actions.approve')}
+						actionHandler={depositWETH}
+					/>
+				{:else} 
+					<AmountInput 
+						headerText={$_('input.deposit')} 
+						bind:inputAmount={$WETHDepositInputAmount} 
+						bind:inputError={$WETHDepositInputError} 
+						inputAmountBigNum={$WETHDepositInputAmountBigNum}
+						inputLimit={$userWETHBalance}
+						inputTypeText={$_('input.collateral') + ': WETH'}
+						actionText={$_('actions.deposit')}
+						actionHandler={depositWETH}
+					/>
+
+				{/if}
 			{:else if $selectedTab==='mint'}
 				<AmountInput 
 					headerText={$_('input.mint')} 
@@ -110,8 +124,6 @@ import AmountInput from './AmountInput.svelte';
 					inputTypeText={$_('input.token') + ': XOC'}
 					actionHandler={redeemXOC}
 					actionText={$_('actions.redeem')}
-					approvalText={$_('actions.approve')}
-					approvalHandler={approveXOC}
 				/>
 			{:else if $selectedTab==='withdraw'}
 				<AmountInput 

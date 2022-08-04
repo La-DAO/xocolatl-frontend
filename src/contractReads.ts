@@ -33,7 +33,6 @@ import { chains } from './chains';
 export async function getWETHtoXOCRate() {
 	checkContractCallPrereqs();
 
-	console.log(get(wrappedHouseOfCoinContract));
 	let price;
 	try {
 	// returned price has 8 decimals
@@ -41,9 +40,6 @@ export async function getWETHtoXOCRate() {
 	} catch (e) {
 		console.log(e);
 	}
-	
-	console.log('WETH TO XOC IS: ', price);
-
 	WETHToXOC.set(price);
 }
 

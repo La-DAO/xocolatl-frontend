@@ -13,8 +13,6 @@
 	export let inputTypeText: string;
 	export let actionText: string;
 	export let actionHandler: () => void;
-	export const approvalText = ''; 
-	export const approvalHandler = ()=>{/*do nothing*/};
 
 	function handlePercentButton(ratio: number) {
 		if(inputLimit) {
@@ -77,17 +75,6 @@
 			-moz-appearance: textfield;
 	}
 
-	/* .action-button { */
-	/* 	background-color: var(--light-color); */
-	/* 	border-radius: 0.5rem; */
-	/* 	cursor: pointer; */
-	/* 	height: 2rem; */
-	/* 	width: 10rem; */
-	/* 	margin: auto; */
-	/* 	border: none; */
-	/* 	font-size: 1.1rem; */
-	/* 	font-weight: 700; */
-	/* } */
 </style>
 
 	<div class="deposit-amount-section">
@@ -101,7 +88,7 @@
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(0.75)}>75%</button>
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(1)}>100%</button>
 		</div>
-		<Button3D on:click={actionHandler}>{actionText}</Button3D>
-		{inputError}
+		<Button3D {actionHandler}>{actionText}</Button3D>
+		<div>{inputError}</div>
 	</div>
 

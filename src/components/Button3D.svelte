@@ -1,3 +1,7 @@
+<script lang="ts">
+export let actionHandler: () => void;
+</script>
+
 <style>
   .pushable {
     position: relative;
@@ -82,7 +86,7 @@
     outline: none;
   }
 </style>
-<button class="pushable">
+<button on:click={actionHandler} class="pushable">
   <span class="shadow"></span>
   <span class="edge"></span>
   <span class="front">
