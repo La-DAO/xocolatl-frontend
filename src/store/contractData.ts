@@ -2,6 +2,9 @@ import { writable, derived } from 'svelte/store';
 import { ethers } from 'ethers';
 import type { Writable, Readable } from 'svelte/store';
 import type { BigNumber } from 'ethers';
+
+export const userNativeTokenBalance: Writable<BigNumber | null> = writable(null);
+
 // display data from contracts
 export const userWETHAllowance: Writable<BigNumber | null> = writable(null);
 export const userWETHBalance: Writable<BigNumber | null> = writable(null);
@@ -87,6 +90,7 @@ export const healthRatioAsPercentage = derived(
 
 // method for reseting data when provider changes
 export function resetAll() {
+	userNativeTokenBalance.set(null);
 	userWETHAllowance.set(null);
 	userWETHBalance.set(null);
 	userWETHDepositBalance.set(null);

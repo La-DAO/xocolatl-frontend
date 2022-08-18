@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { signerAddress, chainId } from 'svelte-ethers-store';
+import { signerAddress, chainId, signer } from 'svelte-ethers-store';
 
 import { checkContractCallPrereqs } from './utils';
 
@@ -14,6 +14,7 @@ import {
 } from './store/contracts';
 
 import { 
+	userNativeTokenBalance,
 	userWETHAllowance,
 	userWETHBalance,
 	userWETHDepositBalance,
@@ -41,6 +42,11 @@ export async function getWETHtoXOCRate() {
 		console.log(e);
 	}
 	WETHToXOC.set(price);
+}
+
+export async function getUserNativeTokenBalance(): Promise<void> {
+	const nativeTokenBalance = await get(signer)!.getBalance();
+	userNativeTokenBalance.set(nativeTokenBalance);
 }
 
 export async function getWETHAllowance() {
@@ -118,6 +124,7 @@ export async function getCollateralRatioParam() {
 // TODO: fetch with array of promises and retry failed
 export async function fetchAllDisplayData() {
 	checkContractCallPrereqs();
+	getUserNativeTokenBalance();
 	getWETHAllowance();
 	getUserWETHDepositBalance();
 	getMaxWETHWithdrawal();

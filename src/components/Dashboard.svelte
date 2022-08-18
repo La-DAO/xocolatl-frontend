@@ -8,6 +8,7 @@ import {
 	userXOCBalance,
 	userWETHMaxWithdrawal,
 	userWETHAllowance,
+	userNativeTokenBalance
 } from '../store/contractData';
 
 import { 
@@ -27,7 +28,7 @@ import {
 } from '../store/userInput';	
 
 
-import { approveWETH, depositWETH, mintXOC, approveXOC, redeemXOC, withdrawWETH } from '../contractWrites';
+import { approveWETH, depositWETH, mintXOC, approveXOC, redeemXOC, withdrawWETH, depositNativeToken } from '../contractWrites';
 
 import PillNavigation from './PillNavigation.svelte';
 import CollateralInfo from './CollateralInfo.svelte';
@@ -68,9 +69,6 @@ import AmountInput from './AmountInput.svelte';
 		flex-basis: 60%;
 		flex-grow: 1;
 	}
-
-
-
 </style>
 
 <section>
@@ -79,6 +77,17 @@ import AmountInput from './AmountInput.svelte';
 		<div class="main-section">
 			<div class="input-section">
 			{#if $selectedTab==='deposit'}
+					<AmountInput 
+						headerText={$_('input.deposit')} 
+						bind:inputAmount={$WETHDepositInputAmount} 
+						bind:inputError={$WETHDepositInputError} 
+						inputAmountBigNum={$WETHDepositInputAmountBigNum}
+						inputLimit={$userNativeTokenBalance}
+						inputTypeText={$_('input.collateral') + ': ETH'}
+						actionText={$_('actions.deposit')}
+						actionHandler={depositNativeToken}
+					/>
+				<!--
 				{#if $WETHDepositNeedsAllowance}
 					<AmountInput 
 						headerText={$_('input.deposit')} 
@@ -101,8 +110,8 @@ import AmountInput from './AmountInput.svelte';
 						actionText={$_('actions.deposit')}
 						actionHandler={depositWETH}
 					/>
-
 				{/if}
+				-->
 			{:else if $selectedTab==='mint'}
 				<AmountInput 
 					headerText={$_('input.mint')} 

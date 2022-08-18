@@ -57,5 +57,5 @@ selectedTab.subscribe(value => {
 	<div class="nav-button" class:selected={selectedTabValue==='mint'} on:click={()=>handleSectionClick('mint')}> {$_('actions.mint')} </div>
 	<div class="nav-button" class:selected={selectedTabValue==='redeem'} on:click={()=>handleSectionClick('redeem')}> {$_('actions.redeem')} </div>
 	<div class="nav-button" class:selected={selectedTabValue==='withdraw'} on:click={()=>handleSectionClick('withdraw')}> {$_('actions.withdraw')} </div>
-	<div class="nav-button right-nav-button"  on:click={()=>window.open('https://app.uniswap.org/#/swap', '_blank')}> {$_('actions.exchange')} </div>
+	<div class="nav-button right-nav-button"  on:click={()=>window.open('https://app.uniswap.org/#/swap?inputCurrency=0x6aA1465af9A3140c5741943939961b197FFfe872&outputCurrency=0xb18d016cDD2d9439A19f15633005A6b2cd6Aa774&chain=rinkeby', '_blank')}> {$_('actions.exchange')} </div>
 </nav>
