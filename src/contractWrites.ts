@@ -1,7 +1,7 @@
 import { get } from 'svelte/store';
 import { maxApproveAmount } from './constants';
 
-import { chainId } from 'svelte-ethers-store';
+import { chainId, signer } from 'svelte-ethers-store';
 import { pendingTxs } from './store/store';
 import { 
 	WETHDepositInputAmountBigNum,
@@ -53,7 +53,6 @@ export async function approveWETH() {
 	const tx = await get(WETHContract)!.approve(chains[get(chainId)].houseOfReserveAddress, maxApproveAmount);
 	handleTxReceipt(tx);
 }
-
 
 export async function depositWETH() {
 	checkContractCallPrereqs();
@@ -107,3 +106,15 @@ export async function withdrawWETH() {
 	}
 }
 
+export async function depositNativeToken() {
+	checkContractCallPrereqs();
+	const amount = get(WETHDepositInputAmountBigNum);
+	
+	if(amount) {
+		const tx = await get(signer)!.sendTransaction({to: chains[get(chainId)].houseOfReserveAddress, value: amount});
+		handleTxReceipt(tx);
+	} else {
+		throw new Error('Invalid ETH deposit amount input');
+	}
+	
+}

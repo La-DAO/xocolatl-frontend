@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { signerAddress, chainId, connected} from 'svelte-ethers-store';
+	import { signerAddress, chainId, connected, provider} from 'svelte-ethers-store';
 
 	import { _, locale, locales } from 'svelte-i18n';
 	import { toShortAddress, changeNetwork } from '../utils';
@@ -29,7 +29,7 @@
 
 	function addXOCToMetamask() {
 		// @ts-ignore:next-line
-		window.ethereum.request({
+		$provider.provider.request({
 			method: 'wallet_watchAsset',
 			params: {
 				type: 'ERC20', // Initially only supports ERC20, but eventually more!
@@ -74,6 +74,7 @@
 
 	.add-token-button {
 		width: 2.5rem;
+		/* width: 45px; */
 		cursor: pointer;
 	}
 	
@@ -81,7 +82,7 @@
 		padding: 0.5rem;
 		background-color: var(--light-color);
 		color: black;
-		border-radius: 5px;
+		border-radius: var(--box-radius);
 		border: 2px solid var(--light-color);
   	text-decoration: none;
 		cursor: pointer;
@@ -94,7 +95,7 @@
 		<h2>Xocolatl</h2>
 		<div class="right-content">
 		{#if $signerAddress}
-			<img class="add-token-button" src="/static/token.png" on:click={addXOCToMetamask} alt="Add XOC to metamask button"/>
+			<img class="add-token-button" src="/static/tokens/XOC.svg" on:click={addXOCToMetamask} alt="Add XOC to metamask button"/>
 			{#if $isRighNetwork && currentChainHex}
 				<Select width="6rem" options={chainOptions} defaultValue={currentChainHex} handleClickFunc={changeNetwork}/>
 			{:else}

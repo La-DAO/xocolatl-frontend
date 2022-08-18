@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { ethers } from 'ethers';
 	import type {BigNumber} from 'ethers';
+
+	import Button3D from './Button3D.svelte';
+
 	// writeable object from store to bind to input
 	export let inputAmount: number;
 	export let inputError: string;
@@ -8,7 +11,8 @@
 	export let inputLimit: BigNumber | null; 
 	export let headerText: string;
 	export let inputTypeText: string;
-
+	export let actionText: string;
+	export let actionHandler: () => void;
 
 	function handlePercentButton(ratio: number) {
 		if(inputLimit) {
@@ -30,10 +34,11 @@
 	}
 
 	.deposit-header {
-		font-size: 2rem;
+		font-size: 1.8rem;
 	}
 
-	.deposit-amount-section > input {
+	input {
+		display: inline-block;
   	all: unset;
     appearance: none;
 		font-size: 3.2rem;
@@ -42,20 +47,22 @@
 	}
 
 	.collateral-type {
-		color: var(--light-color);
+		color: grey;
 		width: 10rem;
-		margin: 2rem auto 2rem auto;
+		margin: 0 auto 0.5rem auto;
 		text-align: center;
-		font-size: 1.2rem;
+		font-size: 1rem;
 	}
 	.percent-button {
-		background-color: var(--light-color);
+		background-color: var(--main-color);
+		color: var(--light-color);
 		font-size: 1rem;
 		margin: 0.5rem;
 		cursor: pointer;
 		width: 5rem;
-		border: none;
+		border: 2px solid var(--light-color);
 		border-radius: 1rem;
+		margin-bottom: 1rem;
 	}
 
 	/* remove arrows form input */
@@ -67,18 +74,21 @@
 	input[type=number]{
 			-moz-appearance: textfield;
 	}
+
 </style>
 
 	<div class="deposit-amount-section">
 		<h1 class="deposit-header"> {headerText} </h1>
-		<input bind:value={inputAmount} type="number" min=0 lang="en"/>
+		<label for="amount"></label>
+		<input id="amount" bind:value={inputAmount} type="number" min=0 lang="en"/>
+		<div class='collateral-type'>{inputTypeText}</div>
 		<div class="buttons">
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(0.25)}>25%</button>
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(0.5)}>50%</button>
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(0.75)}>75%</button>
 			<button class="percent-button" type="button" on:click={()=>handlePercentButton(1)}>100%</button>
 		</div>
-		{inputError}
-		<div class='collateral-type'>{inputTypeText}</div>
+		<Button3D {actionHandler}>{actionText}</Button3D>
+		<div>{inputError}</div>
 	</div>
 

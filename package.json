@@ -54,7 +54,7 @@
 		"@okrad/svelte-progressbar": "^1.11.3",
 		"@walletconnect/web3-provider": "^1.7.7",
 		"ethers": "^5.5.3",
-		"redstone-evm-connector": "^2.1.10",
+		"redstone-evm-connector": "^2.1.25",
 		"serve": "^13.0.2",
 		"svelte-ethers-store": "^2.2.0",
 		"svelte-i18n": "^3.3.13",

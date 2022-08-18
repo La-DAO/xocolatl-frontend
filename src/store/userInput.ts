@@ -1,6 +1,9 @@
 import { writable, derived } from 'svelte/store';
 
 import { ethers } from 'ethers';
+
+import { userWETHAllowance } from './contractData';
+
 // user inputs
 export const WETHDepositInputAmount = writable(0);
 export const WETHDepositInputAmountBigNum = derived(
@@ -23,6 +26,18 @@ export const WETHDepositInputAmountBigNum = derived(
 	}
 );
 export const WETHDepositInputError = writable('');
+
+export const WETHDepositNeedsAllowance = derived(
+	[WETHDepositInputAmountBigNum, userWETHAllowance],
+	([$WETHDepositInputAmountBigNum, $userWETHAllowance]) => {
+		if ($WETHDepositInputAmountBigNum && $userWETHAllowance) {
+			if ($userWETHAllowance.lt($WETHDepositInputAmountBigNum)) {
+				return true;
+			}
+		} 
+		return false;
+	}
+);
 
 export const WETHWithdrawInputAmount = writable(0);
 export const WETHWithdrawInputAmountBigNum = derived(
@@ -48,6 +63,7 @@ export const WETHWithdrawInputError = writable('');
 
 
 
+
 export const XOCMintInputAmount = writable(0);
 export const XOCMintInputAmountBigNum = derived(
 	XOCMintInputAmount,
@@ -68,7 +84,10 @@ export const XOCMintInputAmountBigNum = derived(
 		}
 	}
 );
+
 export const XOCMintInputError = writable('');
+
+
 
 export const XOCRedeemInputAmount = writable(0);
 export const XOCRedeemInputAmountBigNum = derived(
@@ -91,3 +110,5 @@ export const XOCRedeemInputAmountBigNum = derived(
 	}
 );
 export const XOCRedeemInputError = writable('');
+
+

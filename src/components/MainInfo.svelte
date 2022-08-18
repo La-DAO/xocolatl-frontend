@@ -36,6 +36,7 @@ const commify = ethers.utils.commify;
 
 	.outer-box {
 		border: 2px solid var(--main-color);
+		border-radius: var(--box-radius);
 		width: 32rem;
 	}
 
@@ -60,6 +61,12 @@ const commify = ethers.utils.commify;
 	.highlight {
 		font-weight: 700;
 	}
+
+  @media (max-width: 1100px) {
+		.outer-box {
+			margin-bottom: 1rem;
+		}
+  }
 	
 </style>
 
@@ -105,5 +112,3 @@ const commify = ethers.utils.commify;
 		</div>
 	</div>
 </section>
-
-<ContractButton/>

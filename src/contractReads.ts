@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { signerAddress, chainId } from 'svelte-ethers-store';
+import { signerAddress, chainId, signer } from 'svelte-ethers-store';
 
 import { checkContractCallPrereqs } from './utils';
 
@@ -14,6 +14,7 @@ import {
 } from './store/contracts';
 
 import { 
+	userNativeTokenBalance,
 	userWETHAllowance,
 	userWETHBalance,
 	userWETHDepositBalance,
@@ -30,12 +31,22 @@ import {
 
 import { chains } from './chains';
 
-
 export async function getWETHtoXOCRate() {
 	checkContractCallPrereqs();
+
+	let price;
+	try {
 	// returned price has 8 decimals
-	const price = await get(wrappedHouseOfCoinContract)!.redstoneGetLastPrice();
+		price = await get(wrappedHouseOfCoinContract)!.getLatestPrice();
+	} catch (e) {
+		console.log(e);
+	}
 	WETHToXOC.set(price);
+}
+
+export async function getUserNativeTokenBalance(): Promise<void> {
+	const nativeTokenBalance = await get(signer)!.getBalance();
+	userNativeTokenBalance.set(nativeTokenBalance);
 }
 
 export async function getWETHAllowance() {
@@ -44,13 +55,11 @@ export async function getWETHAllowance() {
 	userWETHAllowance.set(allowance);
 }
 
-
 export async function getUserWETHBalance(): Promise<void> {
 	checkContractCallPrereqs();
 	const balance = await get(WETHContract)!.balanceOf(get(signerAddress));
 	userWETHBalance.set(balance);
 }
-
 
 async function getUserWETHDepositBalance(): Promise<void> {
 	checkContractCallPrereqs();
@@ -102,7 +111,7 @@ export async function getHealthRatio() {
 
 export async function getLiquidationParams() {
 	checkContractCallPrereqs();
-	const fetchedValues = await get(houseOfCoinContract)!.liqParam();
+	const fetchedValues = await get(houseOfCoinContract)!.getLiqParams();
 	liquidationThreshold.set(fetchedValues.liquidationThreshold);
 }
 
@@ -115,6 +124,7 @@ export async function getCollateralRatioParam() {
 // TODO: fetch with array of promises and retry failed
 export async function fetchAllDisplayData() {
 	checkContractCallPrereqs();
+	getUserNativeTokenBalance();
 	getWETHAllowance();
 	getUserWETHDepositBalance();
 	getMaxWETHWithdrawal();

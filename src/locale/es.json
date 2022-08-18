@@ -7,7 +7,7 @@
 		"mint": "Acuñar",
 		"redeem": "Amortizar",
 		"withdraw": "Retirar",
-		"change": "Cambiar"
+		"exchange": "Intercambiar"
 	},
 	"input": {
 		"deposit": "Cantidad a depositar",
