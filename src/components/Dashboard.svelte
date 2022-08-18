@@ -88,7 +88,7 @@ import AmountInput from './AmountInput.svelte';
 						inputLimit={$userWETHBalance}
 						inputTypeText={$_('input.collateral') + ': WETH'}
 						actionText={$_('actions.approve')}
-						actionHandler={depositWETH}
+						actionHandler={approveWETH}
 					/>
 				{:else} 
 					<AmountInput 
