@@ -68,8 +68,8 @@ button {
 		<h2 class="modal-header">{$_('modal.header')}</h2>
 		<div class="modal-body">
 			<h4>{$_('modal.body')}: </h4>
+				<p on:click={()=>changeNetwork('0x89')}>Polygon</p><br>
 				<p on:click={()=>changeNetwork('0x4')}>Rinkeby</p><br>
-				<p on:click={()=>changeNetwork('0x2a')}>Kovan</p><br>
 			<button on:click="{()=>hidden=true}">{$_('modal.close')}</button>
 		</div>
 	</div>
