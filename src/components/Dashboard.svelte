@@ -1,6 +1,10 @@
 <script lang="ts">
 import { _ } from 'svelte-i18n';
+import { chainId } from 'svelte-ethers-store';
+
 import { selectedTab } from '../store/store';
+import { chains } from '../chains';
+
 
 import {
 	userWETHBalance,
@@ -34,6 +38,8 @@ import PillNavigation from './PillNavigation.svelte';
 import CollateralInfo from './CollateralInfo.svelte';
 import MainInfo from './MainInfo.svelte';
 import AmountInput from './AmountInput.svelte';
+
+$: isNative = ($chainId && $chainId in chains) ? chains[$chainId].supportsNative : false;
 </script>
 
 <style>
@@ -77,6 +83,7 @@ import AmountInput from './AmountInput.svelte';
 		<div class="main-section">
 			<div class="input-section">
 			{#if $selectedTab==='deposit'}
+				{#if isNative}
 					<AmountInput 
 						headerText={$_('input.deposit')} 
 						bind:inputAmount={$WETHDepositInputAmount} 
@@ -87,31 +94,31 @@ import AmountInput from './AmountInput.svelte';
 						actionText={$_('actions.deposit')}
 						actionHandler={depositNativeToken}
 					/>
-				<!--
-				{#if $WETHDepositNeedsAllowance}
-					<AmountInput 
-						headerText={$_('input.deposit')} 
-						bind:inputAmount={$WETHDepositInputAmount} 
-						bind:inputError={$WETHDepositInputError} 
-						inputAmountBigNum={$WETHDepositInputAmountBigNum}
-						inputLimit={$userWETHBalance}
-						inputTypeText={$_('input.collateral') + ': WETH'}
-						actionText={$_('actions.approve')}
-						actionHandler={approveWETH}
-					/>
-				{:else} 
-					<AmountInput 
-						headerText={$_('input.deposit')} 
-						bind:inputAmount={$WETHDepositInputAmount} 
-						bind:inputError={$WETHDepositInputError} 
-						inputAmountBigNum={$WETHDepositInputAmountBigNum}
-						inputLimit={$userWETHBalance}
-						inputTypeText={$_('input.collateral') + ': WETH'}
-						actionText={$_('actions.deposit')}
-						actionHandler={depositWETH}
-					/>
+				{:else}
+					{#if $WETHDepositNeedsAllowance}
+						<AmountInput 
+							headerText={$_('input.deposit')} 
+							bind:inputAmount={$WETHDepositInputAmount} 
+							bind:inputError={$WETHDepositInputError} 
+							inputAmountBigNum={$WETHDepositInputAmountBigNum}
+							inputLimit={$userWETHBalance}
+							inputTypeText={$_('input.collateral') + ': WETH'}
+							actionText={$_('actions.approve')}
+							actionHandler={approveWETH}
+						/>
+					{:else} 
+						<AmountInput 
+							headerText={$_('input.deposit')} 
+							bind:inputAmount={$WETHDepositInputAmount} 
+							bind:inputError={$WETHDepositInputError} 
+							inputAmountBigNum={$WETHDepositInputAmountBigNum}
+							inputLimit={$userWETHBalance}
+							inputTypeText={$_('input.collateral') + ': WETH'}
+							actionText={$_('actions.deposit')}
+							actionHandler={depositWETH}
+						/>
+					{/if}
 				{/if}
-				-->
 			{:else if $selectedTab==='mint'}
 				<AmountInput 
 					headerText={$_('input.mint')} 
