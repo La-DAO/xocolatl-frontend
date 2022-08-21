@@ -10,8 +10,8 @@
 	import Select from './Select.svelte';
 
 	const chainOptions = {
-		'0x4': 'Rinkeby',
-		'0x2a': 'Kovan'
+		'0x89': 'Polygon',
+		'0x4': 'Rinkeby'
 	};
 
 	// locale array as select options object

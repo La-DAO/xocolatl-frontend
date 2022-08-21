@@ -48,29 +48,29 @@ const rinkebyData: ChainData = {
 	supportsNative: true
 };
 
-const kovanData: ChainData = {
+const polygonData: ChainData = {
 	chain: 42,
-	chainHex: '0x2a',
-	name: 'Kovan',
-	blockExplorerURL: 'https://kovan.etherscan.io/',
-	WETHAddress: '0x053DA244AaaF94A071d9e3E73141e5249FE9251D',
+	chainHex: '0x89',
+	name: 'Polygon',
+	blockExplorerURL: 'https://polygonscan.com/',
+	WETHAddress: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
 	WETHABI: mockWETHABI,
-	assetsAccountantAddress: '0xd9c5D3B12719fdA2d8c2CCA48FD3D92123c5D1CC',
+	assetsAccountantAddress: '0x2e690b471fF7Ded526Bc0Df66f0F96f4c6C3CF64',
 	assetsAccountantABI: assetsAccountantABI,
-	houseOfReserveAddress: '0x8325CE385A2Fbc320f55F6C7bbe267532bF1F89B',
+	houseOfReserveAddress: '0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8',
 	houseOfReserveABI: houseOfReserveABI,
-	houseOfCoinAddress: '0x3c3714b6Ac979241a71717c0A89e7226988141A5',
+	houseOfCoinAddress: '0x4F97C3C8Af0764cC0Af5C3C0F5064F4A6BD5b138',
 	houseOfCoinABI: houseOfCoinABI,
-	XOCAddress: '0x2FeE11961a58b36E766a74CC9c76A847E002FEAa',
+	XOCAddress: '0xa411c9Aa00E020e4f88Bc19996d29c5B7ADB4ACf',
 	XOCABI: XOCABI,
 	reserveTokenID: '69208386426602677783460625292205263210637705470065513959812478282694433536962',
 	backedTokenID: '6398073223512371539250731142149975136586141799346430329041765947991383045798',
-	supportsNative: true
+	supportsNative: false 
 };
 
 export const chains: ChainDict = {
 	4: rinkebyData,
 	'0x4': rinkebyData, // sometimes metamask returns chain Id as hex and sometimes as int
-	42: kovanData,
-	'0x2a': kovanData
+	137: polygonData,
+	'0x89': polygonData
 };
