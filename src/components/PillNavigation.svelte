@@ -3,6 +3,8 @@
 import { _ } from 'svelte-i18n';
 import { selectedTab } from '../store/store';
 
+export let swapURL: string;
+
 function handleSectionClick(selected: string) {
 	selectedTab.set(selected);
 }
@@ -13,6 +15,7 @@ let innerWidth = window.innerWidth;
 selectedTab.subscribe(value => {
 	selectedTabValue = value;
 });
+
 </script>
 
 <svelte:window bind:innerWidth/>
@@ -60,5 +63,5 @@ selectedTab.subscribe(value => {
 	<div class="nav-button" class:selected={selectedTabValue==='mint'} on:click={()=>handleSectionClick('mint')}> {$_('actions.mint')} </div>
 	<div class="nav-button" class:selected={selectedTabValue==='redeem'} on:click={()=>handleSectionClick('redeem')}> {$_('actions.redeem')} </div>
 	<div class="nav-button" class:selected={selectedTabValue==='withdraw'} on:click={()=>handleSectionClick('withdraw')} class:right-nav-button={innerWidth<570}> {$_('actions.withdraw')} </div>
-	<div class="nav-button right-nav-button" hidden={innerWidth<570} on:click={()=>window.open('https://app.uniswap.org/#/swap?inputCurrency=0x6aA1465af9A3140c5741943939961b197FFfe872&outputCurrency=0xb18d016cDD2d9439A19f15633005A6b2cd6Aa774&chain=rinkeby', '_blank')}> {$_('actions.exchange')} </div>
+	<div class="nav-button right-nav-button" hidden={innerWidth<570} on:click={()=>window.open(swapURL, '_blank')}> {$_('actions.exchange')} </div>
 </nav>

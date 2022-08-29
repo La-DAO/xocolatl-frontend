@@ -40,6 +40,8 @@ import MainInfo from './MainInfo.svelte';
 import AmountInput from './AmountInput.svelte';
 
 $: isNative = ($chainId && $chainId in chains) ? chains[$chainId].supportsNative : false;
+
+$: swapURL = ($chainId && $chainId in chains) ? chains[$chainId].swapURL : '';
 </script>
 
 <style>
@@ -79,7 +81,7 @@ $: isNative = ($chainId && $chainId in chains) ? chains[$chainId].supportsNative
 
 <section>
 	<div class="wrapper">
-		<PillNavigation/>
+		<PillNavigation {swapURL}/>
 		<div class="main-section">
 			<div class="input-section">
 			{#if $selectedTab==='deposit'}
