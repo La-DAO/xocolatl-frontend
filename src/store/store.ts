@@ -25,6 +25,7 @@ export const blockExplorerURL = derived(chainId,
 	}
 );
 
+export const selectedPage = writable('home');
 
 export const selectedTab = writable('deposit');
 

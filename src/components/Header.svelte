@@ -4,7 +4,7 @@
 	import { _, locale, locales } from 'svelte-i18n';
 	import { toShortAddress, changeNetwork } from '../utils';
 
-	import { isRighNetwork, accountModalHidden } from '../store/store';
+	import { isRighNetwork, accountModalHidden, selectedPage } from '../store/store';
 	import { chains } from '../chains';
 
 	import Select from './Select.svelte';
@@ -50,6 +50,7 @@
 		width: 100%;
 		background-color: var(--main-color);
 		color: var(--light-color);
+		cursor: pointer;
 	}
 
 	h2 {
@@ -92,7 +93,7 @@
 
 <header class="header">
 	<div class="container">
-		<h2>Xocolatl</h2>
+		<h2 on:click={()=>{$selectedPage='home'}}>Xocolatl</h2>
 		<div class="right-content">
 		{#if $signerAddress}
 			<img class="add-token-button" src="/static/tokens/XOC.svg" on:click={addXOCToMetamask} alt="Add XOC to metamask button"/>
@@ -104,7 +105,6 @@
 			<Select width="3rem" options={localeOptions} defaultValue={trimmedLocale} handleClickFunc={locale.set}/>
 		{:else}
 			<Select width="3rem" options={localeOptions} defaultValue={trimmedLocale} handleClickFunc={locale.set}/>
-
 		{/if}
 		<button type="button" on:click={()=>$accountModalHidden=false}>{$connected ? shortSignerAddress : $_('actions.connect')}</button>
 		</div>
