@@ -1,3 +1,4 @@
+import { utils } from 'ethers';
 import { get } from 'svelte/store';
 import { signerAddress, chainId, signer } from 'svelte-ethers-store';
 
@@ -26,7 +27,10 @@ import {
 	WETHToXOC,
 	userHealthRatio,
 	liquidationThreshold,
-	collateralRatioParam
+	collateralRatioParam,
+	collatRatioNum,
+	collatRatioDenom,
+	globalBase
 } from './store/contractData';
 
 import { chains } from './chains';
@@ -113,11 +117,15 @@ export async function getLiquidationParams() {
 	checkContractCallPrereqs();
 	const fetchedValues = await get(houseOfCoinContract)!.getLiqParams();
 	liquidationThreshold.set(fetchedValues.liquidationThreshold);
+	globalBase.set(fetchedValues.globalBase);
+
 }
 
 export async function getCollateralRatioParam() {
 	checkContractCallPrereqs();
 	const fetchedValues = await get(houseOfReserveContract)!.collateralRatio();
+	collatRatioNum.set(fetchedValues.numerator);
+	collatRatioDenom.set(fetchedValues.denominator);
 	collateralRatioParam.set(parseFloat(fetchedValues.numerator)/parseFloat(fetchedValues.denominator));
 }
 

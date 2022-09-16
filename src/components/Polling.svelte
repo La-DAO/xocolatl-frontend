@@ -52,8 +52,6 @@
 		});
 
 		get(WETHContract)!.on('Transfer', (src: string, dst: string, wad: BigNumber, event: Event) => {
-			console.log('from: ', src, 'to ', dst, 'amount ', wad);
-			console.log(event.blockNumber);
 			if (src === $signerAddress || dst === $signerAddress) {
 				console.log('detected WETH Transfer event');
 				fetchAllDisplayData();			

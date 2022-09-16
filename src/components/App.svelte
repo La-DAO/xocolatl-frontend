@@ -9,6 +9,7 @@ import { isLoading } from 'svelte-i18n';
 
 import { isRighNetwork, accountModalHidden, selectedPage } from '../store/store';
 import { handleProviderChange, checkIfAlreadyConnected } from '../utils';
+import { orgURLs } from '../constants';
 
 import Header from './Header.svelte';
 import AccountModal from './AccountModal.svelte';
@@ -74,6 +75,6 @@ Por favor espere...
 	{/if}
 	<TxMonitor />
 	<Polling />
-	<Footer />
+	<Footer urls={orgURLs}/>
 </main>
 {/if}

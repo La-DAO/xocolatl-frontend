@@ -3,10 +3,16 @@ import { _ } from 'svelte-i18n';
 import { selectedPage } from '../store/store';
 import Icon from './Icon.svelte';
 
-const githubURL = "https://github.com/PipilaDAO";
-const docsURL = "https://iafhurtado.gitbook.io/xocolatl-documentacion-tecnica/";
-const discordURL = "https://discord.gg/GguRwtZj4x";
+export let urls: URLS;
+
+type URLS = {
+	twitter: string;
+	docs: string;
+	github: string;
+	discord: string;
+}
 </script>
+
 <style>
 :global(main) > footer {
   position: sticky;
@@ -57,14 +63,20 @@ a {
 </style>
 <footer class="container">
 	<div class="left">
-		<span on:click={()=>window.open(githubURL, '_blank')}>
-			<Icon name="github" width="1.5rem" height="1.5rem "/>
+		<span on:click={()=>window.open(urls.twitter, '_blank')}>
+			<Icon name="twitter" width="1.2rem" height="1.2rem"/>
 		</span>
-		<span on:click={()=>window.open(docsURL, '_blank')}>
-			<Icon name="docs" width="1.5rem" height="1.5rem"/>
+
+		<span on:click={()=>window.open(urls.docs, '_blank')}>
+			<Icon name="docs" width="1.2rem" height="1.2rem"/>
 		</span>
-		<span on:click={()=>window.open(discordURL, '_blank')}>
-			<Icon name="discord" width="1.5rem" height="1.5rem"/>
+
+		<span on:click={()=>window.open(urls.github, '_blank')}>
+			<Icon name="github" width="1.2rem" height="1.2rem "/>
+		</span>
+
+		<span on:click={()=>window.open(urls.discord, '_blank')}>
+			<Icon name="discord" width="1.2rem" height="1.2rem"/>
 		</span>
 	</div>
 	<div class="right">
