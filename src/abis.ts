@@ -117,7 +117,7 @@ export const houseOfCoinABI = [
 	'function computeCostOfLiquidation(address user, address reserveAsset) view returns (uint256 costAmount, uint256 collateralAtPenalty)',
 	'function computeUserHealthRatio(address user, address reserveAsset) view returns (uint256)',
 	'function getBackedTokenID(address _reserveAsset) view returns (uint256)',
-	'function getLatestPrice() view returns (uint256 price)',
+	'function getLatestPrice(address houseOfReserveAddress) view returns (uint256 price)',
 	'function getLiqParams() view returns (tuple(uint256 globalBase, uint256 marginCallThreshold, uint256 liquidationThreshold, uint256 liquidationPricePenaltyDiscount, uint256 collateralPenalty))',
 	'function getMaxBlockTimestampDelay() view returns (uint256)',
 	'function getMaxDataTimestampDelay() view returns (uint256)',

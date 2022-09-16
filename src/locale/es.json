@@ -53,5 +53,8 @@
 		"copiedAddress": "Copiada al portapeles",
 		"viewOnExplorer": "Ver en explorador de bloques"
 	},
-	"footer": "Un proyecto de"
+	"footer": {
+		"project": "Un proyecto de",
+		"liquidations": "Liquidaciones"
+	}
 }

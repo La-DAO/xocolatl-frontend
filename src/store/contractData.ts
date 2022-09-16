@@ -18,7 +18,12 @@ export const userXOCMintingPower: Writable<BigNumber | null> = writable(null);
 
 // 8 decimals
 export const WETHToXOC: Writable<BigNumber | null> = writable(null);
+
 export const userHealthRatio: Writable<BigNumber | null> = writable(null);
+export const collatRatioNum: Writable<BigNumber | null> = writable(null);
+export const collatRatioDenom: Writable<BigNumber | null> = writable(null);
+export const globalBase: Writable<BigNumber | null> = writable(null);
+
 
 export const userMaxDebt = derived([userXOCMintingPower, userXOCDebt],
 	([$userXOCMintingPower, $userXOCDebt]) => {
@@ -57,7 +62,6 @@ export const userWETHCollateralMXNPrice: Readable<BigNumber | null> = derived(
 		} else return null;
 	}
 );
-
 
 export const userWETHLiquidationPrice = derived(
 	[liquidationThreshold, userXOCDebt, userWETHDepositBalance, collateralRatioParam], 

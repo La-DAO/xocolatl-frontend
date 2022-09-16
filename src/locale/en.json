@@ -53,5 +53,8 @@
 		"copiedAddress": "Copied to clipboard",
 		"viewOnExplorer": "View in block explorer"
 	},
-	"footer": "A project by"
+	"footer": {
+		"project": "A project by",
+		"liquidations": "Liquidations"
+	}
 }
