@@ -10,8 +10,8 @@ import {
 	userWETHBalance,
 	userXOCMintingPower,
 	userXOCBalance,
+	userXOCDebt,
 	userWETHMaxWithdrawal,
-	userWETHAllowance,
 	userNativeTokenBalance
 } from '../store/contractData';
 
@@ -32,7 +32,7 @@ import {
 } from '../store/userInput';	
 
 
-import { approveWETH, depositWETH, mintXOC, approveXOC, redeemXOC, withdrawWETH, depositNativeToken } from '../contractWrites';
+import { approveWETH, depositWETH, mintXOC, redeemXOC, withdrawWETH, depositNativeToken } from '../contractWrites';
 
 import PillNavigation from './PillNavigation.svelte';
 import CollateralInfo from './CollateralInfo.svelte';
@@ -138,7 +138,7 @@ $: swapURL = ($chainId && $chainId in chains) ? chains[$chainId].swapURL : '';
 					bind:inputAmount={$XOCRedeemInputAmount} 
 					bind:inputError={$XOCRedeemInputError} 
 					inputAmountBigNum={$XOCRedeemInputAmountBigNum}
-					inputLimit={$userXOCBalance}
+					inputLimit={$userXOCBalance?.gt($userXOCDebt ? $userXOCDebt : 0) ? $userXOCDebt : $userXOCBalance}
 					inputTypeText={$_('input.token') + ': XOC'}
 					actionHandler={redeemXOC}
 					actionText={$_('actions.redeem')}

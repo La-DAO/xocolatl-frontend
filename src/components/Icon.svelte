@@ -3,7 +3,7 @@ export let name: IconKey;
 export let width = '1rem';
 export let height = '1rem';
 export let focusable = false;
-type IconKey = 'info' | 'chevron' | 'copy' | 'link' | 'check' | 'github' | 'docs' | 'discord'
+type IconKey = 'info' | 'chevron' | 'copy' | 'link' | 'check' | 'github' | 'docs' | 'discord' | 'twitter'
 type IconData = {
   box: number,
   svg: string

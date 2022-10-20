@@ -72,7 +72,6 @@ export const userWETHLiquidationPrice = derived(
 			const wethDepositBalanceFloat = parseFloat(ethers.utils.formatEther($userWETHDepositBalance));
 			const result = (floatLiqThreshold*floatXOCDebt*$collateralRatioParam)/wethDepositBalanceFloat;
 			return result;
-			// return ((parseFloat($liquidationThreshold)/100)*parseFloat($userXOCDebt)*parseFloat($collateralRatioParam)) / (parseFloat($userWETHDepositBalance));
 		} else return null;
 	});
 

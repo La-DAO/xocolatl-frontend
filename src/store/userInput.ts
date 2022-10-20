@@ -1,3 +1,4 @@
+// TODO: get rid of number inputs since floats cause so many issues, use strings for input instead
 import { writable, derived } from 'svelte/store';
 
 import { ethers } from 'ethers';

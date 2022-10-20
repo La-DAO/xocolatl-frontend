@@ -1,5 +1,7 @@
 with import <nixpkgs> {};
-
+let 
+    nodejs = nodejs-16_x;
+in
 stdenv.mkDerivation {
     name = "node";
     buildInputs = [

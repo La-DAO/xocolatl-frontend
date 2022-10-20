@@ -1,6 +1,5 @@
 <script lang="ts">
 import { _ } from 'svelte-i18n';
-import { selectedPage } from '../store/store';
 import Icon from './Icon.svelte';
 
 export let urls: URLS;
@@ -10,6 +9,7 @@ type URLS = {
 	docs: string;
 	github: string;
 	discord: string;
+	dao: string;
 }
 </script>
 
@@ -21,7 +21,7 @@ type URLS = {
 
 footer {
 	margin-top: 1rem;
-	height: 5.5rem;
+	height: 4rem;
   width:100%;
 	border-top: 1px solid grey;
 	text-align: right;
@@ -54,11 +54,15 @@ a {
 	color: var(--main-color);
 }
 
-.linkish {
-	color: var(--main-color);
-	cursor: pointer;
-	text-decoration: underline;
+.icon {
+	width: 1.3rem;
+	height: 1.3rem;
 }
+/* .linkish { */
+/* 	color: var(--main-color); */
+/* 	cursor: pointer; */
+/* 	text-decoration: underline; */
+/* } */
 
 </style>
 <footer class="container">
@@ -78,9 +82,13 @@ a {
 		<span on:click={()=>window.open(urls.discord, '_blank')}>
 			<Icon name="discord" width="1.2rem" height="1.2rem"/>
 		</span>
+
+
+		<span on:click={()=>window.open(urls.dao, '_blank')}>
+			<img alt="dao icon" class="icon" src="/static/dao-icon.png">
+		</span>
 	</div>
 	<div class="right">
-		<p>{$_('footer.project')} <a href="https://pipiladao.org" target="_blank">PipilaDAO</a></p>
-		<p class="linkish" on:click={()=>{$selectedPage='liquidations';}}>{$_('footer.liquidations')}</p>
+		<p>{$_('footer.project')} <a href="https://xocolatl.club" target="_blank">La DAO</a></p>
 	</div>
 </footer>

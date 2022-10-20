@@ -7,7 +7,7 @@ import '@fontsource/roboto';
 import '../i18n'; // locales
 import { isLoading } from 'svelte-i18n';
 
-import { isRighNetwork, accountModalHidden, selectedPage } from '../store/store';
+import { isRighNetwork, accountModalHidden } from '../store/store';
 import { handleProviderChange, checkIfAlreadyConnected } from '../utils';
 import { orgURLs } from '../constants';
 
@@ -18,7 +18,6 @@ import TxMonitor from './TxMonitor.svelte';
 import Polling from './Polling.svelte';
 import ChainModal from './ChainModal.svelte';
 import Footer from './Footer.svelte';
-import Liquidations from './Liquidations.svelte';
 
 $: $provider && handleProviderChange();
 
@@ -46,7 +45,6 @@ $: oldChain = handleNetworkChange(oldChain, $chainId);
 
 	:global(html, body) {
 		background-color: var(--light-color);
-
 	}
 
 	main {
@@ -68,11 +66,7 @@ Por favor espere...
 	{#key !$accountModalHidden}
 		<AccountModal bind:hidden={$accountModalHidden}/>
 	{/key}
-	{#if $selectedPage === 'home'}
-		<Dashboard />
-	{:else if $selectedPage === 'liquidations'}
-		<Liquidations />
-	{/if}
+	<Dashboard />
 	<TxMonitor />
 	<Polling />
 	<Footer urls={orgURLs}/>
