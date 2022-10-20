@@ -2,7 +2,7 @@
   "actions": {
 		"connect": "Conectar cartera",
 		"disconnect": "Desconectar",
-		"approve": "Aprovar",
+		"approve": "Aprobar",
 		"deposit": "Depositar",
 		"mint": "Acuñar",
 		"redeem": "Amortizar",

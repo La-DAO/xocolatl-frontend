@@ -1,9 +1,6 @@
 <script lang="ts">
 import { ethers } from 'ethers';
 import { _ } from 'svelte-i18n';
-
-import ContractButton from './ContractButton.svelte';
-
 import { fetchAllDisplayData } from '../contractReads';
 import { isRighNetwork, selectedTab } from '../store/store';
 import { 
