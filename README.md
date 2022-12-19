@@ -1,6 +1,6 @@
 # Xocolatl frontend 
 
-Applicacion para mintear e interactuar con XOC, un peso mexicano decentralizado. Hecho posible gracias a un esfuerzo colaborativo de PipilaDAO.
+Applicacion para acuñar e interactuar con XOC, un peso mexicano decentralizado. Hecho posible gracias a un esfuerzo colaborativo de La DAO.
 
 - [Getting started](#getting-started)
 	- [Installation](#installation)
@@ -19,7 +19,18 @@ Applicacion para mintear e interactuar con XOC, un peso mexicano decentralizado.
 
 ## Getting started
 
+Install NodeJS:
+
+- To install Node.js on your computer, go to the Node.js website (https://nodejs.org/) and download the latest stable version of Node.js. Make sure to select the version that is compatible with your operating system (e.g. Windows, MacOS, Linux).  
+
+Clone this repository:
+
+```bash
+git clone https://github.com/La-DAO/xocolatl-frontend
+```
+
 ### Installation
+Install dependencies:  
 
 ```bash
 npm install
