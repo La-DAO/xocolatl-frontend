@@ -25,8 +25,7 @@ export const assetsAccountantABI = [
 	'event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)',
 	'event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)',
 	'event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values)',
-	'event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value)'
-	,
+	'event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value)',
 	'event URI(string value, uint256 indexed id)',
 	'function BURNER_ROLE() view returns (bytes32)',
 	'function DEFAULT_ADMIN_ROLE() view returns (bytes32)',
@@ -186,4 +185,29 @@ export const XOCABI = [
 	'function unpause()',
 	'function upgradeTo(address newImplementation)',
 	'function upgradeToAndCall(address newImplementation, bytes data) payable'
+];
+
+export const accountLiquidatorABI = [
+	'event Liquidation(address indexed userLiquidated, address indexed liquidator, uint256 collateralAmount)',
+	'event MarginCall(address indexed user, address indexed mintedAsset, address indexed reserveAsset)',
+	'event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)',
+	'event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)',
+	'event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)',
+	'event TickersChanged(string newtickerUsdFiat, string newtickerReserveAsset)',
+	'event TrustedSignerChanged(address indexed newSigner)',
+	'function DEFAULT_ADMIN_ROLE() view returns (bytes32)',
+	'function assetsAccountant() view returns (address)',
+	'function authorizeSigner(address newtrustedSigner)',
+	'function computeCostOfLiquidation(address user, address reserveAsset) view returns (uint256 costAmount, uint256 collateralAtPenalty)',
+	'function getLatestPrice(address houseOfReserveAddress) view returns (uint256 price)',
+	'function getRoleAdmin(bytes32 role) view returns (bytes32)',
+	'function grantRole(bytes32 role, address account)',
+	'function hasRole(bytes32 role, address account) view returns (bool)',
+	'function isSignerAuthorized(address _receviedSigner) view returns (bool)',
+	'function liquidateUser(address userToLiquidate, address reserveAsset)',
+	'function renounceRole(bytes32 role, address account)',
+	'function revokeRole(bytes32 role, address account)',
+	'function setTickers(string _tickerUsdFiat, string _tickerReserveAsset)',
+	'function tickerReserveAsset() view returns (bytes32)',
+	'function tickerUsdFiat() view returns (bytes32)'
 ];
