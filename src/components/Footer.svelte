@@ -89,6 +89,6 @@ a {
 		</span>
 	</div>
 	<div class="right">
-		<p>{$_('footer.project')} <a href="https://xocolatl.club" target="_blank">La DAO</a></p>
+		<p>{$_('footer.project')} <a href="https://ladao.club/" target="_blank">La DAO</a></p>
 	</div>
 </footer>
