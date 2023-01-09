@@ -94,7 +94,7 @@
 
 <header class="header">
 	<div class="container">
-		<h2 on:click={()=>{$selectedPage='home';}}>Xocolatl</h2>
+		<h2 on:click={()=>{$selectedPage='home';}}>Xocolatl-.-v2</h2>
 		<div class="right-content">
 		{#if $signerAddress}
 			<img class="add-token-button" src="/static/tokens/XOC.svg" on:click={addXOCToMetamask} alt="Add XOC to metamask button"/>
