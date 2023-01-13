@@ -57,7 +57,7 @@ const polygonData: ChainData = {
 	blockExplorerURL: 'https://polygonscan.com/',
 	WETHAddress: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
 	WETHABI: mockWETHABI,
-	assetsAccountantAddress: '0x168D80Ba955033B8f98FCcC94051842d40f294c2',
+	assetsAccountantAddress: '0xB90996A70C957a1496e349434CF0E030A9f693A4',
 	assetsAccountantABI: assetsAccountantABI,
 	houseOfReserveAddress: '0xd411BE9A105Ea7701FabBe58C2834b7033EBC203',
 	houseOfReserveABI: houseOfReserveABI,
