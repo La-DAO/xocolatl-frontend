@@ -40,7 +40,7 @@ export async function getWETHtoXOCRate() {
 	let price;
 	try {
 	// returned price has 8 decimals
-		price = await get(wrappedHouseOfReserveContract)!.getLatestPrice(chains[get(chainId)].houseOfReserveAddress);
+		price = await get(wrappedHouseOfReserveContract)!.getLatestPrice();
 	} catch (e) {
 		console.log(e);
 	}

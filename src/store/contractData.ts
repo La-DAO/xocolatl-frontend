@@ -44,14 +44,6 @@ export const userMaxDebtUtilization: Readable<number | null> = derived([userXOCD
 
 export const liquidationThreshold: Writable<BigNumber | null> = writable(null);
 
-export const collateralRatioParam: Writable <number | null> = writable(null);
-
-export const collateralFactor: Readable<number | null> = derived(collateralRatioParam, 
-	$collateralRatioParam => {
-		if ($collateralRatioParam) {
-			return 1/$collateralRatioParam;
-		} else return null;
-	});
 
 // returns price in 18 decimals
 export const userWETHCollateralMXNPrice: Readable<BigNumber | null> = derived(
@@ -64,13 +56,13 @@ export const userWETHCollateralMXNPrice: Readable<BigNumber | null> = derived(
 );
 
 export const userWETHLiquidationPrice = derived(
-	[liquidationThreshold, userXOCDebt, userWETHDepositBalance, collateralRatioParam], 
-	([$liquidationThreshold, $userXOCDebt, $userWETHDepositBalance, $collateralRatioParam]) => {
-		if ($liquidationThreshold && $userXOCDebt && $userWETHDepositBalance && $collateralRatioParam){
-			const floatLiqThreshold = parseFloat(ethers.utils.formatEther($liquidationThreshold));
+	[userXOCDebt, userWETHDepositBalance, liquidationFactor], 
+	([$userXOCDebt, $userWETHDepositBalance, $liquidationFactor]) => {
+		if ($userXOCDebt && $userWETHDepositBalance && $liquidationFactor){
 			const floatXOCDebt = parseFloat(ethers.utils.formatEther($userXOCDebt));
 			const wethDepositBalanceFloat = parseFloat(ethers.utils.formatEther($userWETHDepositBalance));
-			const result = (floatLiqThreshold*floatXOCDebt*$collateralRatioParam)/wethDepositBalanceFloat;
+			const liqFactorFloat = parseFloat(ethers.utils.formatEther($liquidationFactor));
+			const result = (floatXOCDebt)/(wethDepositBalanceFloat*liqFactorFloat);
 			return result;
 		} else return null;
 	});
@@ -105,5 +97,5 @@ export function resetAll() {
 	WETHToXOC.set(null);
 	userHealthRatio.set(null);
 	liquidationThreshold.set(null);
-	collateralRatioParam.set(null);
+	maxLTVFactor.set(null);
 }

@@ -49,6 +49,7 @@ export const houseOfReserveABI = [
 	'function backedTokenID() view returns (uint256)',
 	'function checkMaxWithdrawal(address user) view returns (uint256 max)',
 	'function deposit(uint256 amount)',
+	'function getLatestPrice() view returns (uint256 price)',
 	'function liquidationFactor() view returns (uint256)',
 	'function maxLTVFactor() view returns (uint256)',
 	'function reserveAsset() view returns (address)',
