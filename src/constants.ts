@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 export const maxApproveAmount = ethers.constants.MaxUint256;
 
 export const orgURLs = {
-	twitter: 'https://twitter.com/PipilaDAO/',	
+	twitter: 'https://twitter.com/LaDAO_Club/',	
 	// docs: 'https://iafhurtado.gitbook.io/xocolatl-documentacion-tecnica/',
 	docs: 'https://github.com/La-DAO/xocolatl-contracts/wiki/background',
 	github: 'https://github.com/La-DAO',
