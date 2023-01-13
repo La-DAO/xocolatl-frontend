@@ -4,7 +4,7 @@ import { signerAddress, chainId, signer } from 'svelte-ethers-store';
 
 import { checkContractCallPrereqs } from './utils';
 
-import { 
+import {
 	WETHContract,
 	XOCContract,
 	assetsAccountantContract,
@@ -14,7 +14,7 @@ import {
 	wrappedHouseOfReserveContract
 } from './store/contracts';
 
-import { 
+import {
 	userNativeTokenBalance,
 	userWETHAllowance,
 	userWETHBalance,
@@ -34,13 +34,21 @@ import {
 
 import { chains } from './chains';
 
+
+// async function fetchBitso(): Promise<any> {
+// 	const uri = 'https://api.bitso.com/v3/ticker/?book=eth_mxn';
+// 	const response = await window.fetch(uri, );
+// 	const rObject = await response.json();
+// 	const lastPrice: number = rObject.payload.last;
+// 	return utils.parseUnits(lastPrice.toString(), 8);
+// }
+
 export async function getWETHtoXOCRate() {
 	checkContractCallPrereqs();
-
 	let price;
 	try {
-	// returned price has 8 decimals
-		price = await get(wrappedHouseOfReserveContract)!.getLatestPrice();
+		// returned price has 8 decimals
+		price = await get(houseOfReserveContract)!.getLatestPrice();
 	} catch (e) {
 		console.log(e);
 	}
@@ -72,7 +80,13 @@ async function getUserWETHDepositBalance(): Promise<void> {
 
 export async function getMaxWETHWithdrawal() {
 	checkContractCallPrereqs();
-	const fetchedAmount = await get(wrappedHouseOfReserveContract)!.checkMaxWithdrawal(get(signerAddress));
+	let fetchedAmount;
+	try {
+		fetchedAmount = await get(houseOfReserveContract)!.checkMaxWithdrawal(get(signerAddress));
+	} catch (error) {
+		fetchedAmount = await get(wrappedHouseOfReserveContract)!.checkMaxWithdrawal(get(signerAddress));
+	}
+	 
 	userWETHMaxWithdrawal.set(fetchedAmount);
 }
 
@@ -85,7 +99,12 @@ async function getXOCBalance() {
 
 export async function getXOCMintingPower() {
 	checkContractCallPrereqs();
-	const fetchedAmount = await get(wrappedHouseOfCoinContract)!.checkRemainingMintingPower(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+	let fetchedAmount;
+	try {
+		fetchedAmount = await get(houseOfCoinContract)!.checkRemainingMintingPower(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+	} catch (error) {
+		fetchedAmount = await get(wrappedHouseOfCoinContract)!.checkRemainingMintingPower(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+	}
 	userXOCMintingPower.set(fetchedAmount);
 }
 
@@ -103,11 +122,16 @@ export async function getXOCDebt() {
 
 export async function getHealthRatio() {
 	checkContractCallPrereqs();
-	// contract revers if no WETH deposits or no debt
+	// contract reverts if no WETH deposits or no debt
 	const deposit = get(userWETHDepositBalance);
 	const debt = get(userXOCDebt);
 	if (deposit && deposit.gt(0) && debt && debt.gt(0)) {
-		const fetchedAmount = await get(wrappedHouseOfCoinContract)!.computeUserHealthRatio(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+		let fetchedAmount;
+		try {
+			fetchedAmount = await get(houseOfCoinContract)!.computeUserHealthRatio(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+		} catch (error) {
+			fetchedAmount = await get(wrappedHouseOfCoinContract)!.computeUserHealthRatio(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+		}
 		userHealthRatio.set(fetchedAmount);
 	}
 }
@@ -134,6 +158,7 @@ export async function getMaxLTVFactor() {
 // TODO: fetch with array of promises and retry failed
 export async function fetchAllDisplayData() {
 	checkContractCallPrereqs();
+	getWETHtoXOCRate();
 	getUserNativeTokenBalance();
 	getWETHAllowance();
 	getUserWETHDepositBalance();
@@ -142,8 +167,6 @@ export async function fetchAllDisplayData() {
 	getXOCBalance();
 	getXOCMintingPower();
 
-
-	getWETHtoXOCRate();
 	getMaxLTVFactor();
 	getLiquidationParams();
 	getLiquidationFactor();
