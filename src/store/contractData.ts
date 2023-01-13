@@ -20,8 +20,8 @@ export const userXOCMintingPower: Writable<BigNumber | null> = writable(null);
 export const WETHToXOC: Writable<BigNumber | null> = writable(null);
 
 export const userHealthRatio: Writable<BigNumber | null> = writable(null);
-export const collatRatioNum: Writable<BigNumber | null> = writable(null);
-export const collatRatioDenom: Writable<BigNumber | null> = writable(null);
+export const liquidationFactor: Writable<BigNumber | null> = writable(null);
+export const maxLTVFactor: Writable<BigNumber | null> = writable(null);
 export const globalBase: Writable<BigNumber | null> = writable(null);
 
 

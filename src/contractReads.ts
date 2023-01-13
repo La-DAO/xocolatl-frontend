@@ -27,9 +27,8 @@ import {
 	WETHToXOC,
 	userHealthRatio,
 	liquidationThreshold,
-	collateralRatioParam,
-	collatRatioNum,
-	collatRatioDenom,
+	liquidationFactor,
+	maxLTVFactor,
 	globalBase
 } from './store/contractData';
 
@@ -41,7 +40,7 @@ export async function getWETHtoXOCRate() {
 	let price;
 	try {
 	// returned price has 8 decimals
-		price = await get(wrappedHouseOfCoinContract)!.getLatestPrice(chains[get(chainId)].houseOfReserveAddress);
+		price = await get(wrappedHouseOfReserveContract)!.getLatestPrice(chains[get(chainId)].houseOfReserveAddress);
 	} catch (e) {
 		console.log(e);
 	}
@@ -86,7 +85,7 @@ async function getXOCBalance() {
 
 export async function getXOCMintingPower() {
 	checkContractCallPrereqs();
-	const fetchedAmount = await get(wrappedHouseOfCoinContract)!.checkRemainingMintingPower(get(signerAddress), chains[get(chainId)].WETHAddress);
+	const fetchedAmount = await get(wrappedHouseOfCoinContract)!.checkRemainingMintingPower(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
 	userXOCMintingPower.set(fetchedAmount);
 }
 
@@ -108,7 +107,7 @@ export async function getHealthRatio() {
 	const deposit = get(userWETHDepositBalance);
 	const debt = get(userXOCDebt);
 	if (deposit && deposit.gt(0) && debt && debt.gt(0)) {
-		const fetchedAmount = await get(wrappedHouseOfCoinContract)!.computeUserHealthRatio(get(signerAddress), chains[get(chainId)].WETHAddress);
+		const fetchedAmount = await get(wrappedHouseOfCoinContract)!.computeUserHealthRatio(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
 		userHealthRatio.set(fetchedAmount);
 	}
 }
@@ -117,16 +116,19 @@ export async function getLiquidationParams() {
 	checkContractCallPrereqs();
 	const fetchedValues = await get(houseOfCoinContract)!.getLiqParams();
 	liquidationThreshold.set(fetchedValues.liquidationThreshold);
-	globalBase.set(fetchedValues.globalBase);
-
+	globalBase.set(utils.parseUnits("1", 18));
 }
 
-export async function getCollateralRatioParam() {
+export async function getLiquidationFactor() {
 	checkContractCallPrereqs();
-	const fetchedValues = await get(houseOfReserveContract)!.collateralRatio();
-	collatRatioNum.set(fetchedValues.numerator);
-	collatRatioDenom.set(fetchedValues.denominator);
-	collateralRatioParam.set(parseFloat(fetchedValues.numerator)/parseFloat(fetchedValues.denominator));
+	const fetchedValue = await get(houseOfReserveContract)!.liquidationFactor();
+	liquidationFactor.set(fetchedValue);
+}
+
+export async function getMaxLTVFactor() {
+	checkContractCallPrereqs();
+	const fetchedValue = await get(houseOfReserveContract)!.maxLTVFactor();
+	maxLTVFactor.set(fetchedValue);
 }
 
 // TODO: fetch with array of promises and retry failed
@@ -142,8 +144,9 @@ export async function fetchAllDisplayData() {
 
 
 	getWETHtoXOCRate();
+	getMaxLTVFactor();
 	getLiquidationParams();
-	getCollateralRatioParam();
+	getLiquidationFactor();
 
 	await getUserWETHBalance();
 	await getXOCDebt();
