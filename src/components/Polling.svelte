@@ -94,29 +94,29 @@
 			}
 		});
 
-		get(houseOfCoinContract)!.on('Liquidation', (userLiquidated: string, _liquidator: string, _collateralAmount: BigNumber, _event: Event) => {
-			if (userLiquidated === $signerAddress) {
-				console.log(`
-     |~~~~~~|                 
-     |      |                   
-     |      |       __________    
-     | (o)(o)      /          \\     
-     @      _)  __/  ¡Ay       \\ 
-      | ,___| /___    caramba!  |   
-      |   /       \\            /    
-     /____\\        \\__________/     
-    /      \\    `); // dont remove this 
-				console.log('detected HouseOfCoin Liquidation event');	
-				fetchAllDisplayData();
-			}
-		});
+		// get(houseOfCoinContract)!.on('Liquidation', (userLiquidated: string, _liquidator: string, _collateralAmount: BigNumber, _event: Event) => {
+		// 	if (userLiquidated === $signerAddress) {
+		// 		console.log(`
+    //  |~~~~~~|                 
+    //  |      |                   
+    //  |      |       __________    
+    //  | (o)(o)      /          \\     
+    //  @      _)  __/  ¡Ay       \\ 
+    //   | ,___| /___    caramba!  |   
+    //   |   /       \\            /    
+    //  /____\\        \\__________/     
+    // /      \\    `); // dont remove this 
+		// 		console.log('detected HouseOfCoin Liquidation event');	
+		// 		fetchAllDisplayData();
+		// 	}
+		// });
 
-		get(houseOfCoinContract)!.on('MarginCall', (user: string, _mintedAsset: string, _reserveAsset: string, _event: Event) => {
-			if (user === $signerAddress) {
-				console.log('detected HouseOfCoin MarginCall event');	
-				fetchAllDisplayData();
-			}
-		});
+		// get(houseOfCoinContract)!.on('MarginCall', (user: string, _mintedAsset: string, _reserveAsset: string, _event: Event) => {
+		// 	if (user === $signerAddress) {
+		// 		console.log('detected HouseOfCoin MarginCall event');	
+		// 		fetchAllDisplayData();
+		// 	}
+		// });
 
 		get(XOCContract)!.on('Approval', (owner: string, _spender: string, _value: BigNumber, _event: Event) => {
 			if(owner === $signerAddress) {

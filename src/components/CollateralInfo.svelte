@@ -1,10 +1,11 @@
 <script lang="ts">
 import { ethers } from 'ethers';
 import { _ } from 'svelte-i18n';
-import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userWETHLiquidationPrice, collateralFactor, userWETHCollateralMXNPrice, healthRatioAsPercentage } from '../store/contractData';
+import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userWETHLiquidationPrice, maxLTVFactor , liquidationFactor, userWETHCollateralMXNPrice, healthRatioAsPercentage } from '../store/contractData';
 /* import HealthCircle from './HealthCircle.svelte'; */
 import ProgressBar from '@okrad/svelte-progressbar';
 import Icon from '../components/Icon.svelte';
+    import { formatUnits } from 'ethers/lib/utils';
 
 const commify = ethers.utils.commify;
 </script>
@@ -132,7 +133,7 @@ const commify = ethers.utils.commify;
                     <p>{$_('healthIndex.LTV')}</p>
                     <div class='info-icon' data-tooltip={$_('healthIndex.LTVTooltip')}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
-                <p>{$collateralFactor ? ($collateralFactor*100).toFixed(2) : '-'} %</p>
+                <p>{$maxLTVFactor ? (parseFloat(ethers.utils.formatEther($maxLTVFactor)) * 100).toFixed(2) : '-'} %</p>
             </div>
 
             <div class="text-row">

@@ -19,7 +19,7 @@
 			if(ratio === 1) {
 				// need to get rid of all floats for inputs and replace to strings, in the meantime use 0.99 as max
 				// as of now, there will always be some dust in wallet balances
-				inputAmount = +((parseFloat(ethers.utils.formatEther(inputLimit))*0.99).toFixed(18));
+				inputAmount = +((parseFloat(ethers.utils.formatEther(inputLimit))*ratio).toFixed(18));
 			} else {
 				inputAmount = +((parseFloat(ethers.utils.formatEther(inputLimit))*ratio).toFixed(18));
 			}
