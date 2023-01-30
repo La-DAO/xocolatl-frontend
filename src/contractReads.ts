@@ -5,7 +5,7 @@ import { signerAddress, chainId, signer } from 'svelte-ethers-store';
 import { checkContractCallPrereqs } from './utils';
 
 import {
-	WETHContract,
+	CollateralContract,
 	XOCContract,
 	assetsAccountantContract,
 	houseOfCoinContract,
@@ -14,11 +14,14 @@ import {
 	wrappedHouseOfReserveContract
 } from './store/contracts';
 
+import { selectedCollateral }
+	from './store/store';
+
 import {
 	userNativeTokenBalance,
-	userWETHAllowance,
-	userWETHBalance,
-	userWETHDepositBalance,
+	userCollateralAllowance,
+	userCollateralBalance,
+	userCollateralDepositBalance,
 	userWETHMaxWithdrawal,
 	userXOCAllowance,
 	userXOCBalance,
@@ -32,7 +35,7 @@ import {
 	globalBase
 } from './store/contractData';
 
-import { chains } from './chains';
+import { allChainData, chains } from './chains';
 
 
 // async function fetchBitso(): Promise<any> {
@@ -43,7 +46,7 @@ import { chains } from './chains';
 // 	return utils.parseUnits(lastPrice.toString(), 8);
 // }
 
-export async function getWETHtoXOCRate() {
+export async function getCollateralToXOCRate() {
 	checkContractCallPrereqs();
 	let price;
 	try {
@@ -60,25 +63,27 @@ export async function getUserNativeTokenBalance(): Promise<void> {
 	userNativeTokenBalance.set(nativeTokenBalance);
 }
 
-export async function getWETHAllowance() {
+export async function getCollateralAllowance() {
 	checkContractCallPrereqs();
-	const allowance = await get(WETHContract)!.allowance(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
-	userWETHAllowance.set(allowance);
+	const allowance = await get(CollateralContract)!.allowance(get(signerAddress),
+		chains[get(chainId)].reserveAssets.find(asset => asset.name == get(selectedCollateral))?.houseOfReserveAddress);
+	userCollateralAllowance.set(allowance);
 }
 
-export async function getUserWETHBalance(): Promise<void> {
+export async function getUserCollateralBalance(): Promise<void> {
 	checkContractCallPrereqs();
-	const balance = await get(WETHContract)!.balanceOf(get(signerAddress));
-	userWETHBalance.set(balance);
+	const balance = await get(CollateralContract)!.balanceOf(get(signerAddress));
+	userCollateralBalance.set(balance);
 }
 
-async function getUserWETHDepositBalance(): Promise<void> {
+async function getUserCollateralDepositBalance(): Promise<void> {
 	checkContractCallPrereqs();
-	const fetchedBalance = await get(assetsAccountantContract)!.balanceOf(get(signerAddress), chains[get(chainId)].reserveTokenID);
-	userWETHDepositBalance.set(fetchedBalance);
+	const fetchedBalance = await get(assetsAccountantContract)!.balanceOf(get(signerAddress), 
+		chains[get(chainId)].reserveAssets.find(asset => asset.name == get(selectedCollateral))?.reserveTokenID);
+	userCollateralDepositBalance.set(fetchedBalance);
 }
 
-export async function getMaxWETHWithdrawal() {
+export async function getMaxCollateralWithdrawal() {
 	checkContractCallPrereqs();
 	let fetchedAmount;
 	try {
@@ -86,7 +91,7 @@ export async function getMaxWETHWithdrawal() {
 	} catch (error) {
 		fetchedAmount = await get(wrappedHouseOfReserveContract)!.checkMaxWithdrawal(get(signerAddress));
 	}
-	 
+
 	userWETHMaxWithdrawal.set(fetchedAmount);
 }
 
@@ -123,7 +128,7 @@ export async function getXOCDebt() {
 export async function getHealthRatio() {
 	checkContractCallPrereqs();
 	// contract reverts if no WETH deposits or no debt
-	const deposit = get(userWETHDepositBalance);
+	const deposit = get(userCollateralDepositBalance);
 	const debt = get(userXOCDebt);
 	if (deposit && deposit.gt(0) && debt && debt.gt(0)) {
 		let fetchedAmount;
@@ -158,11 +163,11 @@ export async function getMaxLTVFactor() {
 // TODO: fetch with array of promises and retry failed
 export async function fetchAllDisplayData() {
 	checkContractCallPrereqs();
-	getWETHtoXOCRate();
+	getCollateralToXOCRate();
 	getUserNativeTokenBalance();
-	getWETHAllowance();
-	getUserWETHDepositBalance();
-	getMaxWETHWithdrawal();
+	getCollateralAllowance();
+	getUserCollateralDepositBalance();
+	getMaxCollateralWithdrawal();
 	getXOCAllowance();
 	getXOCBalance();
 	getXOCMintingPower();
@@ -171,7 +176,7 @@ export async function fetchAllDisplayData() {
 	getLiquidationParams();
 	getLiquidationFactor();
 
-	await getUserWETHBalance();
+	await getUserCollateralBalance();
 	await getXOCDebt();
 	getHealthRatio();
 }

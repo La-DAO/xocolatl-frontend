@@ -16,7 +16,7 @@ import type { ContractTransaction  } from 'ethers';
 import type { TransactionReceipt } from '@ethersproject/providers';
 
 import { 
-	WETHContract,
+	CollateralContract,
 	XOCContract,
 	houseOfCoinContract,
 	houseOfReserveContract,
@@ -50,7 +50,7 @@ async function handleTxReceipt(tx: ContractTransaction) {
 
 export async function approveWETH() {
 	checkContractCallPrereqs();
-	const tx = await get(WETHContract)!.approve(chains[get(chainId)].houseOfReserveAddress, maxApproveAmount);
+	const tx = await get(CollateralContract)!.approve(chains[get(chainId)].houseOfReserveAddress, maxApproveAmount);
 	handleTxReceipt(tx);
 }
 

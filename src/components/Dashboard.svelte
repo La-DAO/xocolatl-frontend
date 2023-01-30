@@ -7,7 +7,7 @@ import { chains } from '../chains';
 
 
 import {
-	userWETHBalance,
+	userCollateralBalance,
 	userXOCMintingPower,
 	userXOCBalance,
 	userXOCDebt,
@@ -103,7 +103,7 @@ $: swapURL = ($chainId && $chainId in chains) ? chains[$chainId].swapURL : '';
 							bind:inputAmount={$WETHDepositInputAmount} 
 							bind:inputError={$WETHDepositInputError} 
 							inputAmountBigNum={$WETHDepositInputAmountBigNum}
-							inputLimit={$userWETHBalance}
+							inputLimit={$userCollateralBalance}
 							inputTypeText={$_('input.collateral') + ': WETH'}
 							actionText={$_('actions.approve')}
 							actionHandler={approveWETH}
@@ -114,7 +114,7 @@ $: swapURL = ($chainId && $chainId in chains) ? chains[$chainId].swapURL : '';
 							bind:inputAmount={$WETHDepositInputAmount} 
 							bind:inputError={$WETHDepositInputError} 
 							inputAmountBigNum={$WETHDepositInputAmountBigNum}
-							inputLimit={$userWETHBalance}
+							inputLimit={$userCollateralBalance}
 							inputTypeText={$_('input.collateral') + ': WETH'}
 							actionText={$_('actions.deposit')}
 							actionHandler={depositWETH}

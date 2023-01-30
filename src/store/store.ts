@@ -16,6 +16,7 @@ export const isRighNetwork = derived(
 	}
 );
 
+export const selectedCollateral = writable("WETH");
 
 export const blockExplorerURL = derived(chainId, 
 	($chainId) => {

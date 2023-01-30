@@ -11,7 +11,7 @@
 
 	const chainOptions = {
 		'0x89': 'Polygon',
-		'0x4': 'Rinkeby'
+		'0x5': 'Goerli'
 	};
 
 	// locale array as select options object

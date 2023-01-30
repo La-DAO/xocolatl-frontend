@@ -4,8 +4,8 @@ import { _ } from 'svelte-i18n';
 import { fetchAllDisplayData } from '../contractReads';
 import { isRighNetwork, selectedTab } from '../store/store';
 import { 
-	userWETHBalance, 
-	userWETHDepositBalance, 
+	userCollateralBalance, 
+	userCollateralDepositBalance, 
 	userWETHMaxWithdrawal, 
 	userXOCDebt, 
 	userXOCBalance, 
@@ -74,12 +74,12 @@ const commify = ethers.utils.commify;
 		</div>
 		<div class:highlight={$selectedTab === 'deposit'} class="box-row">
 			<p>{$_('balances.walletBalance')}</p> 
-			<p>{$userWETHBalance ? ethers.utils.formatEther($userWETHBalance.sub($userWETHBalance.mod(1e10))) : '-'} ETH</p>
+			<p>{$userCollateralBalance ? ethers.utils.formatEther($userCollateralBalance.sub($userCollateralBalance.mod(1e10))) : '-'} ETH</p>
 		</div>
 
 		<div class:highlight={$selectedTab === 'withdraw' || $selectedTab === 'deposit'} class="box-row">
 			<p>{$_('balances.depositBalance')}</p>
-			<p>{$userWETHDepositBalance ? ethers.utils.formatEther($userWETHDepositBalance.sub($userWETHDepositBalance.mod(1e10))) : '-'} ETH</p>
+			<p>{$userCollateralDepositBalance ? ethers.utils.formatEther($userCollateralDepositBalance.sub($userCollateralDepositBalance.mod(1e10))) : '-'} ETH</p>
 		</div>
 
 		<div class:highlight={$selectedTab === 'withdraw'} class="box-row">

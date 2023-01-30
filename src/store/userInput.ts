@@ -3,7 +3,7 @@ import { writable, derived } from 'svelte/store';
 
 import { ethers } from 'ethers';
 
-import { userWETHAllowance } from './contractData';
+import { userCollateralAllowance } from './contractData';
 
 // user inputs
 export const WETHDepositInputAmount = writable(0);
@@ -29,10 +29,10 @@ export const WETHDepositInputAmountBigNum = derived(
 export const WETHDepositInputError = writable('');
 
 export const WETHDepositNeedsAllowance = derived(
-	[WETHDepositInputAmountBigNum, userWETHAllowance],
-	([$WETHDepositInputAmountBigNum, $userWETHAllowance]) => {
-		if ($WETHDepositInputAmountBigNum && $userWETHAllowance) {
-			if ($userWETHAllowance.lt($WETHDepositInputAmountBigNum)) {
+	[WETHDepositInputAmountBigNum, userCollateralAllowance],
+	([$WETHDepositInputAmountBigNum, $userCollateralAllowance]) => {
+		if ($WETHDepositInputAmountBigNum && $userCollateralAllowance) {
+			if ($userCollateralAllowance.lt($WETHDepositInputAmountBigNum)) {
 				return true;
 			}
 		} 

@@ -62,7 +62,7 @@ export async function handleWalletConnectProvider() {
 	//  Enable session (triggers QR Code modal)
 	const wcProvider = new WalletConnectProvider({
 		rpc: {
-			4: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+			5: 'https://rpc.ankr.com/eth_goerli',
 			137: 'https://polygon-rpc.com/',
 			// ...
 		},

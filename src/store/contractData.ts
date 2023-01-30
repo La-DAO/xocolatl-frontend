@@ -6,9 +6,9 @@ import type { BigNumber } from 'ethers';
 export const userNativeTokenBalance: Writable<BigNumber | null> = writable(null);
 
 // display data from contracts
-export const userWETHAllowance: Writable<BigNumber | null> = writable(null);
-export const userWETHBalance: Writable<BigNumber | null> = writable(null);
-export const userWETHDepositBalance: Writable<BigNumber | null> = writable(null);
+export const userCollateralAllowance: Writable<BigNumber | null> = writable(null);
+export const userCollateralBalance: Writable<BigNumber | null> = writable(null);
+export const userCollateralDepositBalance: Writable<BigNumber | null> = writable(null);
 export const userWETHMaxWithdrawal: Writable<BigNumber | null> = writable(null);
 
 export const userXOCAllowance: Writable<BigNumber | null> = writable(null);
@@ -47,20 +47,20 @@ export const liquidationThreshold: Writable<BigNumber | null> = writable(null);
 
 // returns price in 18 decimals
 export const userWETHCollateralMXNPrice: Readable<BigNumber | null> = derived(
-	[WETHToXOC, userWETHDepositBalance],
-	([$WETHToXOC, $userWETHDepositBalance]) => {
-		if($WETHToXOC && $userWETHDepositBalance) {
-			return $WETHToXOC.mul($userWETHDepositBalance).div(1e8);
+	[WETHToXOC, userCollateralDepositBalance],
+	([$WETHToXOC, $userCollateralDepositBalance]) => {
+		if($WETHToXOC && $userCollateralDepositBalance) {
+			return $WETHToXOC.mul($userCollateralDepositBalance).div(1e8);
 		} else return null;
 	}
 );
 
 export const userWETHLiquidationPrice = derived(
-	[userXOCDebt, userWETHDepositBalance, liquidationFactor], 
-	([$userXOCDebt, $userWETHDepositBalance, $liquidationFactor]) => {
-		if ($userXOCDebt && $userWETHDepositBalance && $liquidationFactor){
+	[userXOCDebt, userCollateralDepositBalance, liquidationFactor], 
+	([$userXOCDebt, $userCollateralDepositBalance, $liquidationFactor]) => {
+		if ($userXOCDebt && $userCollateralDepositBalance && $liquidationFactor){
 			const floatXOCDebt = parseFloat(ethers.utils.formatEther($userXOCDebt));
-			const wethDepositBalanceFloat = parseFloat(ethers.utils.formatEther($userWETHDepositBalance));
+			const wethDepositBalanceFloat = parseFloat(ethers.utils.formatEther($userCollateralDepositBalance));
 			const liqFactorFloat = parseFloat(ethers.utils.formatEther($liquidationFactor));
 			const result = (floatXOCDebt)/(wethDepositBalanceFloat*liqFactorFloat);
 			return result;
@@ -86,9 +86,9 @@ export const healthRatioAsPercentage = derived(
 // method for reseting data when provider changes
 export function resetAll() {
 	userNativeTokenBalance.set(null);
-	userWETHAllowance.set(null);
-	userWETHBalance.set(null);
-	userWETHDepositBalance.set(null);
+	userCollateralAllowance.set(null);
+	userCollateralBalance.set(null);
+	userCollateralDepositBalance.set(null);
 	userWETHMaxWithdrawal.set(null);
 	userXOCAllowance.set(null);
 	userXOCBalance.set(null);

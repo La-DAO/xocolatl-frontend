@@ -1,16 +1,27 @@
-import { ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import { WrapperBuilder } from 'redstone-evm-connector';
+import { get } from 'svelte/store';
 import { derived } from 'svelte/store';
 import { provider, signer, chainId } from 'svelte-ethers-store';
+import {
+	mockWETHABI,
+	ERC20ABI
+} from '../abis';
+import { getCollateralAddress, getHouseOfReserveContractAddress, getHouseOfReserveABI, chains } from '../chains';
 
-import { chains } from '../chains';
+import { selectedCollateral }
+	from './store';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-export const WETHContract = derived(
-	[provider, signer, chainId],
-	([_, $signer, $chainId]) => {
+export const CollateralContract = derived(
+	[provider, signer, chainId, selectedCollateral],
+	([_, $signer, $chainId, $selectedCollateral]) => {
 		if($chainId) {
-			return new ethers.Contract(chains[$chainId].WETHAddress, chains[$chainId].WETHABI, $signer);
+			return new ethers.Contract(
+					getCollateralAddress($chainId,$selectedCollateral),
+					ERC20ABI,
+					$signer
+				);
 		}
 	}
 );
@@ -55,7 +66,9 @@ export const houseOfReserveContract = derived(
 	[provider, signer, chainId],
 	([_, $signer, $chainId]) => {
 		if($chainId) {
-			return new ethers.Contract(chains[$chainId].houseOfReserveAddress, chains[$chainId].houseOfReserveABI, $signer);
+			getHouseOfReserveContractAddress($chainId, $selectedCollateral),
+					getHouseOfReserveABI($chainId),
+					$signer
 		}
 	}
 );

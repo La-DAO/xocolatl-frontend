@@ -3,7 +3,7 @@ import { _ } from 'svelte-i18n';
 import { connected } from 'svelte-ethers-store';
 import { isRighNetwork, selectedTab } from '../store/store';
 import { WETHDepositInputAmountBigNum, XOCRedeemInputAmountBigNum } from '../store/userInput';
-import { userWETHAllowance, userXOCAllowance } from '../store/contractData';
+import { userCollateralAllowance, userXOCAllowance } from '../store/contractData';
 import { approveWETH, depositWETH, mintXOC, approveXOC, redeemXOC, withdrawWETH } from '../contractWrites';
 	
 let disabled=true; // disable buttons until data loads
@@ -32,7 +32,7 @@ button {
 </style>
 
 {#if $selectedTab === 'deposit'}
-	{#if $userWETHAllowance && $WETHDepositInputAmountBigNum && $userWETHAllowance.lt($WETHDepositInputAmountBigNum)}
+	{#if $userCollateralAllowance && $WETHDepositInputAmountBigNum && $userCollateralAllowance.lt($WETHDepositInputAmountBigNum)}
 		<button on:click={approveWETH} type="button" class:is-disabled={disabled} {disabled}>{$_('actions.approve')}</button>
 	{:else}
 		<button on:click={depositWETH} type="button" class:is-disabled={disabled} {disabled}>{$_('actions.deposit')}</button>
