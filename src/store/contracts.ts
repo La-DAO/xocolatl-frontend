@@ -16,12 +16,13 @@ import { selectedCollateral }
 export const CollateralContract = derived(
 	[provider, signer, chainId, selectedCollateral],
 	([_, $signer, $chainId, $selectedCollateral]) => {
-		if ($chainId) {
-			return new ethers.Contract(
+		if ($chainId && $selectedCollateral) {
+			const contract = new ethers.Contract(
 				getSelectedAssetObject($chainId, $selectedCollateral).address,
 				ERC20ABI,
 				$signer
 			);
+			return contract;
 		}
 	}
 );
@@ -39,7 +40,12 @@ export const houseOfCoinContract = derived(
 	[provider, signer, chainId],
 	([_, $signer, $chainId]) => {
 		if ($chainId) {
-			return new ethers.Contract(chains[$chainId].houseOfCoinAddress, chains[$chainId].houseOfCoinABI, $signer);
+			const contract = new ethers.Contract(
+				chains[$chainId].houseOfCoinAddress,
+				chains[$chainId].houseOfCoinABI,
+				$signer
+			);
+			return contract;
 		}
 	}
 );
@@ -65,12 +71,13 @@ export const assetsAccountantContract = derived(
 export const houseOfReserveContract = derived(
 	[provider, signer, chainId, selectedCollateral],
 	([_, $signer, $chainId, $selectedCollateral]) => {
-		if ($chainId) {
-			return new ethers.Contract(
+		if ($chainId && $selectedCollateral) {
+			const contract = new ethers.Contract(
 				getSelectedAssetObject($chainId, $selectedCollateral).houseOfReserveAddress,
 				chains[$chainId].houseOfReserveABI,
 				$signer
 			);
+			return contract;
 		}
 	}
 );

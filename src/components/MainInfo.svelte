@@ -6,7 +6,7 @@ import { isRighNetwork, selectedTab } from '../store/store';
 import { 
 	userCollateralBalance, 
 	userCollateralDepositBalance, 
-	userWETHMaxWithdrawal, 
+	userCollateralMaxWithdrawal, 
 	userXOCDebt, 
 	userXOCBalance, 
 	userXOCMintingPower
@@ -84,7 +84,7 @@ const commify = ethers.utils.commify;
 
 		<div class:highlight={$selectedTab === 'withdraw'} class="box-row">
 			<p>{$_('balances.availableForWithdrawal')}</p>
-			<p>{$userWETHMaxWithdrawal ? ethers.utils.formatEther($userWETHMaxWithdrawal.sub($userWETHMaxWithdrawal.mod(1e10))) : '-'} ETH</p>
+			<p>{$userCollateralMaxWithdrawal ? ethers.utils.formatEther($userCollateralMaxWithdrawal.sub($userCollateralMaxWithdrawal.mod(1e10))) : '-'} ETH</p>
 		</div>
   </div>
 

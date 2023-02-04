@@ -89,7 +89,7 @@ const polygonData: ChainData = {
 
 export const chains: ChainDict = {
 	5: goerliData,
-	'0x4': goerliData, // sometimes metamask returns chain Id as hex and sometimes as int
+	'0x5': goerliData, // sometimes metamask returns chain Id as hex and sometimes as int
 	137: polygonData,
 	'0x89': polygonData
 };

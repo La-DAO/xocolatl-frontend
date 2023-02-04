@@ -14,7 +14,7 @@
 		getXOCMintingPower,
 		getHealthRatio,
 	} from '../contractReads';
-	import { isRighNetwork } from '../store/store';
+	import { isRighNetwork, selectedCollateral} from '../store/store';
 	import {
 		CollateralContract,
 		houseOfReserveContract,
@@ -23,7 +23,7 @@
 	} from '../store/contracts';
 	
 
-	$: if($isRighNetwork && get(CollateralContract) && get(houseOfCoinContract) && get(houseOfReserveContract) && get(XOCContract)) {
+	$: if($isRighNetwork && $selectedCollateral && get(CollateralContract) && get(houseOfCoinContract) && get(houseOfReserveContract) && get(XOCContract)) {
 		/* eslint-disable @typescript-eslint/no-unused-vars */
 
 		$provider.on('block', (blockNumber: number) => {
@@ -40,13 +40,6 @@
 		get(CollateralContract)!.on('Approval', (src: string, guy: string, _event: Event) => {
 			if (src === $signerAddress || guy === $signerAddress) {
 				console.log('detected WETH Approval event');
-				fetchAllDisplayData();			
-			}
-		});
-
-		get(CollateralContract)!.on('Deposit', (dst: string, _wad: BigNumber, _event: Event) => {
-			if (dst === $signerAddress) {
-				console.log('detected WETH Deposit event');
 				fetchAllDisplayData();			
 			}
 		});

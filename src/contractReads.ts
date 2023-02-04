@@ -22,12 +22,12 @@ import {
 	userCollateralAllowance,
 	userCollateralBalance,
 	userCollateralDepositBalance,
-	userWETHMaxWithdrawal,
+	userCollateralMaxWithdrawal,
 	userXOCAllowance,
 	userXOCBalance,
 	userXOCMintingPower,
 	userXOCDebt,
-	WETHToXOC,
+	CollateralToXOC,
 	userHealthRatio,
 	liquidationThreshold,
 	liquidationFactor,
@@ -54,7 +54,7 @@ export async function getCollateralToXOCRate() {
 	} catch (e) {
 		console.log(e);
 	}
-	WETHToXOC.set(price);
+	CollateralToXOC.set(price);
 }
 
 export async function getUserNativeTokenBalance(): Promise<void> {
@@ -94,7 +94,7 @@ export async function getMaxCollateralWithdrawal() {
 	} catch (error) {
 		fetchedAmount = await get(wrappedHouseOfReserveContract)!.checkMaxWithdrawal(get(signerAddress));
 	}
-	userWETHMaxWithdrawal.set(fetchedAmount);
+	userCollateralMaxWithdrawal.set(fetchedAmount);
 }
 
 

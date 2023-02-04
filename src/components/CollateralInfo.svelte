@@ -1,7 +1,7 @@
 <script lang="ts">
 import { ethers } from 'ethers';
 import { _ } from 'svelte-i18n';
-import { WETHToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userWETHLiquidationPrice, maxLTVFactor , liquidationFactor, userWETHCollateralMXNPrice, healthRatioAsPercentage } from '../store/contractData';
+import { CollateralToXOC, userHealthRatio, userMaxDebtUtilization, userMaxDebt,  userCollateralLiquidationPrice, maxLTVFactor , liquidationFactor, userCollateralMXNPrice, healthRatioAsPercentage } from '../store/contractData';
 /* import HealthCircle from './HealthCircle.svelte'; */
 import ProgressBar from '@okrad/svelte-progressbar';
 import Icon from '../components/Icon.svelte';
@@ -141,7 +141,7 @@ const commify = ethers.utils.commify;
                     <p>{$_('healthIndex.currentETHPrice')}</p>
                     <div class='info-icon' data-tooltip={$_('healthIndex.currentETHPriceTooltip')}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
-                <p>${$WETHToXOC ?  commify(ethers.utils.formatUnits($WETHToXOC.sub($WETHToXOC.mod(1e4)), 8)) : '-'} (MXN)</p>
+                <p>${$CollateralToXOC ?  commify(ethers.utils.formatUnits($CollateralToXOC.sub($CollateralToXOC.mod(1e4)), 8)) : '-'} (MXN)</p>
             </div>
 
             <div class="text-row">
@@ -149,7 +149,7 @@ const commify = ethers.utils.commify;
                     <p>{$_('healthIndex.liquidationETHPrice')}</p>
                     <div class='info-icon' data-tooltip={$_('healthIndex.liquidationETHPriceTooltip')}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
-                <p>${$userWETHLiquidationPrice ? commify($userWETHLiquidationPrice.toFixed(4)) : '-'} (MXN)</p>
+                <p>${$userCollateralLiquidationPrice ? commify($userCollateralLiquidationPrice.toFixed(4)) : '-'} (MXN)</p>
             </div>
 
 
@@ -158,7 +158,7 @@ const commify = ethers.utils.commify;
                     <p>{$_('healthIndex.collateralValue')}</p>
                     <div class='info-icon' data-tooltip={$_('healthIndex.collateralValueTooltip')}><Icon name="info" width="100%" height="100%" focusable={true}/></div>
                 </div>
-                <p>${$userWETHCollateralMXNPrice ? commify(ethers.utils.formatEther($userWETHCollateralMXNPrice.sub($userWETHCollateralMXNPrice.mod(1e14)))) : '-'} (MXN)</p>
+                <p>${$userCollateralMXNPrice ? commify(ethers.utils.formatEther($userCollateralMXNPrice.sub($userCollateralMXNPrice.mod(1e14)))) : '-'} (MXN)</p>
             </div>
 
 

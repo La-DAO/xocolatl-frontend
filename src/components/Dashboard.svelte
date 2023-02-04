@@ -11,7 +11,7 @@ import {
 	userXOCMintingPower,
 	userXOCBalance,
 	userXOCDebt,
-	userWETHMaxWithdrawal,
+	userCollateralMaxWithdrawal,
 	userNativeTokenBalance
 } from '../store/contractData';
 
@@ -149,7 +149,7 @@ $: swapURL = ($chainId && $chainId in chains) ? chains[$chainId].swapURL : '';
 					bind:inputAmount={$WETHWithdrawInputAmount} 
 					bind:inputError={$WETHWithdrawInputError} 
 					inputAmountBigNum={$WETHWithdrawInputAmountBigNum}
-					inputLimit={$userWETHMaxWithdrawal}
+					inputLimit={$userCollateralMaxWithdrawal}
 					inputTypeText={$_('input.collateral') + ': WETH'}
 					actionHandler={withdrawWETH}
 					actionText={$_('actions.withdraw')}

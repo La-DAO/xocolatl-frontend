@@ -16,10 +16,9 @@ export const isRighNetwork = derived(
 	}
 );
 
-export const selectedCollateral = writable("WETH");
-
-export const blockExplorerURL = derived(chainId, 
-	($chainId) => {
+export const blockExplorerURL = derived(
+	[chainId], 
+	([$chainId]) => {
 		if ($chainId && $chainId in chains) {
 			return chains[$chainId].blockExplorerURL;
 		} else return chains[4].blockExplorerURL;
@@ -29,6 +28,8 @@ export const blockExplorerURL = derived(chainId,
 export const selectedPage = writable('home');
 
 export const selectedTab = writable('deposit');
+
+export const selectedCollateral = writable("WETH");
 
 export const providerType =  derived([provider], 
 	([$provider]) => {

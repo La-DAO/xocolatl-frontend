@@ -9,7 +9,7 @@ export const userNativeTokenBalance: Writable<BigNumber | null> = writable(null)
 export const userCollateralAllowance: Writable<BigNumber | null> = writable(null);
 export const userCollateralBalance: Writable<BigNumber | null> = writable(null);
 export const userCollateralDepositBalance: Writable<BigNumber | null> = writable(null);
-export const userWETHMaxWithdrawal: Writable<BigNumber | null> = writable(null);
+export const userCollateralMaxWithdrawal: Writable<BigNumber | null> = writable(null);
 
 export const userXOCAllowance: Writable<BigNumber | null> = writable(null);
 export const userXOCBalance: Writable<BigNumber | null> = writable(null);
@@ -17,7 +17,7 @@ export const userXOCDebt: Writable<BigNumber | null> = writable(null);
 export const userXOCMintingPower: Writable<BigNumber | null> = writable(null);
 
 // 8 decimals
-export const WETHToXOC: Writable<BigNumber | null> = writable(null);
+export const CollateralToXOC: Writable<BigNumber | null> = writable(null);
 
 export const userHealthRatio: Writable<BigNumber | null> = writable(null);
 export const liquidationFactor: Writable<BigNumber | null> = writable(null);
@@ -46,16 +46,16 @@ export const liquidationThreshold: Writable<BigNumber | null> = writable(null);
 
 
 // returns price in 18 decimals
-export const userWETHCollateralMXNPrice: Readable<BigNumber | null> = derived(
-	[WETHToXOC, userCollateralDepositBalance],
-	([$WETHToXOC, $userCollateralDepositBalance]) => {
-		if($WETHToXOC && $userCollateralDepositBalance) {
-			return $WETHToXOC.mul($userCollateralDepositBalance).div(1e8);
+export const userCollateralMXNPrice: Readable<BigNumber | null> = derived(
+	[CollateralToXOC, userCollateralDepositBalance],
+	([$CollateralToXOC, $userCollateralDepositBalance]) => {
+		if($CollateralToXOC && $userCollateralDepositBalance) {
+			return $CollateralToXOC.mul($userCollateralDepositBalance).div(1e8);
 		} else return null;
 	}
 );
 
-export const userWETHLiquidationPrice = derived(
+export const userCollateralLiquidationPrice = derived(
 	[userXOCDebt, userCollateralDepositBalance, liquidationFactor], 
 	([$userXOCDebt, $userCollateralDepositBalance, $liquidationFactor]) => {
 		if ($userXOCDebt && $userCollateralDepositBalance && $liquidationFactor){
@@ -89,12 +89,12 @@ export function resetAll() {
 	userCollateralAllowance.set(null);
 	userCollateralBalance.set(null);
 	userCollateralDepositBalance.set(null);
-	userWETHMaxWithdrawal.set(null);
+	userCollateralMaxWithdrawal.set(null);
 	userXOCAllowance.set(null);
 	userXOCBalance.set(null);
 	userXOCDebt.set(null);
 	userXOCMintingPower.set(null);
-	WETHToXOC.set(null);
+	CollateralToXOC.set(null);
 	userHealthRatio.set(null);
 	liquidationThreshold.set(null);
 	maxLTVFactor.set(null);
