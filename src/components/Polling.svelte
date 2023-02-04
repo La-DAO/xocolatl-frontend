@@ -14,13 +14,14 @@
 		getXOCMintingPower,
 		getHealthRatio,
 	} from '../contractReads';
-	import { isRighNetwork, selectedCollateral} from '../store/store';
+	import { isRighNetwork} from '../store/store';
 	import {
 		CollateralContract,
 		houseOfReserveContract,
 		houseOfCoinContract,
 		XOCContract,
 	} from '../store/contracts';
+    import { selectedCollateral } from 'src/store/userInput';
 	
 
 	$: if($isRighNetwork && $selectedCollateral && get(CollateralContract) && get(houseOfCoinContract) && get(houseOfReserveContract) && get(XOCContract)) {

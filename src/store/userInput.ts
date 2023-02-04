@@ -6,7 +6,10 @@ import { ethers } from 'ethers';
 import { userCollateralAllowance } from './contractData';
 
 // user inputs
+export const selectedCollateral = writable("WETH");
+
 export const WETHDepositInputAmount = writable(0);
+
 export const WETHDepositInputAmountBigNum = derived(
 	WETHDepositInputAmount,
 	$WETHDepositInputAmount => {

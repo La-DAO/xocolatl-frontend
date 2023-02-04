@@ -14,8 +14,7 @@ import {
 	wrappedHouseOfReserveContract
 } from './store/contracts';
 
-import { selectedCollateral }
-	from './store/store';
+import { selectedCollateral } from './store/userInput';
 
 import {
 	userNativeTokenBalance,
@@ -36,6 +35,7 @@ import {
 } from './store/contractData';
 
 import { chains, getSelectedAssetObject } from './chains';
+
 
 // async function fetchBitso(): Promise<any> {
 // 	const uri = 'https://api.bitso.com/v3/ticker/?book=eth_mxn';
@@ -117,8 +117,8 @@ export async function getXOCMintingPower() {
 			get(signerAddress),
 			getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress
 		);
-		userXOCMintingPower.set(fetchedAmount);
 	}
+	userXOCMintingPower.set(fetchedAmount);
 }
 
 export async function getXOCAllowance() {

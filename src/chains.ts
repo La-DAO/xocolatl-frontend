@@ -99,3 +99,12 @@ export function getSelectedAssetObject(chainId_: string | number, collateralName
 	const asset: any = assets_.find((assetElement: Asset) => assetElement.name == collateralName_);
 	return asset;
 }
+
+export function getCollateralOptions(chainId_:string | number):string[] {
+	const assets_: Asset[] = chains[chainId_].reserveAssets;
+	let options: string[] = [];
+	for (let i = 0; i < assets_.length; i++) {
+		options.push(assets_[i].name);
+	}
+	return options;
+}

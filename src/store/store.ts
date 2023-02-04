@@ -29,8 +29,6 @@ export const selectedPage = writable('home');
 
 export const selectedTab = writable('deposit');
 
-export const selectedCollateral = writable("WETH");
-
 export const providerType =  derived([provider], 
 	([$provider]) => {
 		if($provider && 'provider' in $provider) {

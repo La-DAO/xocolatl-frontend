@@ -2,13 +2,16 @@ import { get } from 'svelte/store';
 import { maxApproveAmount } from './constants';
 
 import { chainId, signer } from 'svelte-ethers-store';
-import { pendingTxs, selectedCollateral } from './store/store';
+import { pendingTxs } from './store/store';
+
 import {
+	selectedCollateral,
 	WETHDepositInputAmountBigNum,
 	WETHWithdrawInputAmountBigNum,
 	XOCMintInputAmountBigNum,
 	XOCRedeemInputAmountBigNum
 } from './store/userInput';
+
 import { fetchAllDisplayData } from './contractReads';
 import { checkContractCallPrereqs } from './utils';
 

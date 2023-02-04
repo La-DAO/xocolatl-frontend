@@ -8,9 +8,7 @@ import {
 	ERC20ABI
 } from '../abis';
 import { getSelectedAssetObject, chains } from '../chains';
-
-import { selectedCollateral }
-	from './store';
+import { selectedCollateral } from './userInput';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export const CollateralContract = derived(
