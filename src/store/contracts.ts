@@ -7,7 +7,7 @@ import {
 	mockWETHABI,
 	ERC20ABI
 } from '../abis';
-import { getCollateralAddress, getHouseOfReserveContractAddress, getHouseOfReserveABI, chains } from '../chains';
+import { getSelectedAssetObject, chains } from '../chains';
 
 import { selectedCollateral }
 	from './store';
@@ -16,12 +16,12 @@ import { selectedCollateral }
 export const CollateralContract = derived(
 	[provider, signer, chainId, selectedCollateral],
 	([_, $signer, $chainId, $selectedCollateral]) => {
-		if($chainId) {
+		if ($chainId) {
 			return new ethers.Contract(
-					getCollateralAddress($chainId,$selectedCollateral),
-					ERC20ABI,
-					$signer
-				);
+				getSelectedAssetObject($chainId, $selectedCollateral).address,
+				ERC20ABI,
+				$signer
+			);
 		}
 	}
 );
@@ -29,7 +29,7 @@ export const CollateralContract = derived(
 export const XOCContract = derived(
 	[provider, signer, chainId],
 	([_, $signer, $chainId]) => {
-		if($chainId) {
+		if ($chainId) {
 			return new ethers.Contract(chains[$chainId].XOCAddress, chains[$chainId].XOCABI, $signer);
 		}
 	}
@@ -38,7 +38,7 @@ export const XOCContract = derived(
 export const houseOfCoinContract = derived(
 	[provider, signer, chainId],
 	([_, $signer, $chainId]) => {
-		if($chainId) {
+		if ($chainId) {
 			return new ethers.Contract(chains[$chainId].houseOfCoinAddress, chains[$chainId].houseOfCoinABI, $signer);
 		}
 	}
@@ -47,7 +47,7 @@ export const houseOfCoinContract = derived(
 export const wrappedHouseOfCoinContract = derived(
 	houseOfCoinContract,
 	($houseOfCoinContract) => {
-		if($houseOfCoinContract) {
+		if ($houseOfCoinContract) {
 			return WrapperBuilder.wrapLite($houseOfCoinContract).usingPriceFeed('redstone-stocks');
 		}
 	}
@@ -56,19 +56,21 @@ export const wrappedHouseOfCoinContract = derived(
 export const assetsAccountantContract = derived(
 	[provider, signer, chainId],
 	([_, $signer, $chainId]) => {
-		if($chainId) {
+		if ($chainId) {
 			return new ethers.Contract(chains[$chainId].assetsAccountantAddress, chains[$chainId].assetsAccountantABI, $signer);
 		}
 	}
 );
 
 export const houseOfReserveContract = derived(
-	[provider, signer, chainId],
-	([_, $signer, $chainId]) => {
-		if($chainId) {
-			getHouseOfReserveContractAddress($chainId, $selectedCollateral),
-					getHouseOfReserveABI($chainId),
-					$signer
+	[provider, signer, chainId, selectedCollateral],
+	([_, $signer, $chainId, $selectedCollateral]) => {
+		if ($chainId) {
+			return new ethers.Contract(
+				getSelectedAssetObject($chainId, $selectedCollateral).houseOfReserveAddress,
+				chains[$chainId].houseOfReserveABI,
+				$signer
+			);
 		}
 	}
 );
@@ -77,7 +79,7 @@ export const houseOfReserveContract = derived(
 export const wrappedHouseOfReserveContract = derived(
 	houseOfReserveContract,
 	($houseOfReserveContract) => {
-		if($houseOfReserveContract) {
+		if ($houseOfReserveContract) {
 			return WrapperBuilder.wrapLite($houseOfReserveContract).usingPriceFeed('redstone-stocks');
 		}
 	}

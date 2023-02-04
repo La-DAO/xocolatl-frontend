@@ -9,7 +9,7 @@
 	import { provider, signerAddress } from 'svelte-ethers-store';
 	import { 
 		fetchAllDisplayData, 
-		getWETHtoXOCRate,
+		getCollateralToXOCRate,
 		getMaxCollateralWithdrawal,
 		getXOCMintingPower,
 		getHealthRatio,
@@ -29,7 +29,7 @@
 		$provider.on('block', (blockNumber: number) => {
 			// update price dependant data more often
 			if (blockNumber%3 === 0) {
-				getWETHtoXOCRate();
+				getCollateralToXOCRate();
 				getMaxCollateralWithdrawal();
 				getXOCMintingPower();
 				getHealthRatio();

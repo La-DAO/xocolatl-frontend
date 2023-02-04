@@ -35,8 +35,7 @@ import {
 	globalBase
 } from './store/contractData';
 
-import { allChainData, chains } from './chains';
-
+import { chains, getSelectedAssetObject } from './chains';
 
 // async function fetchBitso(): Promise<any> {
 // 	const uri = 'https://api.bitso.com/v3/ticker/?book=eth_mxn';
@@ -65,8 +64,10 @@ export async function getUserNativeTokenBalance(): Promise<void> {
 
 export async function getCollateralAllowance() {
 	checkContractCallPrereqs();
-	const allowance = await get(CollateralContract)!.allowance(get(signerAddress),
-		chains[get(chainId)].reserveAssets.find(asset => asset.name == get(selectedCollateral))?.houseOfReserveAddress);
+	const allowance = await get(CollateralContract)!.allowance(
+		get(signerAddress),
+		getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress
+	);
 	userCollateralAllowance.set(allowance);
 }
 
@@ -78,8 +79,10 @@ export async function getUserCollateralBalance(): Promise<void> {
 
 async function getUserCollateralDepositBalance(): Promise<void> {
 	checkContractCallPrereqs();
-	const fetchedBalance = await get(assetsAccountantContract)!.balanceOf(get(signerAddress), 
-		chains[get(chainId)].reserveAssets.find(asset => asset.name == get(selectedCollateral))?.reserveTokenID);
+	const fetchedBalance = await get(assetsAccountantContract)!.balanceOf(
+		get(signerAddress),
+		getSelectedAssetObject(get(chainId), get(selectedCollateral)).reserveTokenID
+	);
 	userCollateralDepositBalance.set(fetchedBalance);
 }
 
@@ -91,7 +94,6 @@ export async function getMaxCollateralWithdrawal() {
 	} catch (error) {
 		fetchedAmount = await get(wrappedHouseOfReserveContract)!.checkMaxWithdrawal(get(signerAddress));
 	}
-
 	userWETHMaxWithdrawal.set(fetchedAmount);
 }
 
@@ -106,11 +108,17 @@ export async function getXOCMintingPower() {
 	checkContractCallPrereqs();
 	let fetchedAmount;
 	try {
-		fetchedAmount = await get(houseOfCoinContract)!.checkRemainingMintingPower(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+		fetchedAmount = await get(houseOfCoinContract)!.checkRemainingMintingPower(
+			get(signerAddress),
+			getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress
+		);
 	} catch (error) {
-		fetchedAmount = await get(wrappedHouseOfCoinContract)!.checkRemainingMintingPower(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+		fetchedAmount = await get(wrappedHouseOfCoinContract)!.checkRemainingMintingPower(
+			get(signerAddress),
+			getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress
+		);
+		userXOCMintingPower.set(fetchedAmount);
 	}
-	userXOCMintingPower.set(fetchedAmount);
 }
 
 export async function getXOCAllowance() {
@@ -121,7 +129,10 @@ export async function getXOCAllowance() {
 
 export async function getXOCDebt() {
 	checkContractCallPrereqs();
-	const fetchedBalance = await get(assetsAccountantContract)!.balanceOf(get(signerAddress), chains[get(chainId)].backedTokenID);
+	const fetchedBalance = await get(assetsAccountantContract)!.balanceOf(
+		get(signerAddress),
+		getSelectedAssetObject(get(chainId), get(selectedCollateral)).backedTokenID
+	);
 	userXOCDebt.set(fetchedBalance);
 }
 
@@ -133,9 +144,15 @@ export async function getHealthRatio() {
 	if (deposit && deposit.gt(0) && debt && debt.gt(0)) {
 		let fetchedAmount;
 		try {
-			fetchedAmount = await get(houseOfCoinContract)!.computeUserHealthRatio(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+			fetchedAmount = await get(houseOfCoinContract)!.computeUserHealthRatio(
+				get(signerAddress),
+				getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress
+			);
 		} catch (error) {
-			fetchedAmount = await get(wrappedHouseOfCoinContract)!.computeUserHealthRatio(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+			fetchedAmount = await get(wrappedHouseOfCoinContract)!.computeUserHealthRatio(
+				get(signerAddress),
+				getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress
+			);
 		}
 		userHealthRatio.set(fetchedAmount);
 	}

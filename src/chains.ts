@@ -94,22 +94,8 @@ export const chains: ChainDict = {
 	'0x89': polygonData
 };
 
-export function getCollateralAddress(chainId_: string | number, collateralName_: string): string {
+export function getSelectedAssetObject(chainId_: string | number, collateralName_: string): Asset {
 	const assets_: Asset[] = chains[chainId_].reserveAssets;
-	const result: any = assets_.find((assetElement: Asset) => assetElement.name == collateralName_);
-	return result.address;
-}
-
-function getReservefromArray(collateralAddress_: string, assets_: Asset[]): string {
-	const result: any = assets_.find((assetElement: Asset) => assetElement.address == collateralAddress_);
-	return result.houseOfReserveAddress;
-}
-
-export function getHouseOfReserveContractAddress(chainId_: string | number, collateralAddress_: string): string {
-	const assets: Asset[] = chains[chainId_].reserveAssets;
-	return getReservefromArray(collateralAddress_, assets);
-}
-
-export function getHouseOfReserveABI(chainId_: string | number): string[] {
-	return chains[chainId_].houseOfReserveABI;
+	const asset: any = assets_.find((assetElement: Asset) => assetElement.name == collateralName_);
+	return asset;
 }
