@@ -101,6 +101,7 @@ export function getSelectedAssetObject(chainId_: string | number, collateralName
 }
 
 export function getCollateralOptions(chainId_:string | number):string[] {
+	console.log("inside getCollateralOptions-chainID", chainId_);
 	const assets_: Asset[] = chains[chainId_].reserveAssets;
 	let options: string[] = [];
 	for (let i = 0; i < assets_.length; i++) {

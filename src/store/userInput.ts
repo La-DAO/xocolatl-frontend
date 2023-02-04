@@ -4,9 +4,22 @@ import { writable, derived } from 'svelte/store';
 import { ethers } from 'ethers';
 
 import { userCollateralAllowance } from './contractData';
+import { chainId } from 'svelte-ethers-store';
+import { getCollateralOptions } from 'src/chains';
 
 // user inputs
 export const selectedCollateral = writable("WETH");
+
+export const listOfCollaterals = derived(
+	chainId,
+	($chainId) => {
+		if($chainId) {
+			return getCollateralOptions($chainId);
+		} else {
+			return ['WETH'];
+		}
+	}
+);
 
 export const WETHDepositInputAmount = writable(0);
 

@@ -38,6 +38,7 @@ import PillNavigation from './PillNavigation.svelte';
 import CollateralInfo from './CollateralInfo.svelte';
 import MainInfo from './MainInfo.svelte';
 import AmountInput from './AmountInput.svelte';
+import AmountReservesInput from './AmountReservesInput.svelte';
 
 $: isNative = ($chainId && $chainId in chains) ? chains[$chainId].supportsNative : false;
 
@@ -86,36 +87,33 @@ $: swapURL = ($chainId && $chainId in chains) ? chains[$chainId].swapURL : '';
 			<div class="input-section">
 			{#if $selectedTab==='deposit'}
 				{#if isNative}
-					<AmountInput 
+					<AmountReservesInput 
 						headerText={$_('input.deposit')} 
 						bind:inputAmount={$WETHDepositInputAmount} 
 						bind:inputError={$WETHDepositInputError} 
 						inputAmountBigNum={$WETHDepositInputAmountBigNum}
 						inputLimit={$userNativeTokenBalance}
-						inputTypeText={$_('input.collateral') + ': ETH'}
 						actionText={$_('actions.deposit')}
 						actionHandler={depositNativeToken}
 					/>
 				{:else}
 					{#if $WETHDepositNeedsAllowance}
-						<AmountInput 
+						<AmountReservesInput 
 							headerText={$_('input.deposit')} 
 							bind:inputAmount={$WETHDepositInputAmount} 
 							bind:inputError={$WETHDepositInputError} 
 							inputAmountBigNum={$WETHDepositInputAmountBigNum}
 							inputLimit={$userCollateralBalance}
-							inputTypeText={$_('input.collateral') + ': WETH'}
 							actionText={$_('actions.approve')}
 							actionHandler={approveWETH}
 						/>
 					{:else} 
-						<AmountInput 
+						<AmountReservesInput 
 							headerText={$_('input.deposit')} 
 							bind:inputAmount={$WETHDepositInputAmount} 
 							bind:inputError={$WETHDepositInputError} 
 							inputAmountBigNum={$WETHDepositInputAmountBigNum}
 							inputLimit={$userCollateralBalance}
-							inputTypeText={$_('input.collateral') + ': WETH'}
 							actionText={$_('actions.deposit')}
 							actionHandler={depositWETH}
 						/>
