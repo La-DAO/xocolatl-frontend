@@ -16,10 +16,10 @@ import {
 } from '../store/contractData';
 
 import { 
-	WETHDepositInputAmount,
-	WETHDepositInputAmountBigNum,
-	WETHDepositInputError,
-	WETHDepositNeedsAllowance,
+	CollateralDepositInputAmount,
+	CollateralDepositInputAmountBigNum,
+	CollateralDepositInputError,
+	CollateralDepositNeedsAllowance,
 	XOCMintInputAmount, 
 	XOCMintInputAmountBigNum,
 	XOCMintInputError, 
@@ -32,7 +32,7 @@ import {
 } from '../store/userInput';	
 
 
-import { approveWETH, depositWETH, mintXOC, redeemXOC, withdrawWETH, depositNativeToken } from '../contractWrites';
+import { approveERC20, depositERC20, mintXOC, redeemXOC, withdrawWETH, depositNativeToken } from '../contractWrites';
 
 import PillNavigation from './PillNavigation.svelte';
 import CollateralInfo from './CollateralInfo.svelte';
@@ -87,35 +87,38 @@ $: swapURL = ($chainId && $chainId in chains) ? chains[$chainId].swapURL : '';
 			<div class="input-section">
 			{#if $selectedTab==='deposit'}
 				{#if isNative}
-					<AmountReservesInput 
+					<AmountInput 
 						headerText={$_('input.deposit')} 
-						bind:inputAmount={$WETHDepositInputAmount} 
-						bind:inputError={$WETHDepositInputError} 
-						inputAmountBigNum={$WETHDepositInputAmountBigNum}
+						bind:inputAmount={$CollateralDepositInputAmount} 
+						bind:inputError={$CollateralDepositInputError} 
+						inputAmountBigNum={$CollateralDepositInputAmountBigNum}
 						inputLimit={$userNativeTokenBalance}
+						inputTypeText={$_('input.collateral')}
 						actionText={$_('actions.deposit')}
 						actionHandler={depositNativeToken}
 					/>
 				{:else}
-					{#if $WETHDepositNeedsAllowance}
-						<AmountReservesInput 
+					{#if $CollateralDepositNeedsAllowance}
+						<AmountInput 
 							headerText={$_('input.deposit')} 
-							bind:inputAmount={$WETHDepositInputAmount} 
-							bind:inputError={$WETHDepositInputError} 
-							inputAmountBigNum={$WETHDepositInputAmountBigNum}
+							bind:inputAmount={$CollateralDepositInputAmount} 
+							bind:inputError={$CollateralDepositInputError} 
+							inputAmountBigNum={$CollateralDepositInputAmountBigNum}
 							inputLimit={$userCollateralBalance}
+							inputTypeText={$_('input.collateral')}
 							actionText={$_('actions.approve')}
-							actionHandler={approveWETH}
+							actionHandler={approveERC20}
 						/>
 					{:else} 
-						<AmountReservesInput 
+						<AmountInput 
 							headerText={$_('input.deposit')} 
-							bind:inputAmount={$WETHDepositInputAmount} 
-							bind:inputError={$WETHDepositInputError} 
-							inputAmountBigNum={$WETHDepositInputAmountBigNum}
+							bind:inputAmount={$CollateralDepositInputAmount} 
+							bind:inputError={$CollateralDepositInputError} 
+							inputAmountBigNum={$CollateralDepositInputAmountBigNum}
 							inputLimit={$userCollateralBalance}
+							inputTypeText={$_('input.collateral')}
 							actionText={$_('actions.deposit')}
-							actionHandler={depositWETH}
+							actionHandler={depositERC20}
 						/>
 					{/if}
 				{/if}
@@ -126,7 +129,7 @@ $: swapURL = ($chainId && $chainId in chains) ? chains[$chainId].swapURL : '';
 					bind:inputError={$XOCMintInputError} 
 					inputAmountBigNum={$XOCMintInputAmountBigNum}
 					inputLimit={$userXOCMintingPower}
-					inputTypeText={$_('input.token') + ': XOC'}
+					inputTypeText={$_('input.token-mint')}
 					actionHandler={mintXOC}
 					actionText={$_('actions.mint')}
 				/>
@@ -137,18 +140,17 @@ $: swapURL = ($chainId && $chainId in chains) ? chains[$chainId].swapURL : '';
 					bind:inputError={$XOCRedeemInputError} 
 					inputAmountBigNum={$XOCRedeemInputAmountBigNum}
 					inputLimit={$userXOCBalance?.gt($userXOCDebt ? $userXOCDebt : 0) ? $userXOCDebt : $userXOCBalance}
-					inputTypeText={$_('input.token') + ': XOC'}
+					inputTypeText={$_('input.token-redeem')}
 					actionHandler={redeemXOC}
 					actionText={$_('actions.redeem')}
 				/>
 			{:else if $selectedTab==='withdraw'}
-				<AmountInput 
+				<AmountReservesInput 
 					headerText={$_('input.withdraw')} 
 					bind:inputAmount={$WETHWithdrawInputAmount} 
 					bind:inputError={$WETHWithdrawInputError} 
 					inputAmountBigNum={$WETHWithdrawInputAmountBigNum}
 					inputLimit={$userCollateralMaxWithdrawal}
-					inputTypeText={$_('input.collateral') + ': WETH'}
 					actionHandler={withdrawWETH}
 					actionText={$_('actions.withdraw')}
 				/>

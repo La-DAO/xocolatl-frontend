@@ -18,6 +18,7 @@
     cursor: pointer;
     width: 7rem;
     border-radius: 1rem;
+    margin-top: 10px;
     margin-bottom: 0rem;
   }
 

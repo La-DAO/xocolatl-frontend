@@ -5,18 +5,19 @@
 		"approve": "Approve",
 		"deposit": "Deposit",
 		"mint": "Mint",
-		"redeem": "Repay",
+		"redeem": "Payback",
 		"withdraw": "Withdraw",
 		"change": "Change",
 		"exchange": "Exchange"
 	},
 	"input": {
-		"deposit": "Amount to deposit",
-		"mint": "Amount to mint",
-		"redeem": "Amount to repay",
-		"withdraw": "Amount to withdraw",
+		"deposit": "Collateral to deposit",
+		"mint": "$XOC to mint",
+		"redeem": "$XOC to payback",
+		"withdraw": "Collateral to withdraw",
 		"collateral": "Collateral",
-		"token": "Token"
+		"token-mint": "Against my",
+		"token-redeem": "Free up my"
 	},
 	"healthIndex": {
 		"healthIndex": "Health index",
@@ -39,9 +40,9 @@
 		"walletBalance": "Your wallet balance",
 		"depositBalance": "Deposited collateral balance",
 		"availableForWithdrawal": "Available for withdrawal",
-		"loans": "Loans",
-		"remainingLoan": "Outstanding loan",
-		"availableToLoan": "Available to borrow",
+		"loans": "$XOC",
+		"remainingLoan": "Minted",
+		"availableToLoan": "Available to mint",
 		"xocBalance": "Your wallet balance"
 	},
 	"modal": {

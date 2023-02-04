@@ -79,12 +79,13 @@
   }
 
   input {
-    display: inline-block;
     all: unset;
+		color: grey;
     appearance: none;
-    font-size: 3.2rem;
+		border-bottom: 0.5px solid var(--light-color);
+    font-size: 2.6rem;
     font-weight: 700;
-    width: 100%;
+    width: 80%;
   }
 
   .collateral-type {

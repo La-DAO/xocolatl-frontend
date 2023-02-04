@@ -21,34 +21,34 @@ export const listOfCollaterals = derived(
 	}
 );
 
-export const WETHDepositInputAmount = writable(0);
+export const CollateralDepositInputAmount = writable(0);
 
-export const WETHDepositInputAmountBigNum = derived(
-	WETHDepositInputAmount,
-	$WETHDepositInputAmount => {
-		WETHDepositInputError.set('');
-		if (!Number.isFinite($WETHDepositInputAmount)){
-			WETHDepositInputError.set('Cantidad invalida');
-		} else if ($WETHDepositInputAmount) {
+export const CollateralDepositInputAmountBigNum = derived(
+	CollateralDepositInputAmount,
+	$CollateralDepositInputAmount => {
+		CollateralDepositInputError.set('');
+		if (!Number.isFinite($CollateralDepositInputAmount)){
+			CollateralDepositInputError.set('Cantidad invalida');
+		} else if ($CollateralDepositInputAmount) {
 			try {
-				return ethers.utils.parseEther($WETHDepositInputAmount.toString());
+				return ethers.utils.parseEther($CollateralDepositInputAmount.toString());
 			} catch(e) {
-				WETHDepositInputError.set('Cantidad invalida');
+				CollateralDepositInputError.set('Cantidad invalida');
 			}
-		} else if ($WETHDepositInputAmount === 0){
+		} else if ($CollateralDepositInputAmount === 0){
 			return ethers.utils.parseEther('0');
 		} else {
-			WETHDepositInputError.set('Cantidad invalida');
+			CollateralDepositInputError.set('Cantidad invalida');
 		}
 	}
 );
-export const WETHDepositInputError = writable('');
+export const CollateralDepositInputError = writable('');
 
-export const WETHDepositNeedsAllowance = derived(
-	[WETHDepositInputAmountBigNum, userCollateralAllowance],
-	([$WETHDepositInputAmountBigNum, $userCollateralAllowance]) => {
-		if ($WETHDepositInputAmountBigNum && $userCollateralAllowance) {
-			if ($userCollateralAllowance.lt($WETHDepositInputAmountBigNum)) {
+export const CollateralDepositNeedsAllowance = derived(
+	[CollateralDepositInputAmountBigNum, userCollateralAllowance],
+	([$CollateralDepositInputAmountBigNum, $userCollateralAllowance]) => {
+		if ($CollateralDepositInputAmountBigNum && $userCollateralAllowance) {
+			if ($userCollateralAllowance.lt($CollateralDepositInputAmountBigNum)) {
 				return true;
 			}
 		} 

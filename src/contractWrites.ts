@@ -6,7 +6,7 @@ import { pendingTxs } from './store/store';
 
 import {
 	selectedCollateral,
-	WETHDepositInputAmountBigNum,
+	CollateralDepositInputAmountBigNum,
 	WETHWithdrawInputAmountBigNum,
 	XOCMintInputAmountBigNum,
 	XOCRedeemInputAmountBigNum
@@ -51,7 +51,7 @@ async function handleTxReceipt(tx: ContractTransaction) {
 	fetchAllDisplayData();
 }
 
-export async function approveWETH() {
+export async function approveERC20() {
 	checkContractCallPrereqs();
 	const tx = await get(CollateralContract)!.approve(
 		getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress,
@@ -60,9 +60,9 @@ export async function approveWETH() {
 	handleTxReceipt(tx);
 }
 
-export async function depositWETH() {
+export async function depositERC20() {
 	checkContractCallPrereqs();
-	const amount = get(WETHDepositInputAmountBigNum);
+	const amount = get(CollateralDepositInputAmountBigNum);
 	if (amount) {
 		const tx = await get(houseOfReserveContract)!.deposit(amount);
 		handleTxReceipt(tx);
@@ -121,7 +121,7 @@ export async function withdrawWETH() {
 
 export async function depositNativeToken() {
 	checkContractCallPrereqs();
-	const amount = get(WETHDepositInputAmountBigNum);
+	const amount = get(CollateralDepositInputAmountBigNum);
 	if (amount) {
 		const tx = await get(signer)!.sendTransaction(
 			{

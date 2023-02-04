@@ -48,7 +48,7 @@ const goerliData: ChainData = {
 			houseOfReserveAddress: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
 			reserveTokenID: '73887769654539014949073486582216648661191570491572674202348119740207094196106',
 			backedTokenID: '61675758050310630888197740848107423622427107441595589912927697675813290646218',
-		}
+		},
 	],
 	assetsAccountantAddress: '0xB90996A70C957a1496e349434CF0E030A9f693A4',
 	assetsAccountantABI: assetsAccountantABI,
@@ -74,7 +74,7 @@ const polygonData: ChainData = {
 			houseOfReserveAddress: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
 			reserveTokenID: '11947586584348366889623359790458925956500907418440056359644468546038903560217',
 			backedTokenID: '70972479931534892086591623403426119776171689317875217451089907405265175126937',
-		}
+		},
 	],
 	assetsAccountantAddress: '0xB90996A70C957a1496e349434CF0E030A9f693A4',
 	assetsAccountantABI: assetsAccountantABI,
@@ -101,7 +101,6 @@ export function getSelectedAssetObject(chainId_: string | number, collateralName
 }
 
 export function getCollateralOptions(chainId_:string | number):string[] {
-	console.log("inside getCollateralOptions-chainID", chainId_);
 	const assets_: Asset[] = chains[chainId_].reserveAssets;
 	let options: string[] = [];
 	for (let i = 0; i < assets_.length; i++) {

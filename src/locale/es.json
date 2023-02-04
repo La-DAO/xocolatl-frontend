@@ -5,18 +5,19 @@
 		"approve": "Aprobar",
 		"deposit": "Depositar",
 		"mint": "Acuñar",
-		"redeem": "Amortizar",
+		"redeem": "Saldar",
 		"withdraw": "Retirar",
 		"change": "Cambiar",
 		"exchange": "Intercambiar"
 	},
 	"input": {
-		"deposit": "Cantidad a depositar",
-		"mint": "Cantidad a acuñar",
-		"redeem": "Cantidad a amortizar",
-		"withdraw": "Cantidad a retirar",
+		"deposit": "Colateral por depositar",
+		"mint": "$XOC por acuñar",
+		"redeem": "$XOC por saldar",
+		"withdraw": "Colateral por retirar",
 		"collateral": "Colateral",
-		"token": "Token"
+		"token-mint": "Utilizando mi",
+		"token-redeem": "Libera mi"
 	},
 	"healthIndex": {
 		"healthIndex": "Indice de salud",
@@ -39,9 +40,9 @@
 		"walletBalance": "Balance de tu cartera",
 		"depositBalance": "Balance del colateral depositado",
 		"availableForWithdrawal": "Disponible para retirar",
-		"loans": "Prestamos",
-		"remainingLoan": "Deuda restante",
-		"availableToLoan": "Disponible para pedir prestado",
+		"loans": "$XOC",
+		"remainingLoan": "Acuñado",
+		"availableToLoan": "Disponible por acuñar",
 		"xocBalance": "Balance de tu cartera"
 	},
 	"modal": {
