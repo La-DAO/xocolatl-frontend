@@ -4,6 +4,7 @@
 
   import Button3D from "./Button3D.svelte";
   import SelectCollateral from "./SelectCollateral.svelte";
+  import { selectedCollateral } from "src/store/userInput";
 
   // writeable object from store to bind to input
   export let inputAmount: number;
@@ -39,7 +40,9 @@
   <h1 class="deposit-header">{headerText}</h1>
   <label for="amount" />
   <input id="amount" bind:value={inputAmount} type="number" min="0" lang="en" />
-  <div class='collateral-type'>Collateral: <SelectCollateral/></div>
+  <div class="collateral-type">
+    Collateral: <SelectCollateral />
+  </div>
   <div class="buttons">
     <button
       class="percent-button"
@@ -80,12 +83,11 @@
 
   input {
     all: unset;
-		color: grey;
+    color: grey;
     appearance: none;
-		border-bottom: 0.5px solid var(--light-color);
+    border-bottom: 0.5px solid var(--light-color);
     font-size: 2.6rem;
     font-weight: 700;
-    width: 80%;
   }
 
   .collateral-type {

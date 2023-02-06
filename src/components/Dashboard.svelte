@@ -69,13 +69,13 @@ $: swapURL = ($chainId && $chainId in chains) ? chains[$chainId].swapURL : '';
 	}
 
 	.input-section {
-		flex-basis: 40%;
+		flex-basis: 50%;
 		flex-grow: 1;
 	}
 
 
 	.info-section {
-		flex-basis: 60%;
+		flex-basis: 50%;
 		flex-grow: 1;
 	}
 </style>
@@ -87,36 +87,33 @@ $: swapURL = ($chainId && $chainId in chains) ? chains[$chainId].swapURL : '';
 			<div class="input-section">
 			{#if $selectedTab==='deposit'}
 				{#if isNative}
-					<AmountInput 
+					<AmountReservesInput 
 						headerText={$_('input.deposit')} 
 						bind:inputAmount={$CollateralDepositInputAmount} 
 						bind:inputError={$CollateralDepositInputError} 
 						inputAmountBigNum={$CollateralDepositInputAmountBigNum}
 						inputLimit={$userNativeTokenBalance}
-						inputTypeText={$_('input.collateral')}
 						actionText={$_('actions.deposit')}
 						actionHandler={depositNativeToken}
 					/>
 				{:else}
 					{#if $CollateralDepositNeedsAllowance}
-						<AmountInput 
+						<AmountReservesInput 
 							headerText={$_('input.deposit')} 
 							bind:inputAmount={$CollateralDepositInputAmount} 
 							bind:inputError={$CollateralDepositInputError} 
 							inputAmountBigNum={$CollateralDepositInputAmountBigNum}
 							inputLimit={$userCollateralBalance}
-							inputTypeText={$_('input.collateral')}
 							actionText={$_('actions.approve')}
 							actionHandler={approveERC20}
 						/>
 					{:else} 
-						<AmountInput 
+						<AmountReservesInput 
 							headerText={$_('input.deposit')} 
 							bind:inputAmount={$CollateralDepositInputAmount} 
 							bind:inputError={$CollateralDepositInputError} 
 							inputAmountBigNum={$CollateralDepositInputAmountBigNum}
 							inputLimit={$userCollateralBalance}
-							inputTypeText={$_('input.collateral')}
 							actionText={$_('actions.deposit')}
 							actionHandler={depositERC20}
 						/>

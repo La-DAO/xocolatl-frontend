@@ -1,8 +1,35 @@
-<script>
+<script lang="ts">
+  import {
+    getXOCDebt,
+    getUserCollateralBalance,
+    getUserCollateralDepositBalance,
+    getMaxCollateralWithdrawal,
+    getCollateralToXOCRate,
+    getMaxLTVFactor,
+	getLiquidationParams,
+	getLiquidationFactor
+  } from "src/contractReads";
   import { listOfCollaterals, selectedCollateral } from "src/store/userInput";
+
+  async function handleCollateralChange(event: any) {
+    const option: string = event.target.value;
+    selectedCollateral.set(option);
+    await getUserCollateralBalance();
+    await getUserCollateralDepositBalance();
+    await getXOCDebt();
+    await getMaxCollateralWithdrawal();
+    await getCollateralToXOCRate();
+    // await getMaxLTVFactor();
+    // await getLiquidationParams();
+    // await getLiquidationFactor();
+  }
 </script>
 
-<select class="box" bind:value={$selectedCollateral}>
+<select
+  class="box"
+  bind:value={$selectedCollateral}
+  on:change={handleCollateralChange}
+>
   {#each $listOfCollaterals as option}
     <option class="options" value={option}>{option}</option>
   {/each}

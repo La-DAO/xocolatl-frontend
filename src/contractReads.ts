@@ -1,4 +1,4 @@
-import { utils } from 'ethers';
+import { Contract, utils } from 'ethers';
 import { get } from 'svelte/store';
 import { signerAddress, chainId, signer } from 'svelte-ethers-store';
 
@@ -73,11 +73,13 @@ export async function getCollateralAllowance() {
 
 export async function getUserCollateralBalance(): Promise<void> {
 	checkContractCallPrereqs();
-	const balance = await get(CollateralContract)!.balanceOf(get(signerAddress));
+	const contract: Contract | undefined = get(CollateralContract);
+	const balance = await contract!.balanceOf(get(signerAddress));
+	console.log("getUserCollateralBalance", contract!.address, balance.toString());
 	userCollateralBalance.set(balance);
 }
 
-async function getUserCollateralDepositBalance(): Promise<void> {
+export async function getUserCollateralDepositBalance(): Promise<void> {
 	checkContractCallPrereqs();
 	const fetchedBalance = await get(assetsAccountantContract)!.balanceOf(
 		get(signerAddress),
