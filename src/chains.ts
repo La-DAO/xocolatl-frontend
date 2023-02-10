@@ -10,6 +10,7 @@ import {
 interface Asset {
 	name: string;
 	address: string;
+	decimals: string;
 	abi: string[];
 	houseOfReserveAddress: string;
 	reserveTokenID: string;
@@ -44,6 +45,7 @@ const goerliData: ChainData = {
 		{
 			name: "WETH",
 			address: "0xCCB14936C2E000ED8393A571D15A2672537838Ad",
+			decimals: "18",
 			abi: mockWETHABI,
 			houseOfReserveAddress: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
 			reserveTokenID: '73887769654539014949073486582216648661191570491572674202348119740207094196106',
@@ -52,6 +54,7 @@ const goerliData: ChainData = {
 		{
 			name: "WBTC",
 			address: "0x45AC379F019E48ca5dAC02E54F406F99F5088099",
+			decimals: "8",
 			abi: ERC20ABI,
 			houseOfReserveAddress: "0xEFAA8B7EF4b8f6D71B9d892Ae7d3DdC0a02E0372",
 			reserveTokenID: '99941502029397031111252900809768826641181088650485097910049856126860921422367',
@@ -78,6 +81,7 @@ const polygonData: ChainData = {
 		{
 			name: "WETH",
 			address: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+			decimals: "18",
 			abi: ERC20ABI,
 			houseOfReserveAddress: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
 			reserveTokenID: '11947586584348366889623359790458925956500907418440056359644468546038903560217',

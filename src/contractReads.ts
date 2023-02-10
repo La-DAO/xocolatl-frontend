@@ -31,7 +31,7 @@ import {
 	liquidationThreshold,
 	liquidationFactor,
 	maxLTVFactor,
-	globalBase
+	globalBase,
 } from './store/contractData';
 
 import { chains, getSelectedAssetObject } from './chains';

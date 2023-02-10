@@ -12,6 +12,8 @@
     userXOCMintingPower,
   } from "../store/contractData";
   import { selectedCollateral } from "src/store/userInput";
+  import { getSelectedAssetObject } from "src/chains";
+  import { chainId } from "svelte-ethers-store";
 
   $: if ($isRighNetwork) {
     fetchAllDisplayData();
@@ -28,9 +30,10 @@
     <div class:highlight={$selectedTab === "deposit"} class="box-row">
       <p>{$_("balances.walletBalance")}</p>
       <p>
-        {$userCollateralBalance
-          ? ethers.utils.formatEther(
-              $userCollateralBalance.sub($userCollateralBalance.mod(1e10))
+        {$userCollateralBalance && $chainId && $selectedCollateral
+          ? ethers.utils.formatUnits(
+              $userCollateralBalance,
+              getSelectedAssetObject($chainId, $selectedCollateral).decimals
             )
           : "-"}
         {$selectedCollateral}
@@ -45,13 +48,12 @@
       <p>{$_("balances.depositBalance")}</p>
       <p>
         {$userCollateralDepositBalance
-          ? ethers.utils.formatEther(
-              $userCollateralDepositBalance.sub(
-                $userCollateralDepositBalance.mod(1e10)
-              )
+          ? ethers.utils.formatUnits(
+              $userCollateralDepositBalance,
+              getSelectedAssetObject($chainId, $selectedCollateral).decimals
             )
-          : "-"} 
-					{$selectedCollateral}
+          : "-"}
+        {$selectedCollateral}
       </p>
     </div>
 
@@ -59,13 +61,12 @@
       <p>{$_("balances.availableForWithdrawal")}</p>
       <p>
         {$userCollateralMaxWithdrawal
-          ? ethers.utils.formatEther(
-              $userCollateralMaxWithdrawal.sub(
-                $userCollateralMaxWithdrawal.mod(1e10)
-              )
+          ? ethers.utils.formatUnits(
+              $userCollateralMaxWithdrawal,
+              getSelectedAssetObject($chainId, $selectedCollateral).decimals
             )
-          : "-"} 
-					{$selectedCollateral}
+          : "-"}
+        {$selectedCollateral}
       </p>
     </div>
   </div>

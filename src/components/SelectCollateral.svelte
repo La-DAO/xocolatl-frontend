@@ -5,21 +5,24 @@
     getUserCollateralDepositBalance,
     getMaxCollateralWithdrawal,
     getCollateralToXOCRate,
-    getMaxLTVFactor,
-	getLiquidationParams,
-	getLiquidationFactor
+    getCollateralAllowance,
+    getHealthRatio,
+    getLiquidationFactor,
+    getXOCMintingPower
   } from "src/contractReads";
   import { listOfCollaterals, selectedCollateral } from "src/store/userInput";
 
   async function handleCollateralChange(event: any) {
     const option: string = event.target.value;
     selectedCollateral.set(option);
-    await getUserCollateralBalance();
-    await getUserCollateralDepositBalance();
-    await getXOCDebt();
-    await getMaxCollateralWithdrawal();
-    await getCollateralToXOCRate();
-    // await getMaxLTVFactor();
+    getUserCollateralDepositBalance();
+    getXOCDebt();
+    getUserCollateralBalance();
+    getCollateralAllowance();
+    getMaxCollateralWithdrawal();
+    getCollateralToXOCRate();
+    getHealthRatio();
+    getXOCMintingPower();
     // await getLiquidationParams();
     // await getLiquidationFactor();
   }

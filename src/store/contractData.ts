@@ -60,9 +60,9 @@ export const userCollateralLiquidationPrice = derived(
 	([$userXOCDebt, $userCollateralDepositBalance, $liquidationFactor]) => {
 		if ($userXOCDebt && $userCollateralDepositBalance && $liquidationFactor){
 			const floatXOCDebt = parseFloat(ethers.utils.formatEther($userXOCDebt));
-			const wethDepositBalanceFloat = parseFloat(ethers.utils.formatEther($userCollateralDepositBalance));
+			const depositBalanceFloat = parseFloat(ethers.utils.formatEther($userCollateralDepositBalance));
 			const liqFactorFloat = parseFloat(ethers.utils.formatEther($liquidationFactor));
-			const result = (floatXOCDebt)/(wethDepositBalanceFloat*liqFactorFloat);
+			const result = depositBalanceFloat == 0? 0 : (floatXOCDebt)/(depositBalanceFloat*liqFactorFloat);
 			return result;
 		} else return null;
 	});
