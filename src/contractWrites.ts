@@ -67,7 +67,7 @@ export async function depositERC20() {
 		const tx = await get(houseOfReserveContract)!.deposit(amount);
 		handleTxReceipt(tx);
 	} else {
-		throw new Error('Invalid WETH deposit amount input');
+		throw new Error('Invalid deposit amount input');
 	}
 }
 

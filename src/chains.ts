@@ -68,7 +68,7 @@ const goerliData: ChainData = {
 	houseOfCoinABI: houseOfCoinABI,
 	XOCAddress: '0xa411c9Aa00E020e4f88Bc19996d29c5B7ADB4ACf',
 	XOCABI: XOCABI,
-	supportsNative: true,
+	supportsNative: false,
 	swapURL: 'https://app.uniswap.org/#/swap?inputCurrency=0x6aA1465af9A3140c5741943939961b197FFfe872&outputCurrency=0xb18d016cDD2d9439A19f15633005A6b2cd6Aa774&chain=rinkeby'
 };
 

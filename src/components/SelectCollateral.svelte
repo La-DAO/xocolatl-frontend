@@ -8,6 +8,7 @@
     getCollateralAllowance,
     getHealthRatio,
     getLiquidationFactor,
+    getLiquidationParams,
     getXOCMintingPower
   } from "src/contractReads";
   import { listOfCollaterals, selectedCollateral } from "src/store/userInput";
@@ -23,8 +24,8 @@
     getCollateralToXOCRate();
     getHealthRatio();
     getXOCMintingPower();
-    // await getLiquidationParams();
-    // await getLiquidationFactor();
+    getLiquidationParams();
+    getLiquidationFactor();
   }
 </script>
 

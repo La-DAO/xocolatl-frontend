@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 
 import { userCollateralAllowance } from './contractData';
 import { chainId } from 'svelte-ethers-store';
-import { getCollateralOptions } from 'src/chains';
+import { getCollateralOptions, getSelectedAssetObject } from 'src/chains';
 
 // user inputs
 export const selectedCollateral = writable("WETH");
@@ -13,7 +13,7 @@ export const selectedCollateral = writable("WETH");
 export const listOfCollaterals = derived(
 	chainId,
 	($chainId) => {
-		if($chainId) {
+		if ($chainId) {
 			return getCollateralOptions($chainId);
 		} else {
 			return ['WETH'];
@@ -24,19 +24,23 @@ export const listOfCollaterals = derived(
 export const CollateralDepositInputAmount = writable(0);
 
 export const CollateralDepositInputAmountBigNum = derived(
-	CollateralDepositInputAmount,
-	$CollateralDepositInputAmount => {
+	[CollateralDepositInputAmount, chainId, selectedCollateral],
+	([$CollateralDepositInputAmount, $chainId, $selectedCollateral]) => {
 		CollateralDepositInputError.set('');
-		if (!Number.isFinite($CollateralDepositInputAmount)){
+		if (!Number.isFinite($CollateralDepositInputAmount)) {
 			CollateralDepositInputError.set('Cantidad invalida');
 		} else if ($CollateralDepositInputAmount) {
-			try {
-				return ethers.utils.parseEther($CollateralDepositInputAmount.toString());
-			} catch(e) {
-				CollateralDepositInputError.set('Cantidad invalida');
+			if ($chainId && $selectedCollateral) {
+				const asset = getSelectedAssetObject($chainId, $selectedCollateral);
+				try {
+					return ethers.utils.parseUnits($CollateralDepositInputAmount.toString(), asset.decimals);
+				} catch (e) {
+					CollateralDepositInputError.set('Cantidad invalida');
+				}
+
 			}
-		} else if ($CollateralDepositInputAmount === 0){
-			return ethers.utils.parseEther('0');
+		} else if ($CollateralDepositInputAmount === 0) {
+			return ethers.BigNumber.from('0');
 		} else {
 			CollateralDepositInputError.set('Cantidad invalida');
 		}
@@ -51,26 +55,29 @@ export const CollateralDepositNeedsAllowance = derived(
 			if ($userCollateralAllowance.lt($CollateralDepositInputAmountBigNum)) {
 				return true;
 			}
-		} 
+		}
 		return false;
 	}
 );
 
 export const WETHWithdrawInputAmount = writable(0);
 export const WETHWithdrawInputAmountBigNum = derived(
-	WETHWithdrawInputAmount,
-	$WETHWithdrawInputAmount => {
+	[WETHWithdrawInputAmount, chainId, selectedCollateral],
+	([$WETHWithdrawInputAmount, $chainId, $selectedCollateral]) => {
 		WETHWithdrawInputError.set('');
-		if (!Number.isFinite($WETHWithdrawInputAmount)){
+		if (!Number.isFinite($WETHWithdrawInputAmount)) {
 			WETHWithdrawInputError.set('Cantidad invalida');
 		} else if ($WETHWithdrawInputAmount) {
-			try {
-				return ethers.utils.parseEther($WETHWithdrawInputAmount.toString());
-			} catch(e) {
-				WETHWithdrawInputError.set('Cantidad invalida');
+			if($chainId && $selectedCollateral) {
+				const asset = getSelectedAssetObject($chainId, $selectedCollateral);
+				try {
+					return ethers.utils.parseUnits($WETHWithdrawInputAmount.toString(), asset.decimals);
+				} catch (e) {
+					WETHWithdrawInputError.set('Cantidad invalida');
+				}
 			}
-		} else if ($WETHWithdrawInputAmount === 0){
-			return ethers.utils.parseEther('0');
+		} else if ($WETHWithdrawInputAmount === 0) {
+			return ethers.BigNumber.from('0');
 		} else {
 			WETHWithdrawInputError.set('Cantidad invalida');
 		}
@@ -86,16 +93,16 @@ export const XOCMintInputAmountBigNum = derived(
 	XOCMintInputAmount,
 	$XOCMintInputAmount => {
 		XOCMintInputError.set('');
-		if (!Number.isFinite($XOCMintInputAmount)){
+		if (!Number.isFinite($XOCMintInputAmount)) {
 			XOCMintInputError.set('Cantidad invalida');
 		} else if ($XOCMintInputAmount) {
 			try {
 				return ethers.utils.parseEther($XOCMintInputAmount.toString());
-			} catch(e) {
+			} catch (e) {
 				XOCMintInputError.set('Cantidad invalida');
 			}
-		} else if ($XOCMintInputAmount === 0){
-			return ethers.utils.parseEther('0');
+		} else if ($XOCMintInputAmount === 0) {
+			return ethers.BigNumber.from('0');
 		} else {
 			XOCMintInputError.set('Cantidad invalida');
 		}
@@ -111,16 +118,16 @@ export const XOCRedeemInputAmountBigNum = derived(
 	XOCRedeemInputAmount,
 	$XOCRedeemInputAmount => {
 		XOCRedeemInputError.set('');
-		if (!Number.isFinite($XOCRedeemInputAmount)){
+		if (!Number.isFinite($XOCRedeemInputAmount)) {
 			XOCRedeemInputError.set('Cantidad invalida');
 		} else if ($XOCRedeemInputAmount) {
 			try {
 				return ethers.utils.parseEther($XOCRedeemInputAmount.toString());
-			} catch(e) {
+			} catch (e) {
 				XOCRedeemInputError.set('Cantidad invalida');
 			}
-		} else if ($XOCRedeemInputAmount === 0){
-			return ethers.utils.parseEther('0');
+		} else if ($XOCRedeemInputAmount === 0) {
+			return ethers.BigNumber.from('0');
 		} else {
 			XOCRedeemInputError.set('Cantidad invalida');
 		}

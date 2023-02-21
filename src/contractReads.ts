@@ -1,7 +1,7 @@
 import { Contract, utils } from 'ethers';
 import { get } from 'svelte/store';
 import { signerAddress, chainId, signer } from 'svelte-ethers-store';
-
+import { ethers } from 'ethers';
 import { checkContractCallPrereqs } from './utils';
 
 import {
@@ -75,7 +75,6 @@ export async function getUserCollateralBalance(): Promise<void> {
 	checkContractCallPrereqs();
 	const contract: Contract | undefined = get(CollateralContract);
 	const balance = await contract!.balanceOf(get(signerAddress));
-	console.log("getUserCollateralBalance", contract!.address, balance.toString());
 	userCollateralBalance.set(balance);
 }
 
@@ -157,6 +156,8 @@ export async function getHealthRatio() {
 			);
 		}
 		userHealthRatio.set(fetchedAmount);
+	} else {
+		userHealthRatio.set(ethers.BigNumber.from("0"));
 	}
 }
 
