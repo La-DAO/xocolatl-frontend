@@ -11,8 +11,7 @@
     userXOCBalance,
     userXOCMintingPower,
   } from "../store/contractData";
-  import { selectedCollateral } from "src/store/userInput";
-  import { getSelectedAssetObject } from "src/chains";
+  import { selectedCollateral, collateralDecimals } from "src/store/userInput";
   import { chainId } from "svelte-ethers-store";
 
   $: if ($isRighNetwork) {
@@ -33,7 +32,7 @@
         {$userCollateralBalance && $chainId && $selectedCollateral
           ? ethers.utils.formatUnits(
               $userCollateralBalance,
-              getSelectedAssetObject($chainId, $selectedCollateral).decimals
+              $collateralDecimals
             )
           : "-"}
         {$selectedCollateral}
@@ -48,10 +47,10 @@
       <p>{$_("balances.depositBalance")}</p>
       <p>
         {$userCollateralDepositBalance
-          ? ethers.utils.formatUnits(
+          ? commify(ethers.utils.formatUnits(
               $userCollateralDepositBalance,
-              getSelectedAssetObject($chainId, $selectedCollateral).decimals
-            )
+              $collateralDecimals
+            ))
           : "-"}
         {$selectedCollateral}
       </p>
@@ -61,10 +60,10 @@
       <p>{$_("balances.availableForWithdrawal")}</p>
       <p>
         {$userCollateralMaxWithdrawal
-          ? ethers.utils.formatUnits(
+          ? commify(parseFloat(ethers.utils.formatUnits(
               $userCollateralMaxWithdrawal,
-              getSelectedAssetObject($chainId, $selectedCollateral).decimals
-            )
+              $collateralDecimals
+            )).toFixed(5))
           : "-"}
         {$selectedCollateral}
       </p>

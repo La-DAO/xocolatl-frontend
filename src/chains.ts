@@ -7,7 +7,7 @@ import {
 	XOCABI
 } from './abis';
 
-interface Asset {
+export interface Asset {
 	name: string;
 	address: string;
 	decimals: string;

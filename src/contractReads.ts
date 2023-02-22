@@ -14,7 +14,7 @@ import {
 	wrappedHouseOfReserveContract
 } from './store/contracts';
 
-import { selectedCollateral } from './store/userInput';
+import { selectedCollateral, collateralDecimals } from './store/userInput';
 
 import {
 	userNativeTokenBalance,
@@ -44,6 +44,12 @@ import { chains, getSelectedAssetObject } from './chains';
 // 	const lastPrice: number = rObject.payload.last;
 // 	return utils.parseUnits(lastPrice.toString(), 8);
 // }
+
+export function setCollateralDecimals() {
+	checkContractCallPrereqs();
+	const asset =  getSelectedAssetObject(get(chainId), get(selectedCollateral));
+	collateralDecimals.set(asset.decimals);
+}
 
 export async function getCollateralToXOCRate() {
 	checkContractCallPrereqs();

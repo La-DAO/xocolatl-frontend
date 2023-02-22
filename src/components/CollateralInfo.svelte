@@ -97,7 +97,7 @@
           ${$CollateralToXOC
             ? commify(
                 ethers.utils.formatUnits(
-                  $CollateralToXOC.sub($CollateralToXOC.mod(1e4)),
+                  $CollateralToXOC.sub($CollateralToXOC.mod(1e7)),
                   8
                 )
               )
@@ -117,7 +117,7 @@
         </div>
         <p>
           ${$userCollateralLiquidationPrice
-            ? commify($userCollateralLiquidationPrice.toFixed(4))
+            ? commify($userCollateralLiquidationPrice.toFixed(1))
             : "-"} (MXN)
         </p>
       </div>
@@ -134,11 +134,7 @@
         </div>
         <p>
           ${$userCollateralMXNPrice
-            ? commify(
-                ethers.utils.formatEther(
-                  $userCollateralMXNPrice.sub($userCollateralMXNPrice.mod(1e14))
-                )
-              )
+            ? commify(parseFloat(ethers.utils.formatUnits($userCollateralMXNPrice, 8)).toFixed(1))
             : "-"} (MXN)
         </p>
       </div>

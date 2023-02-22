@@ -4,7 +4,6 @@
 
   import Button3D from "./Button3D.svelte";
   import SelectCollateral from "./SelectCollateral.svelte";
-  import { selectedCollateral } from "src/store/userInput";
 
   // writeable object from store to bind to input
   export let inputAmount: number;

@@ -2,6 +2,8 @@ import { writable, derived } from 'svelte/store';
 import { ethers } from 'ethers';
 import type { Writable, Readable } from 'svelte/store';
 import type { BigNumber } from 'ethers';
+import { collateralDecimals } from './userInput';
+import { parseEther } from 'ethers/lib/utils';
 
 export const userNativeTokenBalance: Writable<BigNumber | null> = writable(null);
 
@@ -37,7 +39,7 @@ export const userMaxDebt = derived([userXOCMintingPower, userXOCDebt],
 export const userMaxDebtUtilization: Readable<number | null> = derived([userXOCDebt, userMaxDebt],
 	([$userXOCDebt, $userMaxDebt]) => {
 		if ($userXOCDebt && $userMaxDebt) {
-			return parseFloat(ethers.utils.formatEther($userXOCDebt))/parseFloat(ethers.utils.formatEther($userMaxDebt));
+			return parseFloat(ethers.utils.formatEther($userXOCDebt)) / parseFloat(ethers.utils.formatEther($userMaxDebt));
 		} else return null;
 	}
 );
@@ -45,32 +47,49 @@ export const userMaxDebtUtilization: Readable<number | null> = derived([userXOCD
 export const liquidationThreshold: Writable<BigNumber | null> = writable(null);
 
 
-// returns price in 18 decimals
+// returns price in 8 decimals
 export const userCollateralMXNPrice: Readable<BigNumber | null> = derived(
-	[CollateralToXOC, userCollateralDepositBalance],
-	([$CollateralToXOC, $userCollateralDepositBalance]) => {
-		if($CollateralToXOC && $userCollateralDepositBalance) {
-			return $CollateralToXOC.mul($userCollateralDepositBalance).div(1e8);
+	[CollateralToXOC, userCollateralDepositBalance, collateralDecimals],
+	([$CollateralToXOC, $userCollateralDepositBalance, $collateralDecimals]) => {
+		if ($CollateralToXOC && $userCollateralDepositBalance && $collateralDecimals) {
+			const price = parseFloat(ethers.utils.formatUnits($CollateralToXOC, "8"));
+			const collateral = parseFloat(ethers.utils.formatUnits($userCollateralDepositBalance, $collateralDecimals));
+			const calc = (price * collateral).toFixed(5)
+			return ethers.utils.parseUnits(calc.toString(), 8);
 		} else return null;
 	}
 );
 
 export const userCollateralLiquidationPrice = derived(
-	[userXOCDebt, userCollateralDepositBalance, liquidationFactor], 
-	([$userXOCDebt, $userCollateralDepositBalance, $liquidationFactor]) => {
-		if ($userXOCDebt && $userCollateralDepositBalance && $liquidationFactor){
+	[userXOCDebt, userCollateralDepositBalance, liquidationFactor, collateralDecimals],
+	(
+		[
+			$userXOCDebt,
+			$userCollateralDepositBalance,
+			$liquidationFactor,
+			$collateralDecimals
+		]
+	) => {
+		if (
+			$userXOCDebt &&
+			$userCollateralDepositBalance &&
+			$liquidationFactor &&
+			$collateralDecimals
+		) {
 			const floatXOCDebt = parseFloat(ethers.utils.formatEther($userXOCDebt));
-			const depositBalanceFloat = parseFloat(ethers.utils.formatEther($userCollateralDepositBalance));
+			const depositBalanceFloat = parseFloat(ethers.utils.formatUnits($userCollateralDepositBalance, $collateralDecimals));
 			const liqFactorFloat = parseFloat(ethers.utils.formatEther($liquidationFactor));
-			const result = depositBalanceFloat == 0? 0 : (floatXOCDebt)/(depositBalanceFloat*liqFactorFloat);
+			const result = depositBalanceFloat == 0 ?
+				0 :
+				(floatXOCDebt) / (depositBalanceFloat * liqFactorFloat);
 			return result;
 		} else return null;
 	});
 
 export const healthRatioAsPercentage = derived(
-	userHealthRatio, 
+	userHealthRatio,
 	($userHealthRatio) => {
-		if($userHealthRatio) {
+		if ($userHealthRatio) {
 			const value = parseFloat(ethers.utils.formatEther($userHealthRatio));
 			if (value < 1) {
 				return 0;
