@@ -10,7 +10,6 @@
   export let inputError: string;
   export let inputAmountBigNum: BigNumber | undefined;
   export let inputLimit: BigNumber | null;
-	export let inputTypeText: string;
   export let headerText: string;
   export let actionText: string;
   export let actionHandler: () => void;
@@ -40,7 +39,9 @@
   <h1 class="deposit-header">{headerText}</h1>
   <label for="amount" />
   <input id="amount" bind:value={inputAmount} type="number" min="0" lang="en" />
-  <div class="collateral-type">{inputTypeText}: <SelectCollateral /></div>
+  <div class="collateral-type">
+    Collateral: <SelectCollateral />
+  </div>
   <div class="buttons">
     <button
       class="percent-button"
@@ -81,12 +82,11 @@
 
   input {
     all: unset;
-		color: grey;
+    color: grey;
     appearance: none;
-		border-bottom: 0.5px solid var(--light-color);
+    border-bottom: 0.5px solid var(--light-color);
     font-size: 2.6rem;
     font-weight: 700;
-    width: 80%;
   }
 
   .collateral-type {

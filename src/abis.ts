@@ -17,6 +17,21 @@ export const mockWETHABI =[
 	'function withdraw(uint256 wad)'
 ]; 
 
+export const ERC20ABI =[
+	'event Approval(address indexed src, address indexed guy, uint256 wad)',
+	'event Transfer(address indexed src, address indexed dst, uint256 wad)',
+	'event Withdrawal(address indexed src, uint256 wad)',
+	'function allowance(address, address) view returns (uint256)',
+	'function approve(address guy, uint256 wad) returns (bool)',
+	'function balanceOf(address) view returns (uint256)',
+	'function decimals() view returns (uint8)',
+	'function name() view returns (string)',
+	'function symbol() view returns (string)',
+	'function totalSupply() view returns (uint256)',
+	'function transfer(address dst, uint256 wad) returns (bool)',
+	'function transferFrom(address src, address dst, uint256 wad) returns (bool)'
+]; 
+
 export const assetsAccountantABI = [
 	'event HouseRegistered(address house, bytes32 indexed typeOfHouse, address indexed asset)',
 	'event Upgraded(address indexed implementation)',

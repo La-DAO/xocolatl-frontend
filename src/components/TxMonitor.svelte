@@ -1,5 +1,6 @@
 <script lang="ts">
 import { toShortAddress } from '../utils';
+import { get } from 'svelte/store';
 import { pendingTxs, blockExplorerURL } from '../store/store';
 
 function handleClose(txHash: string) {
@@ -120,7 +121,7 @@ img {
 				<p>¡Ay caramba! La transaccion ha fallado por alguna razon, intenta mandarla de nuevo</p>
 				{/if}
 
-				<a class="hash" href={$blockExplorerURL + 'tx/' + tx.hash} target="_blank" rel="noopener noreferrer">{toShortAddress(tx.hash)}</a>
+				<a class="hash" href={get(blockExplorerURL) + 'tx/' + tx.hash} target="_blank" rel="noopener noreferrer">{toShortAddress(tx.hash)}</a>
 
 
 				{#if tx.status === 'pending'}
@@ -131,7 +132,7 @@ img {
 				<img src="/static/failure.svg" alt="text waiting"/>
 				{/if}
 				<div class="button-line">
-					<a href={$blockExplorerURL + 'tx/' + tx.hash} target="_blank" rel="noopener noreferrer">
+					<a href={get(blockExplorerURL) + 'tx/' + tx.hash} target="_blank" rel="noopener noreferrer">
 						<div class='button'>Ver en el explorador</div>
 					</a>
 					<div class='button' on:click={()=>handleClose(tx.hash)}>Cerrar este mensaje</div>

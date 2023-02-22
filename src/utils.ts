@@ -8,6 +8,7 @@ import {Provider} from '@ethersproject/providers';
 import { isRighNetwork } from './store/store';
 import { resetAll } from './store/contractData';
 import { fetchAllDisplayData } from './contractReads';
+import { selectedCollateral } from './store/userInput';
 
 // input: 0x50c57894c3b9bf022d10b94b9d940a48a93cd8c0
 // output: 0x50...d8c0
@@ -24,6 +25,10 @@ export function checkContractCallPrereqs() {
 
 	if(!get(isRighNetwork)) {
 		throw 'Wallet is connected to the wrong network!';
+	}
+
+	if(!get(selectedCollateral)) {
+		throw 'selectedCollateral is not set!';
 	} 
 }
 
@@ -62,7 +67,7 @@ export async function handleWalletConnectProvider() {
 	//  Enable session (triggers QR Code modal)
 	const wcProvider = new WalletConnectProvider({
 		rpc: {
-			4: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+			5: 'https://rpc.ankr.com/eth_goerli',
 			137: 'https://polygon-rpc.com/',
 			// ...
 		},

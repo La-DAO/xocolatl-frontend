@@ -5,18 +5,19 @@
 		"approve": "Approve",
 		"deposit": "Deposit",
 		"mint": "Mint",
-		"redeem": "Repay",
+		"redeem": "Payback",
 		"withdraw": "Withdraw",
 		"change": "Change",
 		"exchange": "Exchange"
 	},
 	"input": {
-		"deposit": "Amount to deposit",
-		"mint": "Amount to mint",
-		"redeem": "Amount to repay",
-		"withdraw": "Amount to withdraw",
+		"deposit": "Collateral to deposit",
+		"mint": "$XOC to mint",
+		"redeem": "$XOC to payback",
+		"withdraw": "Collateral to withdraw",
 		"collateral": "Collateral",
-		"token": "Token"
+		"token-mint": "Against my",
+		"token-redeem": "Free up my"
 	},
 	"healthIndex": {
 		"healthIndex": "Health index",
@@ -25,10 +26,10 @@
 		"usedBorrowingPowerTooltip": "The percentage of the maximum borrowing power you are currently using",
 		"LTV": "Max LTV (Loan-to-Value)",
 		"LTVTooltip": "Loan-to-Value represents the maximum borrowing power of your collateral. For example, with a LTV of 75%, you can borrow up to 0.75 worth of ETH in mexican pesos for every 1 ETH worth of collateral.",
-		"currentETHPrice": "Current ETH price",
-		"currentETHPriceTooltip": "The current price of ETH, as priced by the protocol",
-		"liquidationETHPrice": "Liquidation ETH price",
-		"liquidationETHPriceTooltip": "The price of ETH at which your collateral will be liquidated to cover your debt",
+		"currentETHPrice": "Current price",
+		"currentETHPriceTooltip": "The current price of collateral, as priced by the protocol",
+		"liquidationETHPrice": "Liquidation price",
+		"liquidationETHPriceTooltip": "The price at which your collateral will be liquidated to cover your debt",
 		"collateralValue": "Deposited Collateral value",
 		"collateralValueTooltip": "The current value of your deposited collateral, converted to mexican pesos",
 		"maxDebt": "Borrowing limit",
@@ -39,9 +40,9 @@
 		"walletBalance": "Your wallet balance",
 		"depositBalance": "Deposited collateral balance",
 		"availableForWithdrawal": "Available for withdrawal",
-		"loans": "Loans",
-		"remainingLoan": "Outstanding loan",
-		"availableToLoan": "Available to borrow",
+		"loans": "$XOC",
+		"remainingLoan": "Minted",
+		"availableToLoan": "Available to mint",
 		"xocBalance": "Your wallet balance"
 	},
 	"modal": {

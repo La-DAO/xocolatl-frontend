@@ -2,9 +2,9 @@
 import { _ } from 'svelte-i18n';
 import { connected } from 'svelte-ethers-store';
 import { isRighNetwork, selectedTab } from '../store/store';
-import { WETHDepositInputAmountBigNum, XOCRedeemInputAmountBigNum } from '../store/userInput';
-import { userWETHAllowance, userXOCAllowance } from '../store/contractData';
-import { approveWETH, depositWETH, mintXOC, approveXOC, redeemXOC, withdrawWETH } from '../contractWrites';
+import { CollateralDepositInputAmountBigNum, XOCRedeemInputAmountBigNum } from '../store/userInput';
+import { userCollateralAllowance, userXOCAllowance } from '../store/contractData';
+import { approveERC20, depositERC20, mintXOC, approveXOC, redeemXOC, withdrawWETH } from '../contractWrites';
 	
 let disabled=true; // disable buttons until data loads
 $: if ($isRighNetwork || !connected) {
@@ -32,10 +32,10 @@ button {
 </style>
 
 {#if $selectedTab === 'deposit'}
-	{#if $userWETHAllowance && $WETHDepositInputAmountBigNum && $userWETHAllowance.lt($WETHDepositInputAmountBigNum)}
-		<button on:click={approveWETH} type="button" class:is-disabled={disabled} {disabled}>{$_('actions.approve')}</button>
+	{#if $userCollateralAllowance && $CollateralDepositInputAmountBigNum && $userCollateralAllowance.lt($CollateralDepositInputAmountBigNum)}
+		<button on:click={approveERC20} type="button" class:is-disabled={disabled} {disabled}>{$_('actions.approve')}</button>
 	{:else}
-		<button on:click={depositWETH} type="button" class:is-disabled={disabled} {disabled}>{$_('actions.deposit')}</button>
+		<button on:click={depositERC20} type="button" class:is-disabled={disabled} {disabled}>{$_('actions.deposit')}</button>
 	{/if}
 {:else if $selectedTab === 'mint'}
 	<button on:click={mintXOC} type="button" {disabled} class:is-disabled={disabled}>{$_('actions.mint')}</button>

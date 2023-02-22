@@ -9,49 +9,43 @@
 	import { provider, signerAddress } from 'svelte-ethers-store';
 	import { 
 		fetchAllDisplayData, 
-		getWETHtoXOCRate,
-		getMaxWETHWithdrawal,
+		getCollateralToXOCRate,
+		getMaxCollateralWithdrawal,
 		getXOCMintingPower,
 		getHealthRatio,
 	} from '../contractReads';
-	import { isRighNetwork } from '../store/store';
+	import { isRighNetwork} from '../store/store';
 	import {
-		WETHContract,
+		CollateralContract,
 		houseOfReserveContract,
 		houseOfCoinContract,
 		XOCContract,
 	} from '../store/contracts';
+    import { selectedCollateral } from 'src/store/userInput';
 	
 
-	$: if($isRighNetwork && get(WETHContract) && get(houseOfCoinContract) && get(houseOfReserveContract) && get(XOCContract)) {
+	$: if($isRighNetwork && $selectedCollateral && get(CollateralContract) && get(houseOfCoinContract) && get(houseOfReserveContract) && get(XOCContract)) {
 		/* eslint-disable @typescript-eslint/no-unused-vars */
 
 		$provider.on('block', (blockNumber: number) => {
 			// update price dependant data more often
 			if (blockNumber%3 === 0) {
-				getWETHtoXOCRate();
-				getMaxWETHWithdrawal();
+				getCollateralToXOCRate();
+				getMaxCollateralWithdrawal();
 				getXOCMintingPower();
 				getHealthRatio();
 			}
 		});
 		
 		/* 	/1* eslint-disable @typescript-eslint/no-unused-vars *1/ */
-		get(WETHContract)!.on('Approval', (src: string, guy: string, _event: Event) => {
+		get(CollateralContract)!.on('Approval', (src: string, guy: string, _event: Event) => {
 			if (src === $signerAddress || guy === $signerAddress) {
 				console.log('detected WETH Approval event');
 				fetchAllDisplayData();			
 			}
 		});
 
-		get(WETHContract)!.on('Deposit', (dst: string, _wad: BigNumber, _event: Event) => {
-			if (dst === $signerAddress) {
-				console.log('detected WETH Deposit event');
-				fetchAllDisplayData();			
-			}
-		});
-
-		get(WETHContract)!.on('Transfer', (src: string, dst: string, wad: BigNumber, event: Event) => {
+		get(CollateralContract)!.on('Transfer', (src: string, dst: string, wad: BigNumber, event: Event) => {
 			if (src === $signerAddress || dst === $signerAddress) {
 				console.log('detected WETH Transfer event');
 				fetchAllDisplayData();			
@@ -59,7 +53,7 @@
 		});
 
 
-		get(WETHContract)!.on('Withdrawal', (src: string, _wad: BigNumber, _event: Event) => {
+		get(CollateralContract)!.on('Withdrawal', (src: string, _wad: BigNumber, _event: Event) => {
 			if (src === $signerAddress) {
 				console.log('detected WETH Withdrawal event');
 				fetchAllDisplayData();			

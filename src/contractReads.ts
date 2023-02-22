@@ -1,11 +1,11 @@
-import { utils } from 'ethers';
+import { Contract, utils } from 'ethers';
 import { get } from 'svelte/store';
 import { signerAddress, chainId, signer } from 'svelte-ethers-store';
-
+import { ethers } from 'ethers';
 import { checkContractCallPrereqs } from './utils';
 
 import {
-	WETHContract,
+	CollateralContract,
 	XOCContract,
 	assetsAccountantContract,
 	houseOfCoinContract,
@@ -14,25 +14,27 @@ import {
 	wrappedHouseOfReserveContract
 } from './store/contracts';
 
+import { selectedCollateral, collateralDecimals } from './store/userInput';
+
 import {
 	userNativeTokenBalance,
-	userWETHAllowance,
-	userWETHBalance,
-	userWETHDepositBalance,
-	userWETHMaxWithdrawal,
+	userCollateralAllowance,
+	userCollateralBalance,
+	userCollateralDepositBalance,
+	userCollateralMaxWithdrawal,
 	userXOCAllowance,
 	userXOCBalance,
 	userXOCMintingPower,
 	userXOCDebt,
-	WETHToXOC,
+	CollateralToXOC,
 	userHealthRatio,
 	liquidationThreshold,
 	liquidationFactor,
 	maxLTVFactor,
-	globalBase
+	globalBase,
 } from './store/contractData';
 
-import { chains } from './chains';
+import { chains, getSelectedAssetObject } from './chains';
 
 
 // async function fetchBitso(): Promise<any> {
@@ -43,7 +45,13 @@ import { chains } from './chains';
 // 	return utils.parseUnits(lastPrice.toString(), 8);
 // }
 
-export async function getWETHtoXOCRate() {
+export function setCollateralDecimals() {
+	checkContractCallPrereqs();
+	const asset =  getSelectedAssetObject(get(chainId), get(selectedCollateral));
+	collateralDecimals.set(asset.decimals);
+}
+
+export async function getCollateralToXOCRate() {
 	checkContractCallPrereqs();
 	let price;
 	try {
@@ -52,7 +60,7 @@ export async function getWETHtoXOCRate() {
 	} catch (e) {
 		console.log(e);
 	}
-	WETHToXOC.set(price);
+	CollateralToXOC.set(price);
 }
 
 export async function getUserNativeTokenBalance(): Promise<void> {
@@ -60,25 +68,32 @@ export async function getUserNativeTokenBalance(): Promise<void> {
 	userNativeTokenBalance.set(nativeTokenBalance);
 }
 
-export async function getWETHAllowance() {
+export async function getCollateralAllowance() {
 	checkContractCallPrereqs();
-	const allowance = await get(WETHContract)!.allowance(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
-	userWETHAllowance.set(allowance);
+	const allowance = await get(CollateralContract)!.allowance(
+		get(signerAddress),
+		getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress
+	);
+	userCollateralAllowance.set(allowance);
 }
 
-export async function getUserWETHBalance(): Promise<void> {
+export async function getUserCollateralBalance(): Promise<void> {
 	checkContractCallPrereqs();
-	const balance = await get(WETHContract)!.balanceOf(get(signerAddress));
-	userWETHBalance.set(balance);
+	const contract: Contract | undefined = get(CollateralContract);
+	const balance = await contract!.balanceOf(get(signerAddress));
+	userCollateralBalance.set(balance);
 }
 
-async function getUserWETHDepositBalance(): Promise<void> {
+export async function getUserCollateralDepositBalance(): Promise<void> {
 	checkContractCallPrereqs();
-	const fetchedBalance = await get(assetsAccountantContract)!.balanceOf(get(signerAddress), chains[get(chainId)].reserveTokenID);
-	userWETHDepositBalance.set(fetchedBalance);
+	const fetchedBalance = await get(assetsAccountantContract)!.balanceOf(
+		get(signerAddress),
+		getSelectedAssetObject(get(chainId), get(selectedCollateral)).reserveTokenID
+	);
+	userCollateralDepositBalance.set(fetchedBalance);
 }
 
-export async function getMaxWETHWithdrawal() {
+export async function getMaxCollateralWithdrawal() {
 	checkContractCallPrereqs();
 	let fetchedAmount;
 	try {
@@ -86,8 +101,7 @@ export async function getMaxWETHWithdrawal() {
 	} catch (error) {
 		fetchedAmount = await get(wrappedHouseOfReserveContract)!.checkMaxWithdrawal(get(signerAddress));
 	}
-	 
-	userWETHMaxWithdrawal.set(fetchedAmount);
+	userCollateralMaxWithdrawal.set(fetchedAmount);
 }
 
 
@@ -101,9 +115,15 @@ export async function getXOCMintingPower() {
 	checkContractCallPrereqs();
 	let fetchedAmount;
 	try {
-		fetchedAmount = await get(houseOfCoinContract)!.checkRemainingMintingPower(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+		fetchedAmount = await get(houseOfCoinContract)!.checkRemainingMintingPower(
+			get(signerAddress),
+			getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress
+		);
 	} catch (error) {
-		fetchedAmount = await get(wrappedHouseOfCoinContract)!.checkRemainingMintingPower(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+		fetchedAmount = await get(wrappedHouseOfCoinContract)!.checkRemainingMintingPower(
+			get(signerAddress),
+			getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress
+		);
 	}
 	userXOCMintingPower.set(fetchedAmount);
 }
@@ -116,23 +136,34 @@ export async function getXOCAllowance() {
 
 export async function getXOCDebt() {
 	checkContractCallPrereqs();
-	const fetchedBalance = await get(assetsAccountantContract)!.balanceOf(get(signerAddress), chains[get(chainId)].backedTokenID);
+	const fetchedBalance = await get(assetsAccountantContract)!.balanceOf(
+		get(signerAddress),
+		getSelectedAssetObject(get(chainId), get(selectedCollateral)).backedTokenID
+	);
 	userXOCDebt.set(fetchedBalance);
 }
 
 export async function getHealthRatio() {
 	checkContractCallPrereqs();
 	// contract reverts if no WETH deposits or no debt
-	const deposit = get(userWETHDepositBalance);
+	const deposit = get(userCollateralDepositBalance);
 	const debt = get(userXOCDebt);
 	if (deposit && deposit.gt(0) && debt && debt.gt(0)) {
 		let fetchedAmount;
 		try {
-			fetchedAmount = await get(houseOfCoinContract)!.computeUserHealthRatio(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+			fetchedAmount = await get(houseOfCoinContract)!.computeUserHealthRatio(
+				get(signerAddress),
+				getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress
+			);
 		} catch (error) {
-			fetchedAmount = await get(wrappedHouseOfCoinContract)!.computeUserHealthRatio(get(signerAddress), chains[get(chainId)].houseOfReserveAddress);
+			fetchedAmount = await get(wrappedHouseOfCoinContract)!.computeUserHealthRatio(
+				get(signerAddress),
+				getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress
+			);
 		}
 		userHealthRatio.set(fetchedAmount);
+	} else {
+		userHealthRatio.set(ethers.BigNumber.from("0"));
 	}
 }
 
@@ -158,11 +189,11 @@ export async function getMaxLTVFactor() {
 // TODO: fetch with array of promises and retry failed
 export async function fetchAllDisplayData() {
 	checkContractCallPrereqs();
-	getWETHtoXOCRate();
+	getCollateralToXOCRate();
 	getUserNativeTokenBalance();
-	getWETHAllowance();
-	getUserWETHDepositBalance();
-	getMaxWETHWithdrawal();
+	getCollateralAllowance();
+	getUserCollateralDepositBalance();
+	getMaxCollateralWithdrawal();
 	getXOCAllowance();
 	getXOCBalance();
 	getXOCMintingPower();
@@ -171,7 +202,7 @@ export async function fetchAllDisplayData() {
 	getLiquidationParams();
 	getLiquidationFactor();
 
-	await getUserWETHBalance();
+	await getUserCollateralBalance();
 	await getXOCDebt();
 	getHealthRatio();
 }

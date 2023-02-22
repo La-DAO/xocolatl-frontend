@@ -1,16 +1,26 @@
-import { ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import { WrapperBuilder } from 'redstone-evm-connector';
+import { get } from 'svelte/store';
 import { derived } from 'svelte/store';
 import { provider, signer, chainId } from 'svelte-ethers-store';
-
-import { chains } from '../chains';
+import {
+	mockWETHABI,
+	ERC20ABI
+} from '../abis';
+import { getSelectedAssetObject, chains } from '../chains';
+import { selectedCollateral } from './userInput';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-export const WETHContract = derived(
-	[provider, signer, chainId],
-	([_, $signer, $chainId]) => {
-		if($chainId) {
-			return new ethers.Contract(chains[$chainId].WETHAddress, chains[$chainId].WETHABI, $signer);
+export const CollateralContract = derived(
+	[provider, signer, chainId, selectedCollateral],
+	([_, $signer, $chainId, $selectedCollateral]) => {
+		if ($chainId && $selectedCollateral) {
+			const contract = new ethers.Contract(
+				getSelectedAssetObject($chainId, $selectedCollateral).address,
+				ERC20ABI,
+				$signer
+			);
+			return contract;
 		}
 	}
 );
@@ -18,7 +28,7 @@ export const WETHContract = derived(
 export const XOCContract = derived(
 	[provider, signer, chainId],
 	([_, $signer, $chainId]) => {
-		if($chainId) {
+		if ($chainId) {
 			return new ethers.Contract(chains[$chainId].XOCAddress, chains[$chainId].XOCABI, $signer);
 		}
 	}
@@ -27,8 +37,13 @@ export const XOCContract = derived(
 export const houseOfCoinContract = derived(
 	[provider, signer, chainId],
 	([_, $signer, $chainId]) => {
-		if($chainId) {
-			return new ethers.Contract(chains[$chainId].houseOfCoinAddress, chains[$chainId].houseOfCoinABI, $signer);
+		if ($chainId) {
+			const contract = new ethers.Contract(
+				chains[$chainId].houseOfCoinAddress,
+				chains[$chainId].houseOfCoinABI,
+				$signer
+			);
+			return contract;
 		}
 	}
 );
@@ -36,7 +51,7 @@ export const houseOfCoinContract = derived(
 export const wrappedHouseOfCoinContract = derived(
 	houseOfCoinContract,
 	($houseOfCoinContract) => {
-		if($houseOfCoinContract) {
+		if ($houseOfCoinContract) {
 			return WrapperBuilder.wrapLite($houseOfCoinContract).usingPriceFeed('redstone-stocks');
 		}
 	}
@@ -45,17 +60,22 @@ export const wrappedHouseOfCoinContract = derived(
 export const assetsAccountantContract = derived(
 	[provider, signer, chainId],
 	([_, $signer, $chainId]) => {
-		if($chainId) {
+		if ($chainId) {
 			return new ethers.Contract(chains[$chainId].assetsAccountantAddress, chains[$chainId].assetsAccountantABI, $signer);
 		}
 	}
 );
 
 export const houseOfReserveContract = derived(
-	[provider, signer, chainId],
-	([_, $signer, $chainId]) => {
-		if($chainId) {
-			return new ethers.Contract(chains[$chainId].houseOfReserveAddress, chains[$chainId].houseOfReserveABI, $signer);
+	[provider, signer, chainId, selectedCollateral],
+	([_, $signer, $chainId, $selectedCollateral]) => {
+		if ($chainId && $selectedCollateral) {
+			const contract = new ethers.Contract(
+				getSelectedAssetObject($chainId, $selectedCollateral).houseOfReserveAddress,
+				chains[$chainId].houseOfReserveABI,
+				$signer
+			);
+			return contract;
 		}
 	}
 );
@@ -64,7 +84,7 @@ export const houseOfReserveContract = derived(
 export const wrappedHouseOfReserveContract = derived(
 	houseOfReserveContract,
 	($houseOfReserveContract) => {
-		if($houseOfReserveContract) {
+		if ($houseOfReserveContract) {
 			return WrapperBuilder.wrapLite($houseOfReserveContract).usingPriceFeed('redstone-stocks');
 		}
 	}

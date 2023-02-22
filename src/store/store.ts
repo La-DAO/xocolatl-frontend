@@ -16,9 +16,9 @@ export const isRighNetwork = derived(
 	}
 );
 
-
-export const blockExplorerURL = derived(chainId, 
-	($chainId) => {
+export const blockExplorerURL = derived(
+	[chainId], 
+	([$chainId]) => {
 		if ($chainId && $chainId in chains) {
 			return chains[$chainId].blockExplorerURL;
 		} else return chains[4].blockExplorerURL;
