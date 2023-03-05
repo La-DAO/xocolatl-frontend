@@ -23,8 +23,6 @@ import {
 	XOCContract,
 	houseOfCoinContract,
 	houseOfReserveContract,
-	wrappedHouseOfCoinContract,
-	wrappedHouseOfReserveContract
 } from './store/contracts';
 
 import { chains, getSelectedAssetObject } from './chains';
@@ -75,7 +73,7 @@ export async function mintXOC() {
 	checkContractCallPrereqs();
 	const amount = get(XOCMintInputAmountBigNum);
 	if (amount) {
-		const tx = await get(wrappedHouseOfCoinContract)!.mintCoin(
+		const tx = await get(houseOfCoinContract)!.mintCoin(
 			getSelectedAssetObject(get(chainId), get(selectedCollateral)).address,
 			getSelectedAssetObject(get(chainId), get(selectedCollateral)).houseOfReserveAddress,
 			amount
@@ -112,7 +110,7 @@ export async function withdrawWETH() {
 	checkContractCallPrereqs();
 	const amount = get(WETHWithdrawInputAmountBigNum);
 	if (amount) {
-		const tx = await get(wrappedHouseOfReserveContract)!.withdraw(amount);
+		const tx = await get(houseOfReserveContract)!.withdraw(amount);
 		handleTxReceipt(tx);
 	} else {
 		throw new Error('Invalid WETH withdraw amount input');
