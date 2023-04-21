@@ -10,7 +10,8 @@
     getLiquidationFactor,
     getLiquidationParams,
     getXOCMintingPower,
-    setCollateralDecimals
+    setCollateralDecimals,
+    getMaxLTVFactor
   } from "src/contractReads";
   import {
     listOfCollaterals,
@@ -32,6 +33,7 @@
     getXOCMintingPower();
     getLiquidationParams();
     getLiquidationFactor();
+    getMaxLTVFactor();
   }
 </script>
 

@@ -119,7 +119,7 @@ const polygonData: ChainData = {
 
 const binanceData: ChainData = {
 	chain: 56,
-	chainHex: '0x36',
+	chainHex: '0x38',
 	name: 'BSC',
 	blockExplorerURL: 'https://bscscan.com/',
 	reserveAssets: [
@@ -159,7 +159,7 @@ export const chains: ChainDict = {
 	137: polygonData,
 	'0x89': polygonData,
 	56: binanceData,
-	'0x36': binanceData
+	'0x38': binanceData
 };
 
 export function getSelectedAssetObject(chainId_: string | number, collateralName_: string): Asset {
