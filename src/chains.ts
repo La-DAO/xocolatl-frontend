@@ -125,7 +125,7 @@ const binanceData: ChainData = {
 	reserveAssets: [
 		{
 			name: "WETH",
-			address: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
+			address: "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
 			decimals: "18",
 			abi: ERC20ABI,
 			houseOfReserveAddress: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
