@@ -117,11 +117,49 @@ const polygonData: ChainData = {
 	swapURL: 'https://app.uniswap.org/#/swap?inputCurrency=0xa411c9Aa00E020e4f88Bc19996d29c5B7ADB4ACf&outputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&chain=polygon'
 };
 
+const binanceData: ChainData = {
+	chain: 56,
+	chainHex: '0x38',
+	name: 'BSC',
+	blockExplorerURL: 'https://bscscan.com/',
+	reserveAssets: [
+		{
+			name: "WETH",
+			address: "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+			decimals: "18",
+			abi: ERC20ABI,
+			houseOfReserveAddress: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
+			reserveTokenID: '109392682290811008908886113795024894114858297692101491428581960053892280371532',
+			backedTokenID: '20522261273989995093535621539527639348056070782168896977856206653483982583625',
+		},
+		{
+			name: "WBNB",
+			address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+			decimals: "18",
+			abi: ERC20ABI,
+			houseOfReserveAddress: "0x070ccE6887E70b75015F948b12601D1E759D2024",
+			reserveTokenID: '85925987621059561469642133971917522532759533358859710307334868485990845307587',
+			backedTokenID: '36240893346862244708187722980583805772746997097966348518842957091580463611081',
+		},
+	],
+	assetsAccountantAddress: '0xB90996A70C957a1496e349434CF0E030A9f693A4',
+	assetsAccountantABI: assetsAccountantABI,
+	houseOfReserveABI: houseOfReserveABI,
+	houseOfCoinAddress: '0x7ed1aCD46dE3a4E63f2D3b0f4fB5532e113a520B',
+	houseOfCoinABI: houseOfCoinABI,
+	XOCAddress: '0xa411c9Aa00E020e4f88Bc19996d29c5B7ADB4ACf',
+	XOCABI: XOCABI,
+	supportsNative: false,
+	swapURL: 'https://app.uniswap.org/'
+}
+
 export const chains: ChainDict = {
 	5: goerliData,
 	'0x5': goerliData, // sometimes metamask returns chain Id as hex and sometimes as int
 	137: polygonData,
-	'0x89': polygonData
+	'0x89': polygonData,
+	56: binanceData,
+	'0x38': binanceData
 };
 
 export function getSelectedAssetObject(chainId_: string | number, collateralName_: string): Asset {

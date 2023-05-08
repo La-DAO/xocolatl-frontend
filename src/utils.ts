@@ -69,7 +69,7 @@ export async function handleWalletConnectProvider() {
 		rpc: {
 			5: 'https://rpc.ankr.com/eth_goerli',
 			137: 'https://polygon-rpc.com/',
-			// ...
+			56: 'https://rpc.ankr.com/bsc',
 		},
 	});
 	//  Enable session (triggers QR Code modal)
