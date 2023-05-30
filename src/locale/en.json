@@ -8,7 +8,8 @@
 		"redeem": "Payback",
 		"withdraw": "Withdraw",
 		"change": "Change",
-		"exchange": "Exchange"
+		"exchange": "Exchange",
+		"add-to-wallet": "Add $XOC to wallet"
 	},
 	"input": {
 		"deposit": "Collateral to deposit",

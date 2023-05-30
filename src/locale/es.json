@@ -8,7 +8,8 @@
 		"redeem": "Saldar",
 		"withdraw": "Retirar",
 		"change": "Cambiar",
-		"exchange": "Intercambiar"
+		"exchange": "Intercambiar",
+		"add-to-wallet": "Añadir $XOC a la cartera"
 	},
 	"input": {
 		"deposit": "Colateral por depositar",

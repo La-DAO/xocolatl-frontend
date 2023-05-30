@@ -65,12 +65,10 @@
     </h2>
     <div class="right-content">
       {#if $signerAddress}
-        <img
-          class="add-token-button"
-          src="/static/tokens/XOC.svg"
-          on:click={addXOCToMetamask}
-          alt="Add XOC to metamask button"
-        />
+      <button type="button" class="add-token-button" on:click={addXOCToMetamask}><img
+        class="small-icon"
+        src="/static/tokens/XOC.svg" alt="Add XOC to metamask button"
+      />{$_('actions.add-to-wallet')}</button>
         {#if $isRighNetwork && currentChainHex}
           <Select
             width="6rem"
@@ -133,9 +131,16 @@
   }
 
   .add-token-button {
-    width: 2.5rem;
     /* width: 45px; */
     cursor: pointer;
+    display: flex;
+    column-gap: .5rem;
+    align-items: center;
+  }
+
+  .small-icon{
+    width: 1rem;
+    align-self: center;
   }
 
   #logo_img {
