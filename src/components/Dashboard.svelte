@@ -2,7 +2,7 @@
   import { _ } from "svelte-i18n";
   import { get } from "svelte/store";
   import { chainId } from "svelte-ethers-store";
-	import { BigNumber } from "ethers";
+  import { BigNumber } from "ethers";
 
   import { selectedTab } from "../store/store";
   import { chains } from "../chains";
@@ -46,10 +46,10 @@
   import MainInfo from "./MainInfo.svelte";
   import AmountInput from "./AmountInput.svelte";
   import AmountReservesInput from "./AmountReservesInput.svelte";
-  
+
   const checkNeedsAllowance = function (
     inputAmount: BigNumber | undefined,
-    currentAllowance: BigNumber | null
+    currentAllowance: BigNumber | null,
   ): boolean {
     let need = false;
     if (inputAmount && currentAllowance) {
@@ -148,7 +148,7 @@
   <MainInfo />
 </section>
 
-<style>
+<style lang="scss">
   section {
     display: flex;
     flex-direction: column;
@@ -166,9 +166,9 @@
   .main-section {
     display: flex;
     justify-content: center;
-    align-items: baseline;
-    margin: auto;
+    align-items: center;
     flex-wrap: wrap-reverse;
+    margin-bottom: 2rem;
   }
 
   .input-section {

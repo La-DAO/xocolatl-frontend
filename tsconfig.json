@@ -1,37 +1,41 @@
 {
-	"extends": "@tsconfig/svelte/tsconfig.json",
-	"include": ["src/**/*"],
-	"exclude": ["node_modules/*", "__sapper__/*", "public/*", "webpack.config.ts"],
-	"compilerOptions": {
-		"module": "ES2020",
-		"moduleResolution": "node",
-		"target": "es2020",
-		"resolveJsonModule": true,
-		"importsNotUsedAsValues": "remove",
-		"isolatedModules": true,
-		"esModuleInterop": true,
-		"sourceMap": true,
-		"strict": true,
-		"baseUrl": ".",
-		"paths": {
-			"src/*": ["src/*"]
-		},
-		"types": [
-			"svelte",
-			"svelte/store",
-			"svelte/motion",
-			"svelte/transition",
-			"svelte/animate",
-			"svelte/easing"
-		]
-	},
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules/*",
+    "__sapper__/*",
+    "public/*",
+    "webpack.config.ts"
+  ],
+  "compilerOptions": {
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "resolveJsonModule": true,
+    "importsNotUsedAsValues": "remove",
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"]
+    },
+    "types": [
+      "svelte",
+      "svelte/store",
+      "svelte/motion",
+      "svelte/transition",
+      "svelte/animate",
+      "svelte/easing"
+    ]
+  },
 
-
-	// Fixes errors when changing `module` to ES in the above compiler options
-	// See: https://github.com/webpack/webpack-cli/issues/2458#issuecomment-846635277
-	"ts-node": {
-		"compilerOptions": {
-			"module": "commonjs"
-		}
-	}
+  // Fixes errors when changing `module` to ES in the above compiler options
+  // See: https://github.com/webpack/webpack-cli/issues/2458#issuecomment-846635277
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
 }

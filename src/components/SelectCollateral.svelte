@@ -11,15 +11,11 @@
     getLiquidationParams,
     getXOCMintingPower,
     setCollateralDecimals,
-    getMaxLTVFactor
+    getMaxLTVFactor,
   } from "src/contractReads";
-  import {
-    listOfCollaterals,
-    selectedCollateral,
-  } from "src/store/userInput";
+  import { listOfCollaterals, selectedCollateral } from "src/store/userInput";
 
-
-  async function handleCollateralChange(event: any) {
+  async function handleCollateralChange(event) {
     const option: string = event.target.value;
     selectedCollateral.set(option);
     setCollateralDecimals();

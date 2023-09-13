@@ -32,7 +32,7 @@
         {$userCollateralBalance && $chainId && $selectedCollateral
           ? ethers.utils.formatUnits(
               $userCollateralBalance,
-              $collateralDecimals
+              $collateralDecimals,
             )
           : "-"}
         {$selectedCollateral}
@@ -47,10 +47,12 @@
       <p>{$_("balances.depositBalance")}</p>
       <p>
         {$userCollateralDepositBalance
-          ? commify(ethers.utils.formatUnits(
-              $userCollateralDepositBalance,
-              $collateralDecimals
-            ))
+          ? commify(
+              ethers.utils.formatUnits(
+                $userCollateralDepositBalance,
+                $collateralDecimals,
+              ),
+            )
           : "-"}
         {$selectedCollateral}
       </p>
@@ -60,10 +62,14 @@
       <p>{$_("balances.availableForWithdrawal")}</p>
       <p>
         {$userCollateralMaxWithdrawal
-          ? commify(parseFloat(ethers.utils.formatUnits(
-              $userCollateralMaxWithdrawal,
-              $collateralDecimals
-            )).toFixed(5))
+          ? commify(
+              parseFloat(
+                ethers.utils.formatUnits(
+                  $userCollateralMaxWithdrawal,
+                  $collateralDecimals,
+                ),
+              ).toFixed(5),
+            )
           : "-"}
         {$selectedCollateral}
       </p>
@@ -83,7 +89,9 @@
       <p>
         {$userXOCDebt
           ? commify(
-              ethers.utils.formatEther($userXOCDebt.sub($userXOCDebt.mod(1e14)))
+              ethers.utils.formatEther(
+                $userXOCDebt.sub($userXOCDebt.mod(1e14)),
+              ),
             )
           : "-"} XOC
       </p>
@@ -95,8 +103,8 @@
         {$userXOCMintingPower
           ? commify(
               ethers.utils.formatEther(
-                $userXOCMintingPower.sub($userXOCMintingPower.mod(1e14))
-              )
+                $userXOCMintingPower.sub($userXOCMintingPower.mod(1e14)),
+              ),
             )
           : "-"} XOC
       </p>
@@ -107,8 +115,8 @@
         {$userXOCBalance
           ? commify(
               ethers.utils.formatEther(
-                $userXOCBalance.sub($userXOCBalance.mod(1e14))
-              )
+                $userXOCBalance.sub($userXOCBalance.mod(1e14)),
+              ),
             )
           : "-"} XOC
       </p>
@@ -122,7 +130,7 @@
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    margin: 1rem auto 1rem auto;
+    margin: 1rem auto 0 auto;
     color: var(--main-color);
     column-gap: 4rem;
     flex-wrap: wrap;

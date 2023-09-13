@@ -10,7 +10,7 @@
   export let inputError: string;
   export let inputAmountBigNum: BigNumber | undefined;
   export let inputLimit: BigNumber | null;
-	export let inputTypeText: string;
+  export let inputTypeText: string;
   export let headerText: string;
   export let actionText: string;
   export let actionHandler: () => void;
@@ -81,9 +81,9 @@
 
   input {
     all: unset;
-		color: grey;
+    color: grey;
     appearance: none;
-		border-bottom: 0.5px solid var(--light-color);
+    border-bottom: 0.5px solid var(--light-color);
     font-size: 2.6rem;
     font-weight: 700;
     width: 80%;
