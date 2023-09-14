@@ -75,6 +75,23 @@ export const userCollateralMXNPrice: Readable<BigNumber | null> = derived(
   },
 );
 
+export const currentLTV: Readable<number | null> = derived(
+  [userXOCDebt, userCollateralDepositBalance, collateralDecimals],
+  ([$userXOCDebt, $userCollateralDepositBalance, $collateralDecimals]) => {
+    if ($userXOCDebt && $userCollateralDepositBalance && $collateralDecimals) {
+      return (
+        parseFloat(ethers.utils.formatEther($userXOCDebt)) /
+        parseFloat(
+          ethers.utils.formatUnits(
+            $userCollateralDepositBalance,
+            $collateralDecimals,
+          ),
+        )
+      );
+    } else return null;
+  },
+);
+
 export const userCollateralLiquidationPrice = derived(
   [
     userXOCDebt,

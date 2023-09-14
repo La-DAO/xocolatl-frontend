@@ -9,7 +9,7 @@
     userCollateralLiquidationPrice,
     maxLTVFactor,
     userCollateralMXNPrice,
-    healthRatioAsPercentage,
+    currentLTV,
   } from "../store/contractData";
   import InfoRow from "src/components/Shared/InfoRow.svelte";
 
@@ -19,11 +19,6 @@
 <section>
   <div class="content">
     <div class="info">
-      <InfoRow
-        label={$_("healthIndex.healthIndex")}
-        tooltip={$_("healthIndex.healthIndexTooltip")}
-        value={`${$userHealthRatio ? $healthRatioAsPercentage : "-"} %`}
-      />
       <InfoRow
         label={$_("healthIndex.usedBorrowingPower")}
         tooltip={$_("healthIndex.usedBorrowingPowerTooltip")}
@@ -36,6 +31,12 @@
 
       <InfoRow
         label={$_("healthIndex.LTV")}
+        tooltip={$_("healthIndex.LTVTooltip")}
+        value={`${$currentLTV ? Math.ceil($currentLTV * 10000) / 100 : "-"} %`}
+      />
+
+      <InfoRow
+        label={$_("healthIndex.maxLTV")}
         tooltip={$_("healthIndex.LTVTooltip")}
         value={`${
           $maxLTVFactor
