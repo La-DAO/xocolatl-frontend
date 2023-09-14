@@ -164,5 +164,7 @@
     text-decoration: none;
     cursor: pointer;
     min-width: 8rem;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 700;
   }
 </style>

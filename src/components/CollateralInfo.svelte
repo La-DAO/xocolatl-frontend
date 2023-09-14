@@ -127,8 +127,9 @@
     justify-content: flex-start;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 842px) {
     section {
+      width: 100%;
       margin: 0 0 1rem 0;
       border-left: none;
       border-bottom: 1px solid white;

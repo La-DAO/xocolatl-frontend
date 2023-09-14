@@ -31,7 +31,7 @@
     }
   }
 
-  /* need to subscribe to derived value somewhere in code, otherwise it wont 
+  /* need to subscribe to derived value somewhere in code, otherwise it wont
 	update and errors wont be displayed on time so we do it here */
   inputAmountBigNum;
 </script>
@@ -86,13 +86,12 @@
     border-bottom: 0.5px solid var(--light-color);
     font-size: 2.6rem;
     font-weight: 700;
-    width: 80%;
   }
 
   .collateral-type {
     color: grey;
     width: 10rem;
-    margin: 0 auto 0.5rem auto;
+    margin: 1rem auto 1rem auto;
     text-align: center;
     font-size: 1rem;
   }
