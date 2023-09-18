@@ -2,6 +2,7 @@
   import { toShortAddress } from "../utils";
   import { get } from "svelte/store";
   import { pendingTxs, blockExplorerURL } from "../store/store";
+  import { _ } from "svelte-i18n";
 
   function handleClose(txHash: string) {
     pendingTxs.closeModal(txHash);
@@ -14,27 +15,25 @@
       <div class="heading">
         {#if tx.status === "pending"}
           <div class="loader"></div>
-          <h2>Transacción Enviada</h2>
+          <h2>{$_("txMonitor.pending.status")}</h2>
         {:else if tx.status === "completed"}
           <div class="status-icon">✓</div>
-          <h2>Transacción Confirmada</h2>
+          <h2>{$_("txMonitor.completed.status")}</h2>
         {:else if tx.status === "failed"}
           <div class="status-icon">⨯</div>
-          <h2>Transacción Fallida</h2>
+          <h2>{$_("txMonitor.failed.status")}</h2>
         {/if}
       </div>
 
       {#if tx.status === "pending"}
-        <p>Esperando confirmación de la transacción, disfruta la fruta</p>
+        <p>{$_("txMonitor.pending.message")}</p>
       {:else if tx.status === "completed"}
         <p>
-          La transacción ha sido procesada exitosamente, y ahora puedes verlo
-          reflejado en tu balance.
+          {$_("txMonitor.completed.message")}
         </p>
       {:else if tx.status === "failed"}
         <p>
-          ¡Ay caramba! La transaccion ha fallado por alguna razon, intenta
-          mandarla de nuevo
+          {$_("txMonitor.failed.message")}
         </p>
       {/if}
 
@@ -58,10 +57,10 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <div class="button">Ver en el explorador</div>
+          <div class="button">{$_("txMonitor.view")}</div>
         </a>
         <div class="button" on:click={() => handleClose(tx.hash)}>
-          Cerrar este mensaje
+          {$_("txMonitor.close")}
         </div>
       </div>
     </div>

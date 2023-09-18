@@ -59,5 +59,21 @@
   "footer": {
     "project": "A project by",
     "liquidations": "Liquidations"
+  },
+  "txMonitor": {
+    "pending": {
+      "status": "Transaction Sent",
+      "message": "Waiting for confirmation of the transaction, enjoy the fruit"
+    },
+    "completed": {
+      "status": "Transaction Confirmed",
+      "message": "Transaction has been successfully processed, and you can now see it reflected in your balance."
+    },
+    "failed": {
+      "status": "Transaction Failed",
+      "message": "Oh no! Transaction has failed for some reason, try sending it again"
+    },
+    "view": "View in explorer",
+    "close": "Close this message"
   }
 }
