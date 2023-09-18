@@ -45,7 +45,6 @@
   import CollateralInfo from "./CollateralInfo.svelte";
   import MainInfo from "./MainInfo.svelte";
   import AmountInput from "./AmountInput.svelte";
-  import AmountReservesInput from "./AmountReservesInput.svelte";
 
   const checkNeedsAllowance = function (
     inputAmount: BigNumber | undefined,
@@ -74,32 +73,35 @@
         <div class="input-section__container">
           {#if $selectedTab === "deposit"}
             {#if isNative}
-              <AmountReservesInput
+              <AmountInput
                 headerText={$_("input.deposit")}
                 bind:inputAmount={$CollateralDepositInputAmount}
                 bind:inputError={$CollateralDepositInputError}
                 inputAmountBigNum={$CollateralDepositInputAmountBigNum}
                 inputLimit={$userNativeTokenBalance}
+                inputTypeText={$_("input.collateral")}
                 actionText={$_("actions.deposit")}
                 actionHandler={depositNativeToken}
               />
             {:else if checkNeedsAllowance($CollateralDepositInputAmountBigNum, get(userCollateralAllowance))}
-              <AmountReservesInput
+              <AmountInput
                 headerText={$_("input.deposit")}
                 bind:inputAmount={$CollateralDepositInputAmount}
                 bind:inputError={$CollateralDepositInputError}
                 inputAmountBigNum={$CollateralDepositInputAmountBigNum}
                 inputLimit={$userCollateralBalance}
+                inputTypeText={$_("input.collateral")}
                 actionText={$_("actions.approve")}
                 actionHandler={approveERC20}
               />
             {:else}
-              <AmountReservesInput
+              <AmountInput
                 headerText={$_("input.deposit")}
                 bind:inputAmount={$CollateralDepositInputAmount}
                 bind:inputError={$CollateralDepositInputError}
                 inputAmountBigNum={$CollateralDepositInputAmountBigNum}
                 inputLimit={$userCollateralBalance}
+                inputTypeText={$_("input.collateral")}
                 actionText={$_("actions.deposit")}
                 actionHandler={depositERC20}
               />
@@ -129,12 +131,13 @@
               actionText={$_("actions.redeem")}
             />
           {:else if $selectedTab === "withdraw"}
-            <AmountReservesInput
+            <AmountInput
               headerText={$_("input.withdraw")}
               bind:inputAmount={$WETHWithdrawInputAmount}
               bind:inputError={$WETHWithdrawInputError}
               inputAmountBigNum={$WETHWithdrawInputAmountBigNum}
               inputLimit={$userCollateralMaxWithdrawal}
+              inputTypeText={$_("input.collateral")}
               actionHandler={withdrawWETH}
               actionText={$_("actions.withdraw")}
             />
