@@ -3,7 +3,6 @@
   import { _ } from "svelte-i18n";
   import {
     CollateralToXOC,
-    userHealthRatio,
     userMaxDebtUtilization,
     userMaxDebt,
     userCollateralLiquidationPrice,

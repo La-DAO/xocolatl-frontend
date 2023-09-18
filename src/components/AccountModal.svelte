@@ -25,8 +25,8 @@
   let delayPassed = false;
   let hideTimeOutId: number;
 
-  $: changing = false;
-  $: copying = false;
+  let changing = false;
+  let copying = false;
 
   async function handleCopy() {
     navigator.clipboard.writeText($signerAddress);
@@ -48,7 +48,7 @@
   }
 
   async function handleDisconnect() {
-    defaultEvmStores.disconnect();
+    await defaultEvmStores.disconnect();
     resetAll();
     localStorage.removeItem("walletconnect");
     hidden = true;
@@ -57,9 +57,9 @@
   onMount(async () => {
     if (!$connected) {
       if ($providerType === "metamask") {
-        handleMetamaskConnect();
+        await handleMetamaskConnect();
       } else if ($providerType === "walletconnect") {
-        handleWalletConnectProvider();
+        await handleWalletConnectProvider();
       }
     }
     hideTimeOutId = await new Promise((r) => setTimeout(r, 1000));
@@ -169,7 +169,7 @@
   </div>
 </section>
 
-<style>
+<style lang="scss">
   .modal {
     position: fixed;
     z-index: 3;
@@ -215,7 +215,6 @@
     cursor: pointer;
     height: 2rem;
     width: 10rem;
-    margin: 1rem;
     font-weight: 700;
     margin: 1rem auto auto auto !important;
   }

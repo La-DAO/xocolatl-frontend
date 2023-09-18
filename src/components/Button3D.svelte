@@ -10,7 +10,7 @@
   </span>
 </button>
 
-<style>
+<style lang="scss">
   .pushable {
     position: relative;
     border: none;
