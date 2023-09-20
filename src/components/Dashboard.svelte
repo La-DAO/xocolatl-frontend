@@ -5,7 +5,7 @@
   import { BigNumber } from "ethers";
 
   import { selectedTab } from "../store/account";
-  import { index } from "../chains";
+  import { chains } from "../chains/chains";
 
   import {
     CollateralDepositInputAmount,
@@ -60,9 +60,9 @@
   };
 
   $: isNative =
-    $chainId && $chainId in index ? index[$chainId].supportsNative : false;
+    $chainId && $chainId in chains ? chains[$chainId].supportsNative : false;
 
-  $: swapURL = $chainId && $chainId in index ? index[$chainId].swapURL : "";
+  $: swapURL = $chainId && $chainId in chains ? chains[$chainId].swapURL : "";
 </script>
 
 <section>

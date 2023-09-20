@@ -25,7 +25,7 @@ import {
   houseOfReserveContract,
 } from "../contracts";
 
-import { index, getSelectedAssetObject } from "../../chains";
+import { chains, getSelectedAssetObject } from "../../chains/chains";
 
 // waits for user transaction and updates store for tx progress UI display
 async function handleTxReceipt(tx: ContractTransaction) {
@@ -90,7 +90,7 @@ export async function mintXOC() {
 export async function approveXOC() {
   checkContractCallPrereqs();
   const tx = await get(XOCContract)!.approve(
-    index[get(chainId)].houseOfCoinAddress,
+    chains[get(chainId)].houseOfCoinAddress,
     maxApproveAmount,
   );
   handleTxReceipt(tx);

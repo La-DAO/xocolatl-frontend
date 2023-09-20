@@ -34,7 +34,7 @@ import {
   globalBase,
 } from "../contractData";
 
-import { index, getSelectedAssetObject } from "../../chains";
+import { chains, getSelectedAssetObject } from "../../chains/chains";
 
 // async function fetchBitso(): Promise<any> {
 // 	const uri = 'https://api.bitso.com/v3/ticker/?book=eth_mxn';
@@ -140,7 +140,7 @@ export async function getXOCAllowance() {
   checkContractCallPrereqs();
   const allowance = await get(XOCContract)!.allowance(
     get(signerAddress),
-    index[get(chainId)].houseOfCoinAddress,
+    chains[get(chainId)].houseOfCoinAddress,
   );
   userXOCAllowance.set(allowance);
 }

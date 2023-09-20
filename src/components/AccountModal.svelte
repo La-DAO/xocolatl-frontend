@@ -13,7 +13,7 @@
     toShortAddress,
     handleWalletConnectProvider,
   } from "../utils";
-  import { index } from "../chains";
+  import { chains } from "../chains/chains";
 
   import { providerType } from "../store/account";
   import { resetAll } from "../store/contractData";
@@ -105,7 +105,7 @@
           <div
             on:click={() =>
               window.open(
-                index[$chainId].blockExplorerURL + "/address/" + $signerAddress,
+                chains[$chainId].blockExplorerURL + "/address/" + $signerAddress,
                 "_blank",
               )}
             class="mini-button"

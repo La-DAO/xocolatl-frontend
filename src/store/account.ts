@@ -3,23 +3,23 @@ import { connected, chainId, provider } from "svelte-ethers-store";
 
 import type { Writable } from "svelte/store";
 
-import { index } from "../chains";
+import { chains } from "../chains/chains";
 
 export const accountModalHidden = writable(true);
 
 export const isRighNetwork = derived(
   [connected, chainId],
   ([$connected, $chainId]) => {
-    if ($connected && $chainId in index) {
+    if ($connected && $chainId in chains) {
       return true;
     } else return false;
   },
 );
 
 export const blockExplorerURL = derived([chainId], ([$chainId]) => {
-  if ($chainId && $chainId in index) {
-    return index[$chainId].blockExplorerURL;
-  } else return index[4].blockExplorerURL;
+  if ($chainId && $chainId in chains) {
+    return chains[$chainId].blockExplorerURL;
+  } else return chains[4].blockExplorerURL;
 });
 
 export const selectedPage = writable("home");
