@@ -3,7 +3,7 @@ import { writable, derived } from "svelte/store";
 
 import { ethers } from "ethers";
 import { chainId } from "svelte-ethers-store";
-import { getCollateralOptions } from "src/chains/chains";
+import { getCollateralOptions } from "src/chains";
 
 // defaults and derived from defaults
 export const selectedCollateral = writable("WETH");

@@ -25,7 +25,7 @@ import {
   houseOfReserveContract,
 } from "../contracts";
 
-import { chains, getSelectedAssetObject } from "../../chains/chains";
+import { chains, getSelectedAssetObject } from "../../chains";
 
 // waits for user transaction and updates store for tx progress UI display
 async function handleTxReceipt(tx: ContractTransaction) {

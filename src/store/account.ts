@@ -3,7 +3,7 @@ import { connected, chainId, provider } from "svelte-ethers-store";
 
 import type { Writable } from "svelte/store";
 
-import { chains } from "../chains/chains";
+import { chains } from "../chains";
 
 export const accountModalHidden = writable(true);
 

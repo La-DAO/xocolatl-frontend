@@ -5,7 +5,7 @@
   import { BigNumber } from "ethers";
 
   import { selectedTab } from "../store/account";
-  import { chains } from "../chains/chains";
+  import { chains } from "../chains";
 
   import {
     CollateralDepositInputAmount,

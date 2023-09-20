@@ -13,7 +13,7 @@
     toShortAddress,
     handleWalletConnectProvider,
   } from "../utils";
-  import { chains } from "../chains/chains";
+  import { chains } from "../chains";
 
   import { providerType } from "../store/account";
   import { resetAll } from "../store/contractData";

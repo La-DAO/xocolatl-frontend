@@ -14,7 +14,7 @@
     accountModalHidden,
     selectedPage,
   } from "../store/account";
-  import { chains } from "../chains/chains";
+  import { chains } from "../chains";
 
   import Select from "./Shared/Select.svelte";
 

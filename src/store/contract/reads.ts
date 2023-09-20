@@ -34,7 +34,7 @@ import {
   globalBase,
 } from "../contractData";
 
-import { chains, getSelectedAssetObject } from "../../chains/chains";
+import { chains, getSelectedAssetObject } from "../../chains";
 
 // async function fetchBitso(): Promise<any> {
 // 	const uri = 'https://api.bitso.com/v3/ticker/?book=eth_mxn';

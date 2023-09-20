@@ -3,7 +3,7 @@ import { WrapperBuilder } from "redstone-evm-connector";
 import { derived } from "svelte/store";
 import { provider, signer, chainId } from "svelte-ethers-store";
 import { ERC20ABI } from "../abis";
-import { getSelectedAssetObject, chains } from "../chains/chains";
+import { getSelectedAssetObject, chains } from "../chains";
 import { selectedCollateral } from "./userInput";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
