@@ -19,7 +19,7 @@ const useBabelInDevelopment = false;
  * will be added to the bundle after these. In other words, these are global styles for your svelte app. You can also
  * specify paths to SCSS or SASS files, and they will be compiled automatically.
  */
-const stylesheets = ["./src/styles/index.css"];
+const stylesheets = ["./public/static/styles/index.css"];
 
 /**
  * Change this to `true` to generate source maps alongside your production bundle. This is useful for debugging, but

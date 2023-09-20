@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
-  import { selectedTab } from "../store/store";
+  import { selectedTab } from "../store/account";
 
   export let swapURL: string;
 

@@ -13,9 +13,9 @@
     toShortAddress,
     handleWalletConnectProvider,
   } from "../utils";
-  import { chains } from "../chains";
+  import { index } from "../chains";
 
-  import { providerType } from "../store/store";
+  import { providerType } from "../store/account";
   import { resetAll } from "../store/contractData";
 
   import Icon from "./Shared/Icon.svelte";
@@ -105,9 +105,7 @@
           <div
             on:click={() =>
               window.open(
-                chains[$chainId].blockExplorerURL +
-                  "/address/" +
-                  $signerAddress,
+                index[$chainId].blockExplorerURL + "/address/" + $signerAddress,
                 "_blank",
               )}
             class="mini-button"

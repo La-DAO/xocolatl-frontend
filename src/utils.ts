@@ -5,9 +5,9 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 
 import { Provider } from "@ethersproject/providers";
 
-import { isRighNetwork } from "./store/store";
+import { isRighNetwork } from "./store/account";
 import { resetAll } from "./store/contractData";
-import { fetchAllDisplayData } from "./contractReads";
+import { fetchAllDisplayData } from "./store/contract/reads";
 import { selectedCollateral } from "./store/userInput";
 
 // input: 0x50c57894c3b9bf022d10b94b9d940a48a93cd8c0

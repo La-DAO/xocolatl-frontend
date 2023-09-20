@@ -12,7 +12,7 @@
     getXOCMintingPower,
     setCollateralDecimals,
     getMaxLTVFactor,
-  } from "src/contractReads";
+  } from "src/store/contract/reads";
   import { listOfCollaterals, selectedCollateral } from "src/store/userInput";
 
   async function handleCollateralChange(event) {

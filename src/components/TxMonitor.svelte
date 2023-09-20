@@ -1,7 +1,7 @@
 <script lang="ts">
   import { toShortAddress } from "../utils";
   import { get } from "svelte/store";
-  import { pendingTxs, blockExplorerURL } from "../store/store";
+  import { pendingTxs, blockExplorerURL } from "../store/account";
   import { _ } from "svelte-i18n";
 
   function handleClose(txHash: string) {

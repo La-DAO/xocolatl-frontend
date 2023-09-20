@@ -13,8 +13,8 @@
     getMaxCollateralWithdrawal,
     getXOCMintingPower,
     getHealthRatio,
-  } from "../contractReads";
-  import { isRighNetwork } from "../store/store";
+  } from "../store/contract/reads";
+  import { isRighNetwork } from "../store/account";
   import {
     CollateralContract,
     houseOfReserveContract,

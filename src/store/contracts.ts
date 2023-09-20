@@ -3,7 +3,7 @@ import { WrapperBuilder } from "redstone-evm-connector";
 import { derived } from "svelte/store";
 import { provider, signer, chainId } from "svelte-ethers-store";
 import { ERC20ABI } from "../abis";
-import { getSelectedAssetObject, chains } from "../chains";
+import { getSelectedAssetObject, index } from "../chains";
 import { selectedCollateral } from "./userInput";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -26,8 +26,8 @@ export const XOCContract = derived(
   ([_, $signer, $chainId]) => {
     if ($chainId) {
       return new ethers.Contract(
-        chains[$chainId].XOCAddress,
-        chains[$chainId].XOCABI,
+        index[$chainId].XOCAddress,
+        index[$chainId].XOCABI,
         $signer,
       );
     }
@@ -39,8 +39,8 @@ export const houseOfCoinContract = derived(
   ([_, $signer, $chainId]) => {
     if ($chainId) {
       const contract = new ethers.Contract(
-        chains[$chainId].houseOfCoinAddress,
-        chains[$chainId].houseOfCoinABI,
+        index[$chainId].houseOfCoinAddress,
+        index[$chainId].houseOfCoinABI,
         $signer,
       );
       return contract;
@@ -64,8 +64,8 @@ export const assetsAccountantContract = derived(
   ([_, $signer, $chainId]) => {
     if ($chainId) {
       return new ethers.Contract(
-        chains[$chainId].assetsAccountantAddress,
-        chains[$chainId].assetsAccountantABI,
+        index[$chainId].assetsAccountantAddress,
+        index[$chainId].assetsAccountantABI,
         $signer,
       );
     }
@@ -81,7 +81,7 @@ export const houseOfReserveContract = derived(
           $chainId,
           $selectedCollateral,
         ).houseOfReserveAddress,
-        chains[$chainId].houseOfReserveABI,
+        index[$chainId].houseOfReserveABI,
         $signer,
       );
       return contract;

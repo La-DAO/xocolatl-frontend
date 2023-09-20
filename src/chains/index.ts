@@ -5,7 +5,7 @@ import {
   houseOfReserveABI,
   mockWETHABI,
   XOCABI,
-} from "./abis";
+} from "../abis";
 
 export interface Asset {
   name: string;
@@ -191,7 +191,7 @@ const binanceData: ChainData = {
   swapURL: "https://app.uniswap.org/",
 };
 
-export const chains: ChainDict = {
+export const index: ChainDict = {
   5: goerliData,
   "0x5": goerliData, // sometimes metamask returns chain Id as hex and sometimes as int
   137: polygonData,
@@ -204,14 +204,14 @@ export function getSelectedAssetObject(
   chainId_: string | number,
   collateralName_: string,
 ): Asset {
-  const assets_: Asset[] = chains[chainId_].reserveAssets;
+  const assets_: Asset[] = index[chainId_].reserveAssets;
   return <Asset>(
     assets_.find((assetElement: Asset) => assetElement.name == collateralName_)
   );
 }
 
 export function getCollateralOptions(chainId_: string | number): string[] {
-  const assets_: Asset[] = chains[chainId_].reserveAssets;
+  const assets_: Asset[] = index[chainId_].reserveAssets;
   const options: string[] = [];
   for (let i = 0; i < assets_.length; i++) {
     options.push(assets_[i].name);

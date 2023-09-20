@@ -1,7 +1,7 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
   import { connected } from "svelte-ethers-store";
-  import { isRighNetwork, selectedTab } from "../store/store";
+  import { isRighNetwork, selectedTab } from "../store/account";
   import {
     CollateralDepositInputAmountBigNum,
     XOCRedeemInputAmountBigNum,
@@ -17,7 +17,7 @@
     approveXOC,
     redeemXOC,
     withdrawWETH,
-  } from "../contractWrites";
+  } from "../store/contract/writes";
 
   let disabled = true; // disable buttons until data loads
   $: if ($isRighNetwork || !connected) {

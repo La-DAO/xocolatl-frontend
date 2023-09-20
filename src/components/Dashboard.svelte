@@ -4,8 +4,8 @@
   import { chainId } from "svelte-ethers-store";
   import { BigNumber } from "ethers";
 
-  import { selectedTab } from "../store/store";
-  import { chains } from "../chains";
+  import { selectedTab } from "../store/account";
+  import { index } from "../chains";
 
   import {
     CollateralDepositInputAmount,
@@ -39,7 +39,7 @@
     redeemXOC,
     withdrawWETH,
     depositNativeToken,
-  } from "../contractWrites";
+  } from "../store/contract/writes";
 
   import PillNavigation from "./PillNavigation.svelte";
   import CollateralInfo from "./CollateralInfo.svelte";
@@ -60,9 +60,9 @@
   };
 
   $: isNative =
-    $chainId && $chainId in chains ? chains[$chainId].supportsNative : false;
+    $chainId && $chainId in index ? index[$chainId].supportsNative : false;
 
-  $: swapURL = $chainId && $chainId in chains ? chains[$chainId].swapURL : "";
+  $: swapURL = $chainId && $chainId in index ? index[$chainId].swapURL : "";
 </script>
 
 <section>

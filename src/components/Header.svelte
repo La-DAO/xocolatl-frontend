@@ -13,8 +13,8 @@
     isRighNetwork,
     accountModalHidden,
     selectedPage,
-  } from "../store/store";
-  import { chains } from "../chains";
+  } from "../store/account";
+  import { index } from "../chains";
 
   import Select from "./Shared/Select.svelte";
 
@@ -34,7 +34,7 @@
 
   $: shortSignerAddress = toShortAddress($signerAddress);
 
-  $: currentChainHex = chains[$chainId] ? chains[$chainId].chainHex : null;
+  $: currentChainHex = index[$chainId] ? index[$chainId].chainHex : null;
 
   function addXOCToMetamask() {
     // @ts-ignore:next-line
@@ -43,7 +43,7 @@
       params: {
         type: "ERC20", // Initially only supports ERC20, but eventually more!
         options: {
-          address: chains[$chainId].XOCAddress, // The address that the token is at.
+          address: index[$chainId].XOCAddress, // The address that the token is at.
           symbol: "XOC", // A ticker symbol or shorthand, up to 5 chars.
           decimals: 18, // The number of decimals in the token
           /* image: '', // TODO: A string url of the token logo */

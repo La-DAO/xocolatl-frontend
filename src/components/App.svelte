@@ -7,7 +7,7 @@
   import "../i18n"; // locales
   import { isLoading } from "svelte-i18n";
 
-  import { isRighNetwork, accountModalHidden } from "../store/store";
+  import { isRighNetwork, accountModalHidden } from "../store/account";
   import { handleProviderChange, checkIfAlreadyConnected } from "../utils";
   import { orgURLs } from "../constants";
 

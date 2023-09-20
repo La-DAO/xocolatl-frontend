@@ -2,7 +2,7 @@ import { Contract, utils } from "ethers";
 import { get } from "svelte/store";
 import { signerAddress, chainId, signer } from "svelte-ethers-store";
 import { ethers } from "ethers";
-import { checkContractCallPrereqs } from "./utils";
+import { checkContractCallPrereqs } from "../../utils";
 
 import {
   CollateralContract,
@@ -12,9 +12,9 @@ import {
   wrappedHouseOfCoinContract,
   houseOfReserveContract,
   wrappedHouseOfReserveContract,
-} from "./store/contracts";
+} from "../contracts";
 
-import { selectedCollateral, collateralDecimals } from "./store/userInput";
+import { selectedCollateral, collateralDecimals } from "../userInput";
 
 import {
   userNativeTokenBalance,
@@ -32,9 +32,9 @@ import {
   liquidationFactor,
   maxLTVFactor,
   globalBase,
-} from "./store/contractData";
+} from "../contractData";
 
-import { chains, getSelectedAssetObject } from "./chains";
+import { index, getSelectedAssetObject } from "../../chains";
 
 // async function fetchBitso(): Promise<any> {
 // 	const uri = 'https://api.bitso.com/v3/ticker/?book=eth_mxn';
@@ -140,7 +140,7 @@ export async function getXOCAllowance() {
   checkContractCallPrereqs();
   const allowance = await get(XOCContract)!.allowance(
     get(signerAddress),
-    chains[get(chainId)].houseOfCoinAddress,
+    index[get(chainId)].houseOfCoinAddress,
   );
   userXOCAllowance.set(allowance);
 }

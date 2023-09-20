@@ -1,8 +1,8 @@
 <script lang="ts">
   import { ethers } from "ethers";
   import { _ } from "svelte-i18n";
-  import { fetchAllDisplayData } from "../contractReads";
-  import { isRighNetwork, selectedTab } from "../store/store";
+  import { fetchAllDisplayData } from "../store/contract/reads";
+  import { isRighNetwork, selectedTab } from "../store/account";
   import {
     userCollateralBalance,
     userCollateralDepositBalance,

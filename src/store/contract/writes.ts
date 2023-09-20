@@ -1,8 +1,8 @@
 import { get } from "svelte/store";
-import { maxApproveAmount } from "./constants";
+import { maxApproveAmount } from "../../constants";
 
 import { chainId, signer } from "svelte-ethers-store";
-import { pendingTxs } from "./store/store";
+import { pendingTxs } from "../account";
 
 import {
   selectedCollateral,
@@ -10,10 +10,10 @@ import {
   WETHWithdrawInputAmountBigNum,
   XOCMintInputAmountBigNum,
   XOCRedeemInputAmountBigNum,
-} from "./store/userInput";
+} from "../userInput";
 
-import { fetchAllDisplayData } from "./contractReads";
-import { checkContractCallPrereqs } from "./utils";
+import { fetchAllDisplayData } from "./reads";
+import { checkContractCallPrereqs } from "../../utils";
 
 import type { ContractTransaction } from "ethers";
 import type { TransactionReceipt } from "@ethersproject/providers";
@@ -23,9 +23,9 @@ import {
   XOCContract,
   houseOfCoinContract,
   houseOfReserveContract,
-} from "./store/contracts";
+} from "../contracts";
 
-import { chains, getSelectedAssetObject } from "./chains";
+import { index, getSelectedAssetObject } from "../../chains";
 
 // waits for user transaction and updates store for tx progress UI display
 async function handleTxReceipt(tx: ContractTransaction) {
@@ -90,7 +90,7 @@ export async function mintXOC() {
 export async function approveXOC() {
   checkContractCallPrereqs();
   const tx = await get(XOCContract)!.approve(
-    chains[get(chainId)].houseOfCoinAddress,
+    index[get(chainId)].houseOfCoinAddress,
     maxApproveAmount,
   );
   handleTxReceipt(tx);
