@@ -12,11 +12,14 @@
   import {
     isRighNetwork,
     accountModalHidden,
+    chainModalHidden,
     selectedPage,
   } from "../store/account";
   import { chains } from "../chains";
 
   import Select from "./Shared/Select.svelte";
+
+  import ChainModal from "./ChainModal.svelte";
 
   const chainOptions = {
     "0x89": "Polygon",
@@ -84,6 +87,12 @@
           />
         {:else}
           Unsupported network!
+          <Select
+            width="6rem"
+            options={chainOptions}
+            defaultValue={currentChainHex}
+            handleClickFunc={changeNetwork}
+          />
         {/if}
         <Select
           width="3rem"
