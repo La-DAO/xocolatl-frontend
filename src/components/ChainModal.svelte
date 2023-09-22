@@ -15,7 +15,9 @@
       <h4>{$_("modal.body")}:</h4>
       <p on:click={() => changeNetwork("0x89")}>Polygon</p>
       <br />
-      <p on:click={() => changeNetwork("0x4")}>Rinkeby</p>
+      <p on:click={() => changeNetwork("0x38")}>BSC</p>
+      <br />
+      <p on:click={() => changeNetwork("0x5")}>Goerli</p>
       <br />
       <button on:click={() => (hidden = true)}>{$_("modal.close")}</button>
     </div>
