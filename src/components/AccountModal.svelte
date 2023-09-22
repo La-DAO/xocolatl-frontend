@@ -105,7 +105,9 @@
           <div
             on:click={() =>
               window.open(
-                chains[$chainId].blockExplorerURL + "/address/" + $signerAddress,
+                chains[$chainId].blockExplorerURL +
+                  "/address/" +
+                  $signerAddress,
                 "_blank",
               )}
             class="mini-button"

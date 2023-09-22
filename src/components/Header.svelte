@@ -37,7 +37,9 @@
 
   $: shortSignerAddress = toShortAddress($signerAddress);
 
-  $: currentChainHex = chains[$chainId] ? chains[$chainId].chainHex : null;
+  $: currentChainHex = chains[$chainId]
+    ? chains[$chainId].chainHex
+    : "Select Chain";
 
   function addXOCToMetamask() {
     // @ts-ignore:next-line
