@@ -23,6 +23,8 @@ Install NodeJS:
 
 - To install Node.js on your computer, go to the Node.js website (https://nodejs.org/) and download the latest stable version of Node.js. Make sure to select the version that is compatible with your operating system (e.g. Windows, MacOS, Linux).
 
+To install dependencies without version error better to use `16`th node major version. E.g. `v16.13.1`
+
 Clone this repository:
 
 ```bash
@@ -35,6 +37,12 @@ Install dependencies:
 
 ```bash
 npm install
+```
+
+or 
+
+```bash
+npm ci
 ```
 
 ### Starting the development server
