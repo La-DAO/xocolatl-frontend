@@ -212,14 +212,15 @@ export function getSelectedAssetObject(
 
 export function getCollateralOptions(chainId_: string | number): string[] {
   const chain: ChainData = chains[chainId_];
-  if (chain) {
-    const assets_: Asset[] = chains[chainId_].reserveAssets;
-    const options: string[] = [];
-    for (let i = 0; i < assets_.length; i++) {
-      options.push(assets_[i].name);
-    }
-    return options;
-  } else {
-    return ['WETH']
+  if (!chain) {
+    return ["WETH"];
   }
+
+  const assets_: Asset[] = chain.reserveAssets;
+  const options: string[] = [];
+  for (let i = 0; i < assets_.length; i++) {
+    options.push(assets_[i].name);
+  }
+
+  return options;
 }
