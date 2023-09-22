@@ -7,7 +7,7 @@
   import "../i18n"; // locales
   import { isLoading } from "svelte-i18n";
 
-  import { isRighNetwork, accountModalHidden } from "../store/account";
+  import { isRighNetwork, accountModalHidden, chainModalHidden } from "../store/account";
   import { handleProviderChange, checkIfAlreadyConnected } from "../utils";
   import { orgURLs } from "../constants";
 
@@ -41,7 +41,9 @@
   Por favor espere...
 {:else}
   <main>
-    <ChainModal hidden={$connected && $isRighNetwork} />
+    {#key !$chainModalHidden}
+      <ChainModal bind:hidden={$chainModalHidden} />
+    {/key}
     <Header />
     {#key !$accountModalHidden}
       <AccountModal bind:hidden={$accountModalHidden} />
