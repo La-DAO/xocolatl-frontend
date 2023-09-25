@@ -20,9 +20,7 @@
     "svelte3/typescript": true
   },
   "rules": {
-    "indent": ["error", "tab"],
     "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-non-null-assertion": "off",

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { provider, chainId, connected } from "svelte-ethers-store";
+  import { provider, chainId } from "svelte-ethers-store";
   import "@fontsource/quicksand";
   import "@fontsource/quicksand/700.css";
   import "@fontsource/roboto";
@@ -7,11 +7,7 @@
   import "../i18n"; // locales
   import { isLoading } from "svelte-i18n";
 
-  import {
-    isRighNetwork,
-    accountModalHidden,
-    chainModalHidden,
-  } from "../store/account";
+  import { accountModalHidden, chainModalHidden } from "../store/account";
   import { handleProviderChange, checkIfAlreadyConnected } from "../utils";
   import { orgURLs } from "../constants";
 

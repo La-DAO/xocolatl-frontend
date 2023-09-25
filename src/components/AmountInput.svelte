@@ -83,20 +83,28 @@
     border-bottom: 1px solid var(--light-color);
     font-size: 2.6rem;
     font-weight: 700;
+    width: 100%;
   }
 
   .collateral-type {
     color: grey;
-    width: 10rem;
-    margin: 1rem auto 1rem auto;
+    margin: 1rem auto;
     text-align: center;
     font-size: 1rem;
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0.5rem 0 1rem 0;
   }
   .percent-button {
     background-color: var(--main-color);
     color: var(--light-color);
     font-size: 1rem;
-    margin: 0.5rem 0.5rem 1rem 0.5rem;
     cursor: pointer;
     width: 5rem;
     border: 2px solid var(--light-color);

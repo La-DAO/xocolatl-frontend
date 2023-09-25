@@ -12,14 +12,11 @@
   import {
     isRighNetwork,
     accountModalHidden,
-    chainModalHidden,
     selectedPage,
   } from "../store/account";
   import { chains } from "../chains";
 
   import Select from "./Shared/Select.svelte";
-
-  import ChainModal from "./ChainModal.svelte";
 
   const chainOptions = {
     "0x89": "Polygon",
