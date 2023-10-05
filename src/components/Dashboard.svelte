@@ -2,9 +2,9 @@
   import { _ } from "svelte-i18n";
   import { get } from "svelte/store";
   import { chainId } from "svelte-ethers-store";
-	import { BigNumber } from "ethers";
+  import { BigNumber } from "ethers";
 
-  import { selectedTab } from "../store/store";
+  import { selectedTab } from "../store/account";
   import { chains } from "../chains";
 
   import {
@@ -39,17 +39,16 @@
     redeemXOC,
     withdrawWETH,
     depositNativeToken,
-  } from "../contractWrites";
+  } from "../store/contract/writes";
 
   import PillNavigation from "./PillNavigation.svelte";
   import CollateralInfo from "./CollateralInfo.svelte";
   import MainInfo from "./MainInfo.svelte";
   import AmountInput from "./AmountInput.svelte";
-  import AmountReservesInput from "./AmountReservesInput.svelte";
-  
+
   const checkNeedsAllowance = function (
     inputAmount: BigNumber | undefined,
-    currentAllowance: BigNumber | null
+    currentAllowance: BigNumber | null,
   ): boolean {
     let need = false;
     if (inputAmount && currentAllowance) {
@@ -71,73 +70,79 @@
     <PillNavigation {swapURL} />
     <div class="main-section">
       <div class="input-section">
-        {#if $selectedTab === "deposit"}
-          {#if isNative}
-            <AmountReservesInput
-              headerText={$_("input.deposit")}
-              bind:inputAmount={$CollateralDepositInputAmount}
-              bind:inputError={$CollateralDepositInputError}
-              inputAmountBigNum={$CollateralDepositInputAmountBigNum}
-              inputLimit={$userNativeTokenBalance}
-              actionText={$_("actions.deposit")}
-              actionHandler={depositNativeToken}
+        <div class="input-section__container">
+          {#if $selectedTab === "deposit"}
+            {#if isNative}
+              <AmountInput
+                headerText={$_("input.deposit")}
+                bind:inputAmount={$CollateralDepositInputAmount}
+                bind:inputError={$CollateralDepositInputError}
+                inputAmountBigNum={$CollateralDepositInputAmountBigNum}
+                inputLimit={$userNativeTokenBalance}
+                inputTypeText={$_("input.collateral")}
+                actionText={$_("actions.deposit")}
+                actionHandler={depositNativeToken}
+              />
+            {:else if checkNeedsAllowance($CollateralDepositInputAmountBigNum, get(userCollateralAllowance))}
+              <AmountInput
+                headerText={$_("input.deposit")}
+                bind:inputAmount={$CollateralDepositInputAmount}
+                bind:inputError={$CollateralDepositInputError}
+                inputAmountBigNum={$CollateralDepositInputAmountBigNum}
+                inputLimit={$userCollateralBalance}
+                inputTypeText={$_("input.collateral")}
+                actionText={$_("actions.approve")}
+                actionHandler={approveERC20}
+              />
+            {:else}
+              <AmountInput
+                headerText={$_("input.deposit")}
+                bind:inputAmount={$CollateralDepositInputAmount}
+                bind:inputError={$CollateralDepositInputError}
+                inputAmountBigNum={$CollateralDepositInputAmountBigNum}
+                inputLimit={$userCollateralBalance}
+                inputTypeText={$_("input.collateral")}
+                actionText={$_("actions.deposit")}
+                actionHandler={depositERC20}
+              />
+            {/if}
+          {:else if $selectedTab === "mint"}
+            <AmountInput
+              headerText={$_("input.mint")}
+              bind:inputAmount={$XOCMintInputAmount}
+              bind:inputError={$XOCMintInputError}
+              inputAmountBigNum={$XOCMintInputAmountBigNum}
+              inputLimit={$userXOCMintingPower}
+              inputTypeText={$_("input.token-mint")}
+              actionHandler={mintXOC}
+              actionText={$_("actions.mint")}
             />
-          {:else if checkNeedsAllowance($CollateralDepositInputAmountBigNum, get(userCollateralAllowance))}
-            <AmountReservesInput
-              headerText={$_("input.deposit")}
-              bind:inputAmount={$CollateralDepositInputAmount}
-              bind:inputError={$CollateralDepositInputError}
-              inputAmountBigNum={$CollateralDepositInputAmountBigNum}
-              inputLimit={$userCollateralBalance}
-              actionText={$_("actions.approve")}
-              actionHandler={approveERC20}
+          {:else if $selectedTab === "redeem"}
+            <AmountInput
+              headerText={$_("input.redeem")}
+              bind:inputAmount={$XOCRedeemInputAmount}
+              bind:inputError={$XOCRedeemInputError}
+              inputAmountBigNum={$XOCRedeemInputAmountBigNum}
+              inputLimit={$userXOCBalance?.gt($userXOCDebt ? $userXOCDebt : 0)
+                ? $userXOCDebt
+                : $userXOCBalance}
+              inputTypeText={$_("input.token-redeem")}
+              actionHandler={redeemXOC}
+              actionText={$_("actions.redeem")}
             />
-          {:else}
-            <AmountReservesInput
-              headerText={$_("input.deposit")}
-              bind:inputAmount={$CollateralDepositInputAmount}
-              bind:inputError={$CollateralDepositInputError}
-              inputAmountBigNum={$CollateralDepositInputAmountBigNum}
-              inputLimit={$userCollateralBalance}
-              actionText={$_("actions.deposit")}
-              actionHandler={depositERC20}
+          {:else if $selectedTab === "withdraw"}
+            <AmountInput
+              headerText={$_("input.withdraw")}
+              bind:inputAmount={$WETHWithdrawInputAmount}
+              bind:inputError={$WETHWithdrawInputError}
+              inputAmountBigNum={$WETHWithdrawInputAmountBigNum}
+              inputLimit={$userCollateralMaxWithdrawal}
+              inputTypeText={$_("input.collateral")}
+              actionHandler={withdrawWETH}
+              actionText={$_("actions.withdraw")}
             />
           {/if}
-        {:else if $selectedTab === "mint"}
-          <AmountInput
-            headerText={$_("input.mint")}
-            bind:inputAmount={$XOCMintInputAmount}
-            bind:inputError={$XOCMintInputError}
-            inputAmountBigNum={$XOCMintInputAmountBigNum}
-            inputLimit={$userXOCMintingPower}
-            inputTypeText={$_("input.token-mint")}
-            actionHandler={mintXOC}
-            actionText={$_("actions.mint")}
-          />
-        {:else if $selectedTab === "redeem"}
-          <AmountInput
-            headerText={$_("input.redeem")}
-            bind:inputAmount={$XOCRedeemInputAmount}
-            bind:inputError={$XOCRedeemInputError}
-            inputAmountBigNum={$XOCRedeemInputAmountBigNum}
-            inputLimit={$userXOCBalance?.gt($userXOCDebt ? $userXOCDebt : 0)
-              ? $userXOCDebt
-              : $userXOCBalance}
-            inputTypeText={$_("input.token-redeem")}
-            actionHandler={redeemXOC}
-            actionText={$_("actions.redeem")}
-          />
-        {:else if $selectedTab === "withdraw"}
-          <AmountReservesInput
-            headerText={$_("input.withdraw")}
-            bind:inputAmount={$WETHWithdrawInputAmount}
-            bind:inputError={$WETHWithdrawInputError}
-            inputAmountBigNum={$WETHWithdrawInputAmountBigNum}
-            inputLimit={$userCollateralMaxWithdrawal}
-            actionHandler={withdrawWETH}
-            actionText={$_("actions.withdraw")}
-          />
-        {/if}
+        </div>
       </div>
       <div class="info-section">
         <CollateralInfo />
@@ -148,7 +153,7 @@
   <MainInfo />
 </section>
 
-<style>
+<style lang="scss">
   section {
     display: flex;
     flex-direction: column;
@@ -166,18 +171,48 @@
   .main-section {
     display: flex;
     justify-content: center;
-    align-items: baseline;
-    margin: auto;
+    align-items: center;
     flex-wrap: wrap-reverse;
+    margin-bottom: 2rem;
+
+    @media (max-width: 1200px) {
+      flex-direction: column-reverse;
+      padding: 0 1rem;
+    }
   }
 
   .input-section {
+    display: flex;
+    justify-content: flex-end;
     flex-basis: 50%;
     flex-grow: 1;
+
+    @media (max-width: 1200px) {
+      justify-content: center;
+    }
+
+    &__container {
+      width: 70%;
+      margin-right: 2rem;
+
+      @media (max-width: 1200px) {
+        width: 90%;
+        margin-right: 0;
+      }
+
+      @media (max-width: 842px) {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   }
 
   .info-section {
     flex-basis: 50%;
     flex-grow: 1;
+
+    @media (max-width: 1200px) {
+      width: 100%;
+    }
   }
 </style>

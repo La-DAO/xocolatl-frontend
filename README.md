@@ -1,19 +1,19 @@
-# Xocolatl frontend 
+# Xocolatl frontend
 
 Applicacion para acuñar e interactuar con XOC, un peso mexicano decentralizado. Hecho posible gracias a un esfuerzo colaborativo de La DAO.
 
 - [Getting started](#getting-started)
-	- [Installation](#installation)
-	- [Starting the development server](#starting-the-development-server)
-	- [Building for production](#building-for-production)
-	- [Running in production](#running-in-production)
+  - [Installation](#installation)
+  - [Starting the development server](#starting-the-development-server)
+  - [Building for production](#building-for-production)
+  - [Running in production](#running-in-production)
 - [Usage](#usage)
-	- [Global stylesheets](#global-stylesheets)
-	- [Single page applications](#single-page-applications)
-	- [Browsers list](#browsers-list)
-	- [Babel customization](#babel-customization)
-	- [Source maps in production](#source-maps-in-production)
-	- [Import path aliases](#import-path-aliases)
+  - [Global stylesheets](#global-stylesheets)
+  - [Single page applications](#single-page-applications)
+  - [Browsers list](#browsers-list)
+  - [Babel customization](#babel-customization)
+  - [Source maps in production](#source-maps-in-production)
+  - [Import path aliases](#import-path-aliases)
 
 ---
 
@@ -21,7 +21,9 @@ Applicacion para acuñar e interactuar con XOC, un peso mexicano decentralizado.
 
 Install NodeJS:
 
-- To install Node.js on your computer, go to the Node.js website (https://nodejs.org/) and download the latest stable version of Node.js. Make sure to select the version that is compatible with your operating system (e.g. Windows, MacOS, Linux).  
+- To install Node.js on your computer, go to the Node.js website (https://nodejs.org/) and download the latest stable version of Node.js. Make sure to select the version that is compatible with your operating system (e.g. Windows, MacOS, Linux).
+
+To install dependencies without version error better to use `16`th node major version. E.g. `v16.13.1`
 
 Clone this repository:
 
@@ -30,12 +32,18 @@ git clone https://github.com/La-DAO/xocolatl-frontend
 ```
 
 ### Installation
-Install dependencies:  
+
+Install dependencies:
 
 ```bash
 npm install
 ```
 
+or
+
+```bash
+npm ci
+```
 
 ### Starting the development server
 
@@ -87,9 +95,7 @@ Add one or more global stylesheets to the bundle by editing the `stylesheets` va
 `webpack.config.ts`:
 
 ```ts
-const stylesheets = [
-    './src/styles/index.scss'
-];
+const stylesheets = ["./src/styles/index.scss"];
 ```
 
 You can specify `css`, `scss`, and `sass` files here, and they will be compiled and minified as necessary. These styles
@@ -163,12 +169,12 @@ You can then import files under these aliases and Webpack will resolve them. You
 for automatic imports:
 
 ```ts
-import { users } from '@stores/users'; // src/stores/users.ts
+import { users } from "@stores/users"; // src/stores/users.ts
 ```
 
 The root directory is configured as a base path for imports. This means you can also import modules with an absolute
 path from anywhere in the project instead of using a large number of `..` to traverse directories.
 
 ```ts
-import { users } from 'src/stores/users';
+import { users } from "src/stores/users";
 ```

@@ -1,8 +1,16 @@
 <script lang="ts">
-export let actionHandler: () => void;
+  export let actionHandler: () => void;
 </script>
 
-<style>
+<button on:click={actionHandler} class="pushable">
+  <span class="shadow"></span>
+  <span class="edge"></span>
+  <span class="front">
+    <slot />
+  </span>
+</button>
+
+<style lang="scss">
   .pushable {
     position: relative;
     border: none;
@@ -22,10 +30,7 @@ export let actionHandler: () => void;
     background: hsl(0deg 0% 0% / 0.25);
     will-change: transform;
     transform: translateY(2px);
-    transition:
-      transform
-      600ms
-      cubic-bezier(.3, .7, .4, 1);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
   }
   .edge {
     position: absolute;
@@ -34,13 +39,7 @@ export let actionHandler: () => void;
     width: 100%;
     height: 100%;
     border-radius: 12px;
-    background: linear-gradient(
-      to left,
-      #787671,
-      #94928d,
-      #94928d,
-      #787671
-    );
+    background: linear-gradient(to left, #787671, #94928d, #94928d, #787671);
   }
   .front {
     display: block;
@@ -52,20 +51,14 @@ export let actionHandler: () => void;
     background: var(--light-color);
     will-change: transform;
     transform: translateY(-4px);
-    transition:
-      transform
-      600ms
-      cubic-bezier(.3, .7, .4, 1);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
   }
   .pushable:hover {
     filter: brightness(110%);
   }
   .pushable:hover .front {
     transform: translateY(-6px);
-    transition:
-      transform
-      250ms
-      cubic-bezier(.3, .7, .4, 1.5);
+    transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
   }
   .pushable:active .front {
     transform: translateY(-2px);
@@ -73,10 +66,7 @@ export let actionHandler: () => void;
   }
   .pushable:hover .shadow {
     transform: translateY(4px);
-    transition:
-      transform
-      250ms
-      cubic-bezier(.3, .7, .4, 1.5);
+    transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
   }
   .pushable:active .shadow {
     transform: translateY(1px);
@@ -86,10 +76,3 @@ export let actionHandler: () => void;
     outline: none;
   }
 </style>
-<button on:click={actionHandler} class="pushable">
-  <span class="shadow"></span>
-  <span class="edge"></span>
-  <span class="front">
-    <slot></slot>
-  </span>
-</button>

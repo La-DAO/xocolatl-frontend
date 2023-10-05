@@ -13,10 +13,10 @@
     isRighNetwork,
     accountModalHidden,
     selectedPage,
-  } from "../store/store";
+  } from "../store/account";
   import { chains } from "../chains";
 
-  import Select from "./Select.svelte";
+  import Select from "./Shared/Select.svelte";
 
   const chainOptions = {
     "0x89": "Polygon",
@@ -34,7 +34,9 @@
 
   $: shortSignerAddress = toShortAddress($signerAddress);
 
-  $: currentChainHex = chains[$chainId] ? chains[$chainId].chainHex : null;
+  $: currentChainHex = chains[$chainId]
+    ? chains[$chainId].chainHex
+    : "Select Chain";
 
   function addXOCToMetamask() {
     // @ts-ignore:next-line
@@ -65,10 +67,16 @@
     </h2>
     <div class="right-content">
       {#if $signerAddress}
-      <button type="button" class="add-token-button" on:click={addXOCToMetamask}><img
-        class="small-icon"
-        src="/static/tokens/XOC.svg" alt="Add XOC to metamask button"
-      />{$_('actions.add-to-wallet')}</button>
+        <button
+          type="button"
+          class="add-token-button"
+          on:click={addXOCToMetamask}
+          ><img
+            class="small-icon"
+            src="/static/tokens/XOC.svg"
+            alt="Add XOC to metamask button"
+          />{$_("actions.add-to-wallet")}</button
+        >
         {#if $isRighNetwork && currentChainHex}
           <Select
             width="6rem"
@@ -78,6 +86,12 @@
           />
         {:else}
           Unsupported network!
+          <Select
+            width="6rem"
+            options={chainOptions}
+            defaultValue={currentChainHex}
+            handleClickFunc={changeNetwork}
+          />
         {/if}
         <Select
           width="3rem"
@@ -110,10 +124,12 @@
   }
 
   h2 {
-    font-family: "HWTAetna-ExtraCondensed";
+    font-family: "HWTAetna-ExtraCondensed", sans-serif;
     font-size: 2rem;
     color: #f8f8f8;
-    align-items: left;
+    align-items: flex-start;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
   }
 
   .container {
@@ -134,11 +150,11 @@
     /* width: 45px; */
     cursor: pointer;
     display: flex;
-    column-gap: .5rem;
+    column-gap: 0.5rem;
     align-items: center;
   }
 
-  .small-icon{
+  .small-icon {
     width: 1rem;
     align-self: center;
   }
@@ -155,5 +171,8 @@
     border: 2px solid #f25b3d;
     text-decoration: none;
     cursor: pointer;
+    min-width: 8rem;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 700;
   }
 </style>

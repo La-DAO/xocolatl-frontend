@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
-  import Icon from "./Icon.svelte";
+  import Icon from "./Shared/Icon.svelte";
 
   export let urls: URLS;
 
@@ -46,7 +46,7 @@
 <style>
   :global(main) > footer {
     position: sticky;
-    top: 100vh;
+    top: 93vh;
   }
 
   footer {

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { ethers } from "ethers";
   import { _ } from "svelte-i18n";
-  import { fetchAllDisplayData } from "../contractReads";
-  import { isRighNetwork, selectedTab } from "../store/store";
+  import { fetchAllDisplayData } from "../store/contract/reads";
+  import { isRighNetwork, selectedTab } from "../store/account";
   import {
     userCollateralBalance,
     userCollateralDepositBalance,
@@ -32,7 +32,7 @@
         {$userCollateralBalance && $chainId && $selectedCollateral
           ? ethers.utils.formatUnits(
               $userCollateralBalance,
-              $collateralDecimals
+              $collateralDecimals,
             )
           : "-"}
         {$selectedCollateral}
@@ -47,10 +47,12 @@
       <p>{$_("balances.depositBalance")}</p>
       <p>
         {$userCollateralDepositBalance
-          ? commify(ethers.utils.formatUnits(
-              $userCollateralDepositBalance,
-              $collateralDecimals
-            ))
+          ? commify(
+              ethers.utils.formatUnits(
+                $userCollateralDepositBalance,
+                $collateralDecimals,
+              ),
+            )
           : "-"}
         {$selectedCollateral}
       </p>
@@ -60,10 +62,14 @@
       <p>{$_("balances.availableForWithdrawal")}</p>
       <p>
         {$userCollateralMaxWithdrawal
-          ? commify(parseFloat(ethers.utils.formatUnits(
-              $userCollateralMaxWithdrawal,
-              $collateralDecimals
-            )).toFixed(5))
+          ? commify(
+              parseFloat(
+                ethers.utils.formatUnits(
+                  $userCollateralMaxWithdrawal,
+                  $collateralDecimals,
+                ),
+              ).toFixed(5),
+            )
           : "-"}
         {$selectedCollateral}
       </p>
@@ -83,7 +89,9 @@
       <p>
         {$userXOCDebt
           ? commify(
-              ethers.utils.formatEther($userXOCDebt.sub($userXOCDebt.mod(1e14)))
+              ethers.utils.formatEther(
+                $userXOCDebt.sub($userXOCDebt.mod(1e14)),
+              ),
             )
           : "-"} XOC
       </p>
@@ -95,8 +103,8 @@
         {$userXOCMintingPower
           ? commify(
               ethers.utils.formatEther(
-                $userXOCMintingPower.sub($userXOCMintingPower.mod(1e14))
-              )
+                $userXOCMintingPower.sub($userXOCMintingPower.mod(1e14)),
+              ),
             )
           : "-"} XOC
       </p>
@@ -107,8 +115,8 @@
         {$userXOCBalance
           ? commify(
               ethers.utils.formatEther(
-                $userXOCBalance.sub($userXOCBalance.mod(1e14))
-              )
+                $userXOCBalance.sub($userXOCBalance.mod(1e14)),
+              ),
             )
           : "-"} XOC
       </p>
@@ -116,13 +124,14 @@
   </div>
 </section>
 
-<style>
+<style lang="scss">
   section {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     width: 100%;
-    margin: 1rem auto 1rem auto;
+    margin: 1rem 0;
     color: var(--main-color);
     column-gap: 4rem;
     flex-wrap: wrap;
@@ -132,6 +141,10 @@
     border: 2px solid var(--main-color);
     border-radius: var(--box-radius);
     width: 32rem;
+
+    @media (max-width: 600px) {
+      width: 80%;
+    }
   }
 
   .box-header {

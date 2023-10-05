@@ -1,0 +1,79 @@
+{
+  "actions": {
+    "connect": "Connect wallet",
+    "disconnect": "Disconnect",
+    "approve": "Approve",
+    "deposit": "Deposit",
+    "mint": "Mint",
+    "redeem": "Payback",
+    "withdraw": "Withdraw",
+    "change": "Change",
+    "exchange": "Exchange",
+    "add-to-wallet": "Add $XOC to wallet"
+  },
+  "input": {
+    "deposit": "Collateral to deposit",
+    "mint": "$XOC to mint",
+    "redeem": "$XOC to payback",
+    "withdraw": "Collateral to withdraw",
+    "collateral": "Collateral",
+    "token-mint": "Against my",
+    "token-redeem": "Free up my"
+  },
+  "healthIndex": {
+    "healthIndex": "Health index",
+    "healthIndexTooltip": "The safety of your loan derived from the proportion of collateral versus amount borrowed. Keep it above 1 to avoid liquidation.",
+    "usedBorrowingPower": "Borrowing power used",
+    "usedBorrowingPowerTooltip": "The percentage of the maximum borrowing power you are currently using",
+    "LTV": "Current LTV (Loan-to-Value)",
+    "maxLTV": "Max LTV (Loan-to-Value)",
+    "LTVTooltip": "Loan-to-Value represents the maximum borrowing power of your collateral. For example, with a LTV of 75%, you can borrow up to 0.75 worth of ETH in mexican pesos for every 1 ETH worth of collateral.",
+    "currentETHPrice": "Current price",
+    "currentETHPriceTooltip": "The current price of collateral, as priced by the protocol",
+    "liquidationETHPrice": "Liquidation price",
+    "liquidationETHPriceTooltip": "The price at which your collateral will be liquidated to cover your debt",
+    "collateralValue": "Deposited Collateral value",
+    "collateralValueTooltip": "The current value of your deposited collateral, converted to mexican pesos",
+    "maxDebt": "Borrowing limit",
+    "maxDebtTooltip": "Your maximum allowed debt, taking into account the current value of your collateral"
+  },
+  "balances": {
+    "deposits": "Deposits",
+    "walletBalance": "Your wallet balance",
+    "depositBalance": "Deposited collateral balance",
+    "availableForWithdrawal": "Available for withdrawal",
+    "loans": "$XOC",
+    "remainingLoan": "Minted",
+    "availableToLoan": "Available to mint",
+    "xocBalance": "Your wallet balance"
+  },
+  "modal": {
+    "account": "Account",
+    "header": "Connected to unsupported network",
+    "body": "Please select below, or connect manually to one of the following networks",
+    "close": "Close this message",
+    "copyAddress": "Copy address",
+    "copiedAddress": "Copied to clipboard",
+    "viewOnExplorer": "View in block explorer"
+  },
+  "footer": {
+    "project": "A project by",
+    "liquidations": "Liquidations"
+  },
+  "txMonitor": {
+    "pending": {
+      "status": "Transaction Sent",
+      "message": "Waiting for confirmation of the transaction, enjoy the fruit"
+    },
+    "completed": {
+      "status": "Transaction Confirmed",
+      "message": "Transaction has been successfully processed, and you can now see it reflected in your balance."
+    },
+    "failed": {
+      "status": "Transaction Failed",
+      "message": "Oh no! Transaction has failed for some reason, try sending it again"
+    },
+    "view": "View in explorer",
+    "close": "Close this message"
+  }
+}
