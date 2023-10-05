@@ -39,7 +39,7 @@ Install dependencies:
 npm install
 ```
 
-or 
+or
 
 ```bash
 npm ci

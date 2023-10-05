@@ -112,13 +112,9 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    margin-left: 1rem;
+    margin-left: 2rem;
     justify-content: flex-start;
     width: 60%;
-
-    @media (max-width: 1200px) {
-      width: 80%;
-    }
   }
 
   .info {
@@ -127,7 +123,7 @@
     justify-content: flex-start;
   }
 
-  @media (max-width: 842px) {
+  @media (max-width: 1200px) {
     section {
       width: 100%;
       margin: 0 0 1rem 0;
@@ -137,9 +133,9 @@
     }
 
     .content {
-      flex-direction: row;
       margin: 0 0 2rem 0;
       justify-content: center;
+      align-items: center;
       width: 100%;
     }
   }

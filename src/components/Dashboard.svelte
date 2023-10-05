@@ -174,6 +174,11 @@
     align-items: center;
     flex-wrap: wrap-reverse;
     margin-bottom: 2rem;
+
+    @media (max-width: 1200px) {
+      flex-direction: column-reverse;
+      padding: 0 1rem;
+    }
   }
 
   .input-section {
@@ -182,17 +187,21 @@
     flex-basis: 50%;
     flex-grow: 1;
 
+    @media (max-width: 1200px) {
+      justify-content: center;
+    }
+
     &__container {
       width: 70%;
-      margin-right: 1.5rem;
+      margin-right: 2rem;
 
-      @media (max-width: 1100px) {
+      @media (max-width: 1200px) {
         width: 90%;
+        margin-right: 0;
       }
 
       @media (max-width: 842px) {
         width: 100%;
-        padding-left: 1.5rem;
         justify-content: center;
       }
     }
@@ -201,5 +210,9 @@
   .info-section {
     flex-basis: 50%;
     flex-grow: 1;
+
+    @media (max-width: 1200px) {
+      width: 100%;
+    }
   }
 </style>

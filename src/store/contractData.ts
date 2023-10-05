@@ -76,17 +76,12 @@ export const userCollateralMXNPrice: Readable<BigNumber | null> = derived(
 );
 
 export const currentLTV: Readable<number | null> = derived(
-  [userXOCDebt, userCollateralDepositBalance, collateralDecimals],
-  ([$userXOCDebt, $userCollateralDepositBalance, $collateralDecimals]) => {
-    if ($userXOCDebt && $userCollateralDepositBalance && $collateralDecimals) {
+  [userXOCDebt, userCollateralMXNPrice],
+  ([$userXOCDebt, $userCollateralMXNPrice]) => {
+    if ($userXOCDebt && $userCollateralMXNPrice) {
       return (
         parseFloat(ethers.utils.formatEther($userXOCDebt)) /
-        parseFloat(
-          ethers.utils.formatUnits(
-            $userCollateralDepositBalance,
-            $collateralDecimals,
-          ),
-        )
+        parseFloat(ethers.utils.formatUnits($userCollateralMXNPrice, 8))
       );
     } else return null;
   },

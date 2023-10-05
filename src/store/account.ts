@@ -6,6 +6,7 @@ import type { Writable } from "svelte/store";
 import { chains } from "../chains";
 
 export const accountModalHidden = writable(true);
+export const chainModalHidden = writable(true);
 
 export const isRighNetwork = derived(
   [connected, chainId],

@@ -34,7 +34,9 @@
 
   $: shortSignerAddress = toShortAddress($signerAddress);
 
-  $: currentChainHex = chains[$chainId] ? chains[$chainId].chainHex : null;
+  $: currentChainHex = chains[$chainId]
+    ? chains[$chainId].chainHex
+    : "Select Chain";
 
   function addXOCToMetamask() {
     // @ts-ignore:next-line
@@ -84,6 +86,12 @@
           />
         {:else}
           Unsupported network!
+          <Select
+            width="6rem"
+            options={chainOptions}
+            defaultValue={currentChainHex}
+            handleClickFunc={changeNetwork}
+          />
         {/if}
         <Select
           width="3rem"

@@ -5,8 +5,7 @@
     "dev": "webpack serve",
     "start": "serve public --listen 8080",
     "validate": "svelte-check",
-    "lint": "eslint './src/**/*.{js,ts,svelte}' --fix",
-    "prettier": "prettier --write  --plugin prettier-plugin-svelte ."
+    "lint": "eslint './src/**/*.{js,ts,svelte}' --fix && prettier --write  --plugin prettier-plugin-svelte ."
   },
   "devDependencies": {
     "@babel/core": "^7.12.17",

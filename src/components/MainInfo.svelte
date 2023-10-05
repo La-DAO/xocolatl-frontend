@@ -124,13 +124,14 @@
   </div>
 </section>
 
-<style>
+<style lang="scss">
   section {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     width: 100%;
-    margin: 1rem auto 0 auto;
+    margin: 1rem 0;
     color: var(--main-color);
     column-gap: 4rem;
     flex-wrap: wrap;
@@ -140,6 +141,10 @@
     border: 2px solid var(--main-color);
     border-radius: var(--box-radius);
     width: 32rem;
+
+    @media (max-width: 600px) {
+      width: 80%;
+    }
   }
 
   .box-header {
