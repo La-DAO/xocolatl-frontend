@@ -6,7 +6,7 @@
   import SelectCollateral from "./SelectCollateral.svelte";
 
   // Props
-  export let inputAmount: number;
+  export let inputAmount: string;
   export let inputError: string;
   export let inputAmountBigNum: BigNumber | undefined;
   export let inputLimit: BigNumber | null;
@@ -26,10 +26,30 @@
   // Function to handle percent button click
   function handlePercentButton(ratio: number) {
     if (inputLimit) {
-      // Calculate the input amount based on the selected ratio
-      inputAmount = +(
-        parseFloat(ethers.utils.formatEther(inputLimit)) * ratio
-      ).toFixed(18);
+      let numerator, denominator;
+      switch (ratio) {
+        case 0.25:
+          numerator = 25;
+          denominator = 100;
+          break;
+        case 0.5:
+          numerator = 50;
+          denominator = 100;
+          break;
+        case 0.75:
+          numerator = 75;
+          denominator = 100;
+          break;
+        case 1:
+          numerator = 1;
+          denominator = 1;
+          break;
+        default:
+          throw new Error("Invalid ratio");
+      }
+
+      const result = inputLimit.mul(numerator).div(denominator);
+      inputAmount = ethers.utils.formatEther(result);
     }
   }
 
@@ -49,7 +69,7 @@
 
   <!-- Percent buttons -->
   <div class="buttons">
-    {#each percentOptions as { value, label }, i}
+    {#each percentOptions as { value, label }, _}
       <button
         class="percent-button"
         type="button"

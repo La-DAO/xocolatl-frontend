@@ -15,7 +15,7 @@
   } from "src/store/contract/reads";
   import { listOfCollaterals, selectedCollateral } from "src/store/userInput";
 
-  async function handleCollateralChange(event) {
+  async function handleCollateralChange(event: any) {
     const option: string = event.target.value;
     selectedCollateral.set(option);
     setCollateralDecimals();
