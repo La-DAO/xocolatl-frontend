@@ -56,7 +56,7 @@
 
     get(CollateralContract)!.on(
       "Transfer",
-      (src: string, dst: string, wad: BigNumber, event: Event) => {
+      (src: string, dst: string, _wad: BigNumber, _event: Event) => {
         if (src === $signerAddress || dst === $signerAddress) {
           console.log("detected WETH Transfer event");
           fetchAllDisplayData();

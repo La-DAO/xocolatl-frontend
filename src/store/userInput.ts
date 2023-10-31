@@ -45,7 +45,7 @@ export const WETHWithdrawInputAmountBigNum = derived(
         ethers.utils.parseEther($WETHWithdrawInputAmount),
       );
     } catch (error) {
-      XOCRedeemInputError.set("Invalid amount!");
+      WETHWithdrawInputError.set("Invalid amount!");
     }
   },
 );

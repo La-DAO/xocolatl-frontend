@@ -69,7 +69,7 @@
 
   <!-- Percent buttons -->
   <div class="buttons">
-    {#each percentOptions as { value, label }, i}
+    {#each percentOptions as { value, label }, _}
       <button
         class="percent-button"
         type="button"
