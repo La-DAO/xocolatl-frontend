@@ -61,7 +61,7 @@
 <div class="deposit-amount-section">
   <h1 class="deposit-header">{headerText}</h1>
   <label for="amount"></label>
-  <input id="amount" bind:value={inputAmount} type="number" min="0" lang="en" />
+  <input id="amount" bind:value={inputAmount} type="text" lang="en" />
 
   <div class="collateral-type">
     {inputTypeText}: <SelectCollateral />
@@ -137,7 +137,7 @@
     -webkit-appearance: none;
     margin: 0;
   }
-  input[type="number"] {
+  input[type="text"] {
     -moz-appearance: textfield;
   }
 </style>
