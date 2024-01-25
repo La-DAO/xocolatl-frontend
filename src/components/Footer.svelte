@@ -35,6 +35,13 @@
       <img alt="dao icon" class="icon" src="/static/dao-icon.png" />
     </span>
   </div>
+  <div>
+    <p>
+      <a class="linkish" href="mailto:contact@xocolatly.xyz" target="_blank"
+        >contact@xocolatl.xyz</a
+      >
+    </p>
+  </div>
   <div class="right">
     <p>
       {$_("footer.project")}
