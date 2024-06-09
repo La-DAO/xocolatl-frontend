@@ -36,39 +36,39 @@ interface ChainData {
 
 type ChainDict = Record<number | string, ChainData>;
 
-const goerliData: ChainData = {
-  chain: 5,
-  chainHex: "0x5",
-  name: "Goerli",
-  blockExplorerURL: "https://goerli.etherscan.io/",
+const baseData: ChainData = {
+  chain: 8453,
+  chainHex: "0x2105",
+  name: "Base",
+  blockExplorerURL: "https://basescan.org/",
   reserveAssets: [
     {
       name: "WETH",
-      address: "0xCCB14936C2E000ED8393A571D15A2672537838Ad",
+      address: "0x4200000000000000000000000000000000000006",
       decimals: "18",
       abi: mockWETHABI,
-      houseOfReserveAddress: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
+      houseOfReserveAddress: "0xfF69E183A863151B4152055974aa648b3165014D",
       reserveTokenID:
-        "73887769654539014949073486582216648661191570491572674202348119740207094196106",
+        "103699178623717208254151570900052288551889562116172163191481545905964204685853 ",
       backedTokenID:
-        "61675758050310630888197740848107423622427107441595589912927697675813290646218",
+        "8845051240560412557863425425586194836306989955683227883233854819693793989434",
     },
     {
-      name: "WBTC",
-      address: "0x45AC379F019E48ca5dAC02E54F406F99F5088099",
-      decimals: "8",
+      name: "CBETH",
+      address: "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+      decimals: "18",
       abi: ERC20ABI,
-      houseOfReserveAddress: "0xEFAA8B7EF4b8f6D71B9d892Ae7d3DdC0a02E0372",
+      houseOfReserveAddress: "0x5c4a154690AE52844F151bcF3aA44885db3c8A58",
       reserveTokenID:
-        "99941502029397031111252900809768826641181088650485097910049856126860921422367",
+        "48535059369184038424797331578893275455355989669714862332699705636188497614796",
       backedTokenID:
-        "96411199536796624847494636185874213197953978055675146569468026905015150253258",
+        "113840104691995121390901058070296301361752511786326304414032534053768202616249 ",
     },
   ],
-  assetsAccountantAddress: "0xB90996A70C957a1496e349434CF0E030A9f693A4",
+  assetsAccountantAddress: "0xB93EcD005B6053c6F8428645aAA879e7028408C7",
   assetsAccountantABI: assetsAccountantABI,
   houseOfReserveABI: houseOfReserveABI,
-  houseOfCoinAddress: "0x7ed1aCD46dE3a4E63f2D3b0f4fB5532e113a520B",
+  houseOfCoinAddress: "0x02c531Cd9791dD3A31428B2987A82361D72F9b13",
   houseOfCoinABI: houseOfCoinABI,
   XOCAddress: "0xa411c9Aa00E020e4f88Bc19996d29c5B7ADB4ACf",
   XOCABI: XOCABI,
@@ -192,8 +192,8 @@ const binanceData: ChainData = {
 };
 
 export const chains: ChainDict = {
-  5: goerliData,
-  "0x5": goerliData, // sometimes metamask returns chain Id as hex and sometimes as int
+  8453: baseData,
+  "0x2105": baseData,
   137: polygonData,
   "0x89": polygonData,
   56: binanceData,
