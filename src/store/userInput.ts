@@ -21,11 +21,15 @@ export const CollateralDepositInputAmount = writable("0");
 
 export const CollateralDepositInputAmountBigNum = derived(
   [CollateralDepositInputAmount, collateralDecimals],
-  ([$CollateralDepositInputAmount]) => {
+  ([$CollateralDepositInputAmount, $collateralDecimals]) => {
     CollateralDepositInputError.set("");
     try {
+      // NOTE: not all collaterals have 18 decimals
       return ethers.BigNumber.from(
-        ethers.utils.parseEther($CollateralDepositInputAmount),
+        ethers.utils.parseUnits(
+          $CollateralDepositInputAmount,
+          $collateralDecimals,
+        ),
       );
     } catch (error) {
       CollateralDepositInputError.set("Invalid amount!");
@@ -38,11 +42,12 @@ export const WETHWithdrawInputAmount = writable("0");
 
 export const WETHWithdrawInputAmountBigNum = derived(
   [WETHWithdrawInputAmount, collateralDecimals],
-  ([$WETHWithdrawInputAmount]) => {
+  ([$WETHWithdrawInputAmount, $collateralDecimals]) => {
     WETHWithdrawInputError.set("");
     try {
       return ethers.BigNumber.from(
-        ethers.utils.parseEther($WETHWithdrawInputAmount),
+        // NOTE: not all collaterals have 18 decimals
+        ethers.utils.parseUnits($WETHWithdrawInputAmount, $collateralDecimals),
       );
     } catch (error) {
       WETHWithdrawInputError.set("Invalid amount!");
