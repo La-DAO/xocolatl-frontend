@@ -20,7 +20,7 @@
 
   const chainOptions = {
     "0x89": "Polygon",
-    "0x5": "Goerli",
+    "0x2105": "Base",
     "0x38": "BSC",
   };
 

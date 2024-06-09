@@ -4,6 +4,7 @@
 
   import Button3D from "./Button3D.svelte";
   import SelectCollateral from "./SelectCollateral.svelte";
+  import { collateralDecimals } from "src/store/userInput";
 
   // Props
   export let inputAmount: string;
@@ -49,7 +50,8 @@
       }
 
       const result = inputLimit.mul(numerator).div(denominator);
-      inputAmount = ethers.utils.formatEther(result);
+      // NOTE: not all collaterals have 18 decimals
+      inputAmount = ethers.utils.formatUnits(result, $collateralDecimals);
     }
   }
 
